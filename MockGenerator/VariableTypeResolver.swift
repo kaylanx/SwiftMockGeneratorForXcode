@@ -99,7 +99,7 @@ class VariableTypeResolver: RecursiveElementVisitor {
     }
   }
 
-  override func visitExpression(_ element: Expression) {
+  override func visitExpression(_ element: AST.Expression) {
     if let type = resolve(element.prefixExpression) {
       self.type = type
       return

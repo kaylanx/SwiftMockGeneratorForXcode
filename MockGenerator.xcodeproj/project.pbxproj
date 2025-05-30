@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -43,14 +43,7 @@
 		147437B61F79746A00241B8A /* TestProject in Copy Test Project */ = {isa = PBXBuildFile; fileRef = 147437B51F79746000241B8A /* TestProject */; };
 		14812327243B8554001CA005 /* PositionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14812326243B8554001CA005 /* PositionParser.swift */; };
 		14887ABC20FB859B00D50A73 /* MockGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14276C611F4F312E00EA7753 /* MockGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		148D5E08242E801000ED04DC /* TestHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149A5AEB242BCCD4003DDAE2 /* TestHelper.framework */; };
-		148D5E0A242E801100ED04DC /* SwiftyPluginTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148D5E09242E801100ED04DC /* SwiftyPluginTest.framework */; };
-		148D5E0B242E899100ED04DC /* TestHelper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 149A5AEB242BCCD4003DDAE2 /* TestHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		148D5E0C242E899700ED04DC /* SwiftyPluginTest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 148D5E09242E801100ED04DC /* SwiftyPluginTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		148D5E0E242F700100ED04DC /* SwiftToolkit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 149A5AEF242BD37D003DDAE2 /* SwiftToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1497FE77215D0B5C00CD670B /* XcodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497FE76215D0B5C00CD670B /* XcodeAccess.swift */; };
-		149A5AF0242BD37D003DDAE2 /* SwiftToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149A5AEF242BD37D003DDAE2 /* SwiftToolkit.framework */; };
-		149A5AF1242BD3A2003DDAE2 /* SwiftToolkit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 149A5AEF242BD37D003DDAE2 /* SwiftToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		149A5AF5242C36B8003DDAE2 /* SetupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149A5AF4242C36B8003DDAE2 /* SetupTests.swift */; };
 		149CF7B3217B115B005892B4 /* partial.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 149CF792217B115A005892B4 /* partial.mustache */; };
 		149CF7B5217B1301005892B4 /* PartialSpyCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149CF7B4217B1301005892B4 /* PartialSpyCommand.swift */; };
@@ -95,6 +88,12 @@
 		35CDFCCC54AA20F2E8E375D6 /* TypeDeclarationTransformingVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CDF6D840276DE36906BC4C /* TypeDeclarationTransformingVisitor.swift */; };
 		35CDFD1935A027AD6624A741 /* VariableTypeResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CDFFCFBA4A510F93250CFF /* VariableTypeResolverTests.swift */; };
 		35CDFF1EBDCD49B97A999ABA /* ManualProjectPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CDF41BB007A5C1F4180748 /* ManualProjectPathView.swift */; };
+		5830EA102DE8ED9E0029D24E /* SwiftToolkit in Frameworks */ = {isa = PBXBuildFile; productRef = 5830EA0F2DE8ED9E0029D24E /* SwiftToolkit */; };
+		5830EA142DE8EE460029D24E /* SwiftToolkit in Frameworks */ = {isa = PBXBuildFile; productRef = 5830EA132DE8EE460029D24E /* SwiftToolkit */; };
+		5830EA152DE8EE460029D24E /* SwiftToolkit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5830EA132DE8EE460029D24E /* SwiftToolkit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5830EA192DE8EFF00029D24E /* SwiftToolkit in Frameworks */ = {isa = PBXBuildFile; productRef = 5830EA182DE8EFF00029D24E /* SwiftToolkit */; };
+		5830EA1A2DE8EFF00029D24E /* SwiftToolkit in CopyFiles */ = {isa = PBXBuildFile; productRef = 5830EA182DE8EFF00029D24E /* SwiftToolkit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		584F37462DE8F4DC004F9C9D /* SwiftyPluginTest in Frameworks */ = {isa = PBXBuildFile; productRef = 584F37452DE8F4DC004F9C9D /* SwiftyPluginTest */; };
 		BF14E748254C57D90010956B /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F866EF20D90C3A00E79758 /* XcodeKit.framework */; };
 		BF14E749254C57D90010956B /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14F866EF20D90C3A00E79758 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -181,10 +180,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				148D5E0C242E899700ED04DC /* SwiftyPluginTest.framework in CopyFiles */,
-				148D5E0B242E899100ED04DC /* TestHelper.framework in CopyFiles */,
-				149A5AF1242BD3A2003DDAE2 /* SwiftToolkit.framework in CopyFiles */,
 				149DEC711F651B0C007DF43E /* MockGenerator.framework in CopyFiles */,
+				5830EA1A2DE8EFF00029D24E /* SwiftToolkit in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +222,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				148D5E0E242F700100ED04DC /* SwiftToolkit.framework in Embed Frameworks */,
 				142B023021709A97005DE573 /* UseCases.framework in Embed Frameworks */,
 				14887ABC20FB859B00D50A73 /* MockGenerator.framework in Embed Frameworks */,
 			);
@@ -250,6 +246,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BF14E749254C57D90010956B /* XcodeKit.framework in Embed Frameworks */,
+				5830EA152DE8EE460029D24E /* SwiftToolkit in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,10 +280,7 @@
 		14812326243B8554001CA005 /* PositionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionParser.swift; sourceTree = "<group>"; };
 		14872E7B1F59DBC50017AF3F /* MockGeneratorAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MockGeneratorAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14872E7F1F59DBC50017AF3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		148D5E09242E801100ED04DC /* SwiftyPluginTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyPluginTest.framework; path = lib/Debug/SwiftyPluginTest.framework; sourceTree = "<group>"; };
 		1497FE76215D0B5C00CD670B /* XcodeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeAccess.swift; sourceTree = "<group>"; };
-		149A5AEB242BCCD4003DDAE2 /* TestHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TestHelper.framework; path = lib/Debug/TestHelper.framework; sourceTree = "<group>"; };
-		149A5AEF242BD37D003DDAE2 /* SwiftToolkit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftToolkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		149A5AF4242C36B8003DDAE2 /* SetupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTests.swift; sourceTree = "<group>"; };
 		149CF792217B115A005892B4 /* partial.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = partial.mustache; sourceTree = "<group>"; };
 		149CF7B4217B1301005892B4 /* PartialSpyCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialSpyCommand.swift; sourceTree = "<group>"; };
@@ -353,6 +347,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5830EA102DE8ED9E0029D24E /* SwiftToolkit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,10 +355,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				148D5E0A242E801100ED04DC /* SwiftyPluginTest.framework in Frameworks */,
-				148D5E08242E801000ED04DC /* TestHelper.framework in Frameworks */,
-				149A5AF0242BD37D003DDAE2 /* SwiftToolkit.framework in Frameworks */,
 				14276C6A1F4F312E00EA7753 /* MockGenerator.framework in Frameworks */,
+				584F37462DE8F4DC004F9C9D /* SwiftyPluginTest in Frameworks */,
+				5830EA192DE8EFF00029D24E /* SwiftToolkit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +389,7 @@
 			files = (
 				14CA2D6C1F40008F00900937 /* Cocoa.framework in Frameworks */,
 				BF14E748254C57D90010956B /* XcodeKit.framework in Frameworks */,
+				5830EA142DE8EE460029D24E /* SwiftToolkit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,9 +516,6 @@
 		14CA2D6A1F40008F00900937 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				148D5E09242E801100ED04DC /* SwiftyPluginTest.framework */,
-				149A5AEF242BD37D003DDAE2 /* SwiftToolkit.framework */,
-				149A5AEB242BCCD4003DDAE2 /* TestHelper.framework */,
 				14F866EF20D90C3A00E79758 /* XcodeKit.framework */,
 				14CA2D6B1F40008F00900937 /* Cocoa.framework */,
 			);
@@ -814,6 +806,9 @@
 				Base,
 			);
 			mainGroup = 14CA2D4A1F40007000900937;
+			packageReferences = (
+				5830EA0E2DE8ED9E0029D24E /* XCLocalSwiftPackageReference "../swift-toolkit/SwiftToolkit" */,
+			);
 			productRefGroup = 14CA2D541F40007000900937 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -884,7 +879,6 @@
 			inputPaths = (
 				"$(SRCROOT)/lib/$(CONFIGURATION)/UseCases.framework",
 				"$(SRCROOT)/lib/$(CONFIGURATION)/libGRMustache7-MacOS.a",
-				"$(SRCROOT)/lib/$(CONFIGURATION)/SwiftToolkit.framework",
 			);
 			name = "Copy Frameworks";
 			outputFileListPaths = (
@@ -892,7 +886,6 @@
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/UseCases.framework",
 				"$(BUILT_PRODUCTS_DIR)/libGRMustache7-MacOS.a",
-				"$(BUILT_PRODUCTS_DIR)/SwiftToolkit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1073,7 +1066,11 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = MockGenerator/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib/Debug",
@@ -1105,7 +1102,11 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = MockGenerator/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib/Debug",
@@ -1134,12 +1135,17 @@
 					"$(PROJECT_DIR)/lib/Debug",
 				);
 				INFOPLIST_FILE = MockGeneratorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks /usr/lib/swift";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+					/usr/lib/swift,
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=${PROJECT_DIR}/lib/Debug/include/GRMustache/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_INCLUDE_PATHS = $PROJECT_DIR/lib/Debug/SwiftToolkit.framework/Modules;
+				SWIFT_INCLUDE_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -1156,7 +1162,12 @@
 					"$(PROJECT_DIR)/lib/Debug",
 				);
 				INFOPLIST_FILE = MockGeneratorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks /usr/lib/swift";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+					/usr/lib/swift,
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=${PROJECT_DIR}/lib/Release/include/GRMustache/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1226,8 +1237,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = HU45578K6L;
 				INFOPLIST_FILE = MockGeneratorAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorAppTests;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swift Mock Generator for Xcode.app/Contents/MacOS/Swift Mock Generator for Xcode";
@@ -1244,7 +1258,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = HU45578K6L;
 				INFOPLIST_FILE = MockGeneratorAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1287,8 +1305,10 @@
 					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = MockGeneratorApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorApp.debug;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_MODULE_NAME = MockGeneratorApp;
 				PRODUCT_NAME = "Swift Mock Generator for Xcode";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1312,7 +1332,10 @@
 					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = MockGeneratorApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorApp;
 				PRODUCT_MODULE_NAME = MockGeneratorApp;
 				PRODUCT_NAME = "Swift Mock Generator for Xcode";
@@ -1336,7 +1359,11 @@
 					"$(PROJECT_DIR)/lib/Debug",
 				);
 				INFOPLIST_FILE = XcodePlugin/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				MENU_DISPLAY_NAME = "Debug Mock Generator";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1364,7 +1391,11 @@
 					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = XcodePlugin/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				MENU_DISPLAY_NAME = "Mock Generator";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1453,6 +1484,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		5830EA0E2DE8ED9E0029D24E /* XCLocalSwiftPackageReference "../swift-toolkit/SwiftToolkit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../swift-toolkit/SwiftToolkit";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5830EA0F2DE8ED9E0029D24E /* SwiftToolkit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftToolkit;
+		};
+		5830EA132DE8EE460029D24E /* SwiftToolkit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5830EA0E2DE8ED9E0029D24E /* XCLocalSwiftPackageReference "../swift-toolkit/SwiftToolkit" */;
+			productName = SwiftToolkit;
+		};
+		5830EA182DE8EFF00029D24E /* SwiftToolkit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5830EA0E2DE8ED9E0029D24E /* XCLocalSwiftPackageReference "../swift-toolkit/SwiftToolkit" */;
+			productName = SwiftToolkit;
+		};
+		584F37452DE8F4DC004F9C9D /* SwiftyPluginTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5830EA0E2DE8ED9E0029D24E /* XCLocalSwiftPackageReference "../swift-toolkit/SwiftToolkit" */;
+			productName = SwiftyPluginTest;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 14CA2D4B1F40007000900937 /* Project object */;
 }

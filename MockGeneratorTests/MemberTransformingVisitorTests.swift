@@ -176,6 +176,16 @@ class MemberTransformingVisitorTests: XCTestCase {
         XCTAssertEqual(method.declarationText, "func a(`let`: A, `var`: B)")
     }
 
+    func test_visit_shouldTransformAsyncProtocolMethod() {
+        let method = transformMethod("func a() async")
+        XCTAssert(method.async)
+    }
+
+    func test_visit_shouldTransformAnyProtocolMethod() {
+        let method = transformMethod("func a() -> any Foo")
+        XCTAssert(method.any)
+    }
+
     func test_visit_shouldTransformThrowingProtocolMethod() {
         let method = transformMethod("func a() throws")
         XCTAssert(method.throws)

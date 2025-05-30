@@ -7,6 +7,14 @@ import AST
 
 class InsertMockCommandTests: XCTestCase {
 
+    func test_generateAnyMock() {
+        assertMockGeneratesExpected("AnyProtocolMock")
+    }
+
+    func test_generateAsyncAwaitMock() {
+        assertMockGeneratesExpected("AsyncAwaitProtocolMock")
+    }
+
     func test_generatesSimpleMock() {
         assertMockGeneratesExpected("SimpleProtocolMock")
     }
