@@ -9,6 +9,7 @@ import Testing
 @testable import MockGenerating
 
 struct DictionaryTypeTests {
+
     @Test("Should Deep Copy")
     func shouldDeepCopy() {
         let original = DictionaryType.Builder()

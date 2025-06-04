@@ -9,6 +9,7 @@ import Testing
 @testable import MockGenerating
 
 struct ArrayTypeTests {
+
     @Test("Should Deep Copy")
     func shouldDeepCopy() {
         let original = ArrayType.Builder()

@@ -11,7 +11,8 @@ struct GenericType: `Type` {
     let arguments: [`Type`]
 
     var text: String {
-        return "<\(arguments.map(\.text).joined(separator: ", "))>\(identifier)"
+        let argumentsList = arguments.map(\.text).joined(separator: ", ")
+        return "\(identifier)<\(argumentsList)>"
     }
 
     func accept(visitor: any Visitor) {
