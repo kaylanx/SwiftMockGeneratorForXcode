@@ -37,9 +37,9 @@ struct TupleType: `Type` {
     // MARK: - Nested TupleElement
     final class TupleElement: Sendable {
         let label: String?
-        let type: Type
+        let type: `Type`
 
-        init(label: String?, type: Type) {
+        init(label: String?, type: `Type`) {
             self.label = label
             self.type = type
         }
@@ -77,7 +77,7 @@ struct TupleType: `Type` {
         }
 
         @discardableResult
-        func element(_ type: Type) -> Builder {
+        func element(_ type: `Type`) -> Builder {
             elements.append(TupleElement(label: nil, type: type))
             return self
         }
