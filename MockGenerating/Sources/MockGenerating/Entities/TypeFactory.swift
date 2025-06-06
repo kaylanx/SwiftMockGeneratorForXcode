@@ -58,11 +58,13 @@ class TypeFactory<Builder> {
         }
     }
 
+    @discardableResult
     func type(_ type: String) -> Builder {
         getType(TypeIdentifier(identifier: type))
         return previousBuilder
     }
 
+    @discardableResult
     func typeIdentifier(
         identifier: String,
         _ build: (TypeIdentifier.Builder) -> Void
@@ -73,6 +75,7 @@ class TypeFactory<Builder> {
         return previousBuilder
     }
 
+    @discardableResult
     func tuple(_ build: (TupleType.Builder) -> Void) -> Builder {
         let builder = TupleType.Builder()
         build(builder)
