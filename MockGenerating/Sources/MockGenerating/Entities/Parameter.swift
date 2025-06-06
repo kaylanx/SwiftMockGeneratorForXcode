@@ -7,7 +7,16 @@
 
 import Foundation
 
-class Parameter: Element {
+class Parameter: Element, Equatable {
+
+    static func == (lhs: Parameter, rhs: Parameter) -> Bool {
+        lhs.externalName == rhs.externalName &&
+        lhs.internalName == rhs.internalName &&
+        lhs.type == rhs.type &&
+        lhs.text == rhs.text &&
+        lhs.isEscaping == rhs.isEscaping
+    }
+
     let externalName: String?
     let internalName: String
     let type: ResolvedType

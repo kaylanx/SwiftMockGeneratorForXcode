@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class ResolvedType: Sendable {
+final class ResolvedType: Sendable, Equatable {
+
+    static func == (lhs: ResolvedType, rhs: ResolvedType) -> Bool {
+        lhs.originalType.text == rhs.originalType.text
+    }
 
     static let implicit: ResolvedType = {
         ResolvedType(
