@@ -11,6 +11,12 @@ let package = Package(
             name: "MockGenerating",
             targets: ["MockGenerating"]),
     ],
+    dependencies: [
+        .package(
+            url: "https://github.com/hummingbird-project/swift-mustache.git",
+            from: "2.0.0"
+        )
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
@@ -18,7 +24,14 @@ let package = Package(
             name: "MockGenerating"),
         .testTarget(
             name: "MockGeneratingTests",
-            dependencies: ["MockGenerating"]
+            dependencies: [
+                "MockGenerating",
+                .product(name: "Mustache", package: "swift-mustache")
+            ],
+            resources: [
+                .copy("Resources/Fixtures"),
+                .copy("Resources/Templates")
+            ]
         ),
     ]
 )

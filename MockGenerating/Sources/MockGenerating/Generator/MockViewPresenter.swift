@@ -77,7 +77,7 @@ class MockViewPresenter: MockTransformer {
     }
 
     func set(classInitializers: [Initializer]) {
-        self.classInitializer = initializers.min(by: { $0.parametersList.count < $1.parametersList.count })
+        self.classInitializer = classInitializers.min(by: { $0.parametersList.count < $1.parametersList.count })
     }
 
     func add(classMethods: Method...) {
@@ -104,6 +104,7 @@ class MockViewPresenter: MockTransformer {
         self.classSubscripts.append(contentsOf: classSubscripts)
     }
 
+    @discardableResult
     func generate() -> String {
         generateOverloadedNames()
         let mockModel = MockViewModel(
