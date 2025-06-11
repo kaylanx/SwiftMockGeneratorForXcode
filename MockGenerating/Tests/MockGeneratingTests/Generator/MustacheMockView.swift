@@ -21,7 +21,6 @@ final class MustacheMockView: MockView {
             fatalError("Couldn't find templates directory")
         }
         let templateDirPath = templatesDirectory.path()
-        print(">>> Using templates directory: \(templateDirPath)")
         library = try await MustacheLibrary(directory: templateDirPath)
     }
 
@@ -39,15 +38,5 @@ final class MustacheMockView: MockView {
 enum MockViewType: String {
     case dummy
 
-    var directoryName: String {
-        switch self {
-        case .dummy: "Dummy"
-        }
-    }
-
-    var templateName: String {
-        switch self {
-        case .dummy: "dummy"
-        }
-    }
+    var directoryName: String { rawValue.capitalized }
 }
