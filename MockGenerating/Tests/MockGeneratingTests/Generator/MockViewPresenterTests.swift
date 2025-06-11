@@ -120,7 +120,29 @@ struct MockViewPresenterTests {
         type: MockViewType
     ) async throws {
         try await setUp(type: type)
-        try runTest(template:ThrowingInitializerTemplate(), for: type)
+        try runTest(template: ThrowingInitializerTemplate(), for: type)
+    }
+
+    @Test(
+        "Should Correctly Render Async Initializer",
+        arguments: arguments
+    )
+    mutating func shouldCorrectlyRenderAsyncInitializer(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template: AsyncInitializerTemplate(), for: type)
+    }
+
+    @Test(
+        "Should Correctly Render Async Throwing Initializer",
+        arguments: arguments
+    )
+    mutating func shouldCorrectlyRenderAsyncThrowingInitializer(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template: AsyncThrowingInitializerTemplate(), for: type)
     }
 
     private func runTest(

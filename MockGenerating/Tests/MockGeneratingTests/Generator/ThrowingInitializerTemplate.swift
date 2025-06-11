@@ -11,11 +11,12 @@ final class ThrowingInitializerTemplate: MockGeneratorTestTemplate {
     let expectedSwiftFileName = "ThrowingInitializer"
 
     func build(generator: MockTransformer) {
-        generator.set(classInitializers:
-            Initializer.Builder()
-                .parameter("a") { $0.type("String") }
-                .throws()
-                .build()
+        generator.set(
+            classInitializers:
+                Initializer.Builder()
+                    .parameter("a") { $0.type("String") }
+                    .throws()
+                    .build()
         )
     }
 }
