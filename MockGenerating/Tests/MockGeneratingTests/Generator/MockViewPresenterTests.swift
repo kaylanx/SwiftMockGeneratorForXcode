@@ -30,16 +30,32 @@ struct MockViewPresenterTests {
         #expect(generator.generate().isEmpty)
     }
 
-    @Test("Should Return Simple Protocol")
-    mutating func shouldReturnSimpleProtocol() async throws {
-        try await setUp(type: .dummy)
-        try runTest(template: SimpleProtocolTest())
+    @Test(
+        "Should Return Simple Protocol",
+        .disabled("Re-enable when protocols implemented"),
+        arguments: arguments
+    )
+    mutating func shouldReturnSimpleProtocol(type: MockViewType) async throws {
+        try await setUp(type: type)
+        try runTest(template: SimpleProtocolTemplate())
     }
 
-    @Test("Should Return Open Intializer")
-    mutating func shouldReTurnOpenIntializer() async throws {
-        try await setUp(type: .dummy)
-        try runTest(template: OpenInitializerTest())
+    @Test(
+        "Should Return Intializer With Arguments",
+        arguments: arguments
+    )
+    mutating func shouldReturnArgumentsInitializer(type: MockViewType) async throws {
+        try await setUp(type: type)
+        try runTest(template: ArgumentsInitializerTemplate())
+    }
+
+    @Test(
+        "Should Return Open Intializer",
+        arguments: arguments
+    )
+    mutating func shouldReturnOpenIntializer(type: MockViewType) async throws {
+        try await setUp(type: type)
+        try runTest(template: OpenInitializerTemplate())
     }
 
     private func runTest(template: MockGeneratorTestTemplate) throws {

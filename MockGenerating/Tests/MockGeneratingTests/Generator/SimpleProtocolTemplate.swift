@@ -6,9 +6,9 @@
 //
 @testable import MockGenerating
 
-final class SimpleProtocolTest: MockGeneratorTestTemplate {
+final class SimpleProtocolTemplate: MockGeneratorTestTemplate {
 
-    let expectedSwiftFileName = "SimpleProtocolTest"
+    let expectedSwiftFileName = "SimpleProtocol"
 
     func build(generator: MockTransformer) {
         generator.add(

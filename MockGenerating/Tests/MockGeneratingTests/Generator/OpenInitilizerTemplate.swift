@@ -7,9 +7,9 @@
 
 @testable import MockGenerating
 
-final class OpenInitializerTest: MockGeneratorTestTemplate {
+final class OpenInitializerTemplate: MockGeneratorTestTemplate {
 
-    let expectedSwiftFileName = "OpenInitializerTest"
+    let expectedSwiftFileName = "OpenInitializer"
 
     func build(generator: MockTransformer) {
         generator.set(classInitializers:
