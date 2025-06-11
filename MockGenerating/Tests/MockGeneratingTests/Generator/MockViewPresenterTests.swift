@@ -16,53 +16,120 @@ struct MockViewPresenterTests {
     private var generator: MockViewPresenter!
     private var view: MustacheMockView!
 
-    private mutating func setUp(type: MockViewType) async throws {
+    private mutating func setUp(
+        type: MockViewType
+    ) async throws {
         view = try await MustacheMockView(type: type)
         generator = MockViewPresenter(view: view)
     }
 
     @Test(
-        "Should Return Empty String When Nothing To Mock",
+        "Should Correctly Render Empty String When Nothing To Mock",
         arguments: arguments
     )
-    mutating func testShouldReturnEmptyString_whenNothingToMock(type: MockViewType) async throws {
+    mutating func testShouldCorrectlyRenderEmptyString_whenNothingToMock(
+        type: MockViewType
+    ) async throws {
         try await setUp(type: type)
         #expect(generator.generate().isEmpty)
     }
 
     @Test(
-        "Should Return Simple Protocol",
+        "Should Correctly Render Simple Protocol",
         .disabled("Re-enable when protocols implemented"),
         arguments: arguments
     )
-    mutating func shouldReturnSimpleProtocol(type: MockViewType) async throws {
+    mutating func shouldCorrectlyRenderSimpleProtocol(
+        type: MockViewType
+    ) async throws {
         try await setUp(type: type)
-        try runTest(template: SimpleProtocolTemplate())
+        try runTest(template: SimpleProtocolTemplate(), for: type)
     }
 
     @Test(
-        "Should Return Intializer With Arguments",
+        "Should Correctly Render Intializer With Arguments",
         arguments: arguments
     )
-    mutating func shouldReturnArgumentsInitializer(type: MockViewType) async throws {
+    mutating func shouldCorrectlyRenderArgumentsInitializer(
+        type: MockViewType
+    ) async throws {
         try await setUp(type: type)
-        try runTest(template: ArgumentsInitializerTemplate())
+        try runTest(template: ArgumentsInitializerTemplate(), for: type)
     }
 
     @Test(
-        "Should Return Open Intializer",
+        "Should Correctly Render Optional Intializer",
         arguments: arguments
     )
-    mutating func shouldReturnOpenIntializer(type: MockViewType) async throws {
+    mutating func shouldCorrectlyRenderOptionalInitializer(
+        type: MockViewType
+    ) async throws {
         try await setUp(type: type)
-        try runTest(template: OpenInitializerTemplate())
+        try runTest(template: FailableInitialzerTemplate(), for: type)
     }
 
-    private func runTest(template: MockGeneratorTestTemplate) throws {
+    @Test(
+        "Should Correctly Render No Arguments Optional Initializer",
+        arguments: arguments
+    )
+    mutating func shouldCorrectlyRenderNoArgumentsOptionalInitializer(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template: NoArgumentFailableInitializerTemplate(), for: type)
+    }
+
+    @Test(
+        "Should Correctly Render Protocol Initializer",
+        arguments: arguments
+    )
+    mutating func shouldCorrectlyRenderProtocolInitializer(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template: ProtocolInitializerTemplate(), for: type)
+    }
+
+    @Test(
+        "Should Correctly Render Simplest Initializer",
+        arguments: arguments
+    )
+    mutating func shouldCorrectlyRenderSimplestInitializer(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template: SimplestClassInitializerTemplate(), for: type)
+    }
+
+    @Test(
+        "Should Correctly Render Open Intializer",
+        arguments: arguments
+    )
+    mutating func shouldCorrectlyRenderOpenIntializer(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template: OpenInitializerTemplate(), for: type)
+    }
+
+    @Test(
+        "Should Correctly Render Throwing Initializer",
+        arguments: arguments
+    )
+    mutating func shouldCorrectlyRenderThrowingInitializer(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template:ThrowingInitializerTemplate(), for: type)
+    }
+
+    private func runTest(
+        template: MockGeneratorTestTemplate,
+        for type: MockViewType
+    ) throws {
         template.build(generator: generator)
         generator.generate()
-        let expected = try #require(template.getExpected(type: .dummy))
+        let expected = try #require(template.getExpected(type: type))
         #expect(view.rendered == expected)
     }
 }
-
