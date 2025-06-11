@@ -21,9 +21,9 @@ extension MockGeneratorTestTemplate {
     }
 
     private func readFile(from directory: String) -> String? {
-        guard let fixtureFile = Bundle.module.url(forResource: "Fixtures/\(directory)/\(expectedSwiftFileName)", withExtension: "swift") else {
+        guard let expectedFile = Bundle.module.url(forResource: "Expectations/\(directory)/\(expectedSwiftFileName)", withExtension: "swift") else {
             return nil
         }
-        return try? String(contentsOf: fixtureFile, encoding: .utf8)
+        return try? String(contentsOf: expectedFile, encoding: .utf8)
     }
 }

@@ -11,7 +11,12 @@ import Testing
 
 struct MockViewPresenterTests {
 
-    private static let arguments: [MockViewType] = [.dummy]
+    private static let arguments: [MockViewType] = [
+        .dummy,
+        .partial,
+        .spy,
+        .stub
+    ]
 
     private var generator: MockViewPresenter!
     private var view: MustacheMockView!

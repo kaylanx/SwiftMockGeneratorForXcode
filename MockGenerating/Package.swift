@@ -29,7 +29,7 @@ let package = Package(
                 .product(name: "Mustache", package: "swift-mustache")
             ],
             resources: [
-                .copy("Resources/Fixtures"),
+                .copy("Resources/Expectations"),
                 .copy("Resources/Templates")
             ]
         ),

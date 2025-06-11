@@ -37,6 +37,9 @@ final class MustacheMockView: MockView {
 
 enum MockViewType: String {
     case dummy
+    case partial
+    case spy
+    case stub
 
     var directoryName: String { rawValue.capitalized }
 }
