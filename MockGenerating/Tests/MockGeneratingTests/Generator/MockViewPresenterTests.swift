@@ -41,7 +41,6 @@ struct MockViewPresenterTests {
 
     @Test(
         "Should Correctly Render Simple Protocol",
-        .disabled("Re-enable when protocols implemented"),
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderSimpleProtocol(

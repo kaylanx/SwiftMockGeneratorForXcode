@@ -109,12 +109,9 @@ class MockViewPresenter: MockTransformer {
         generateOverloadedNames()
         let mockModel = MockViewModel(
             initializer: transformInitializers(),
-            //            transformProperties(),
-            //            transformMethods(),
-            //            transformSubscripts(),
-            property: [],
-            method: [],
-            subscript: [],
+            property: [], // transformProperties(),
+            method: transformMethods(),
+            subscript: [], // transformSubscripts(),
             scope: scope
         )
         view.render(model: mockModel)
@@ -156,7 +153,7 @@ class MockViewPresenter: MockTransformer {
     private func getClassInitializerScope() -> String {
         switch scope {
         case "open": return "public "
-        case let s?: return "\(s) "
+        case let scope?: return "\(scope) "
         default: return ""
         }
     }
@@ -223,26 +220,28 @@ class MockViewPresenter: MockTransformer {
         return modifiers + declaration
     }
 
-//    private func transformMethods() -> [MethodViewModel] {
-//        return transformMethods(classMethods, isClass: true) +
-//        transformMethods(protocolMethods, isClass: false)
-//    }
-//
-//    private func transformMethods(_ methods: [Method], isClass: Bool) -> [MethodViewModel] {
+    private func transformMethods() -> [MethodViewModel] {
+        return transformMethods(classMethods, isClass: true) +
+        transformMethods(protocolMethods, isClass: false)
+    }
+
+    private func transformMethods(_ methods: [Method], isClass: Bool) -> [MethodViewModel] {
+    []
 //        return methods.map {
 //            MethodViewModel(
-//                name: getUniqueName($0).capitalized,
-//                parameters: transformParameters($0),
-//                closureParameters: $0.parametersList.compactMap(transformClosureParameters),
-//                returnType: transformReturnType($0),
+//                capitalizedUniqueName: getUniqueName($0).capitalized,
+//                escapingParameters: transformParameters($0),
+//                closureParameter: $0.parametersList.compactMap(transformClosureParameters),
+//                resultType: transformReturnType($0),
 //                functionCall: MakeFunctionCallVisitor.make($0),
-//                isThrowing: $0.throws,
-//                isRethrowing: $0.rethrows,
-//                isClass: isClass,
+//                async: $0.async,
+//                throws: $0.throws,
+//                rethrows: $0.rethrows,
+//                isImplemented: isClass,
 //                declarationText: transformDeclarationText($0.declarationText.trimmingCharacters(in: .whitespacesAndNewlines), isOverriding: isClass)
 //            )
 //        }
-//    }
+    }
 //
 //    private func transformClosureParameters(_ parameter: Parameter) -> ClosureParameterViewModel? {
 //        let visitor = FunctionParameterTransformer(parameter.internalName)

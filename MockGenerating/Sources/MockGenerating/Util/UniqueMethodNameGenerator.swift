@@ -33,21 +33,25 @@ class UniqueMethodNameGenerator {
     private func commitUniqueModels(name: String, models: [MethodModel]) {
         if models.count == 1 {
             commitModel(name: name, model: models[0])
-        } else {
-            var sortedModels = models
-            sortBySimplest(&sortedModels)
-            let simplestModel = sortedModels[0]
-            if isUniquelySimple(sortedModels) {
-                commitModel(name: name, model: simplestModel)
-            }
-            commitModelsThatCannotGetMoreComplex(models: sortedModels, name: name)
+            return
         }
+
+        var sortedModels = models
+        sortBySimplest(&sortedModels)
+
+        guard let simplestModel = sortedModels.first else { return }
+
+        if isUniquelySimple(sortedModels) {
+            commitModel(name: name, model: simplestModel)
+        }
+
+        commitModelsThatCannotGetMoreComplex(models: sortedModels, name: name)
     }
 
     private func commitModelsThatCannotGetMoreComplex(models: [MethodModel], name: String) {
-        for model in models where !canModelGetMoreComplex(model) {
-            commitModel(name: name, model: model)
-        }
+        models
+            .filter { canModelGetMoreComplex($0) }
+            .forEach { commitModel(name: name, model: $0) }
     }
 
     private func canModelGetMoreComplex(_ model: MethodModel) -> Bool {
@@ -67,29 +71,20 @@ class UniqueMethodNameGenerator {
     }
 
     private func strip(_ name: String) -> String {
-        return name.replacingOccurrences(of: "\\W", with: "", options: .regularExpression)
+        let pattern = "\\W"
+        return name.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
     }
 
     private func sortBySimplest(_ models: inout [MethodModel]) {
-        var swapped: Bool
-        repeat {
-            swapped = false
-            for i in 1..<models.count {
-                if models[i].parameterCount < models[i - 1].parameterCount {
-                    models.swapAt(i, i - 1)
-                    swapped = true
-                }
-            }
-        } while swapped
+        models.sort { $0.parameterCount < $1.parameterCount }
     }
 
     private func moveDuplicatesToNameBuckets() -> [String: [MethodModel]] {
-        var nameBuckets = [String: [MethodModel]]()
+        var nameBuckets: [String: [MethodModel]] = [:]
         for model in duplicateMethodModels {
-            guard let name = model.nextPreferredName() else { continue }
-            var models = nameBuckets[name] ?? []
-            models.append(model)
-            nameBuckets[name] = models
+            if let name = model.nextPreferredName() {
+                nameBuckets[name, default: []].append(model)
+            }
         }
         return nameBuckets
     }

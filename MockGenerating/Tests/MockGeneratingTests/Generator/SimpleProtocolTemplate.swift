@@ -12,7 +12,10 @@ final class SimpleProtocolTemplate: MockGeneratorTestTemplate {
 
     func build(generator: MockTransformer) {
         generator.add(
-            method: Method.Builder(name: "simpleMethod").build()
+            method:
+                Method.Builder(
+                    name: "simpleMethod"
+                ).build()
         )
     }
 }
