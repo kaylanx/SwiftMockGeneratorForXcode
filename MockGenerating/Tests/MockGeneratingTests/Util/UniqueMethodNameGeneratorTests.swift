@@ -27,7 +27,7 @@ struct UniqueMethodNameGeneratorTests  {
     @Test("Should Return Nil When ID Does Not Exist")
     mutating func shouldReturnNilWhenIDDoesNotExist() {
         generator = createGenerator()
-        #expect(generator.getMethodName(id: "1") == nil)
+        #expect(generator.getMethodName(for: "1") == nil)
     }
 
     @Test("When No Overloaded Methods Then Unique Method Name Should Return Method Name")
@@ -233,7 +233,7 @@ struct UniqueMethodNameGeneratorTests  {
     private mutating func assertEquals(models: [MethodModel], expected: [String]) {
         createGenerator(models: models)
         models.enumerated().forEach { index, model in
-            let id = generator.getMethodName(id: model.id)
+            let id = generator.getMethodName(for: model.id)
             #expect(expected[index] == id)
         }
     }

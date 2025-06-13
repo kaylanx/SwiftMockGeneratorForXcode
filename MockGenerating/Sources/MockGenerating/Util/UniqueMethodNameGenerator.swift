@@ -89,7 +89,7 @@ class UniqueMethodNameGenerator {
         return nameBuckets
     }
 
-    func getMethodName(id: String) -> String? {
+    func getMethodName(for id: String) -> String? {
         return uniqueMethodName[id]
     }
 }

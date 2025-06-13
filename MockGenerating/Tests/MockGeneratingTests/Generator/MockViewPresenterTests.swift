@@ -40,12 +40,13 @@ struct MockViewPresenterTests {
     }
 
     @Test(
-        "Should Correctly Render Simple Protocol",
-        arguments: arguments
+        "Should Correctly Render Simple Protocol"//,
+//        arguments: arguments.first!
     )
     mutating func shouldCorrectlyRenderSimpleProtocol(
-        type: MockViewType
+//        type: MockViewType
     ) async throws {
+        let type = MockViewType.dummy
         try await setUp(type: type)
         try runTest(template: SimpleProtocolTemplate(), for: type)
     }

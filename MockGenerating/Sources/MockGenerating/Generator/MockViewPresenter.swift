@@ -201,16 +201,16 @@ class MockViewPresenter: MockTransformer {
 //        }
 //    }
 //
-//    private func getUniqueName(_ method: Method) -> String {
-//        return nameGenerator.getMethodName(for: toMethodModel(method).id) ?? ""
-//    }
+    private func getUniqueName(_ method: Method) -> String {
+        return nameGenerator.getMethodName(for: method.toMethodModel().id) ?? ""
+    }
 //
 //    private func getUniqueName(_ property: Property) -> String {
-//        return nameGenerator.getMethodName(for: toMethodModel(property).id) ?? ""
+//        return nameGenerator.getMethodName(for: property.toMethodModel().id) ?? ""
 //    }
 //
 //    private func getUniqueName(_ subscript: Subscript) -> String {
-//        return nameGenerator.getMethodName(for: toMethodModel(subscript).id) ?? ""
+//        return nameGenerator.getMethodName(for: subscript.toMethodModel().id) ?? ""
 //    }
 
     private func transformDeclarationText(declaration: String, isOverriding: Bool) -> String {
@@ -226,23 +226,31 @@ class MockViewPresenter: MockTransformer {
     }
 
     private func transformMethods(_ methods: [Method], isClass: Bool) -> [MethodViewModel] {
-    []
-//        return methods.map {
-//            MethodViewModel(
-//                capitalizedUniqueName: getUniqueName($0).capitalized,
-//                escapingParameters: transformParameters($0),
-//                closureParameter: $0.parametersList.compactMap(transformClosureParameters),
-//                resultType: transformReturnType($0),
-//                functionCall: MakeFunctionCallVisitor.make($0),
-//                async: $0.async,
-//                throws: $0.throws,
-//                rethrows: $0.rethrows,
-//                isImplemented: isClass,
-//                declarationText: transformDeclarationText($0.declarationText.trimmingCharacters(in: .whitespacesAndNewlines), isOverriding: isClass)
-//            )
-//        }
+        return methods.map {
+            MethodViewModel(
+                capitalizedUniqueName: getUniqueName($0).capitalized,
+                escapingParameters: nil,
+                // transformParameters($0),
+                closureParameter: [],
+                // $0.parametersList.compactMap(transformClosureParameters),
+                resultType: nil,
+                // transformReturnType($0),
+                functionCall: nil,
+                // MakeFunctionCallVisitor.make($0),
+                async: $0.async,
+                throws: $0.throws,
+                rethrows: $0.rethrows,
+                isImplemented: isClass,
+                declarationText:  transformDeclarationText(
+                    declaration: $0.declarationText.trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    ),
+                    isOverriding: isClass
+                )
+            )
+        }
     }
-//
+
 //    private func transformClosureParameters(_ parameter: Parameter) -> ClosureParameterViewModel? {
 //        let visitor = FunctionParameterTransformer(parameter.internalName)
 //        parameter.type.resolvedType.accept(visitor)
