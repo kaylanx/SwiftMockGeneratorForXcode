@@ -228,7 +228,7 @@ class MockViewPresenter: MockTransformer {
     private func transformMethods(_ methods: [Method], isClass: Bool) -> [MethodViewModel] {
         return methods.map {
             MethodViewModel(
-                capitalizedUniqueName: getUniqueName($0).capitalized,
+                capitalizedUniqueName: getUniqueName($0).capitalizingFirstLetter(),
                 escapingParameters: nil,
                 // transformParameters($0),
                 closureParameter: [],

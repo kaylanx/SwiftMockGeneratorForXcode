@@ -116,9 +116,3 @@ extension MethodModel: Hashable {
         hasher.combine(id)
     }
 }
-
-fileprivate extension String {
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
-    }
-}
