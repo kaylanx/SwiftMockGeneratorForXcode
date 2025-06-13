@@ -63,14 +63,14 @@ class MethodModel {
             return nil
         }
         index += 1
-        return getPreferredNameAt(index: index)
+        return getPreferredName(at: index)
     }
 
     private func hasNextPreferredName() -> Bool {
-        return index + 1 < filteredNames.count + filteredTypes.count
+        return (index + 1) < (filteredNames.count + filteredTypes.count)
     }
 
-    private func getPreferredNameAt(index: Int) -> String {
+    private func getPreferredName(at index: Int) -> String {
         var name = methodName
         let names = filteredNames
         let types = filteredTypes
@@ -95,7 +95,7 @@ class MethodModel {
         guard hasNextPreferredName() else {
             return nil
         }
-        return getPreferredNameAt(index: index + 1)
+        return getPreferredName(at: index + 1)
     }
 
     private func isNameValid(name: String) -> Bool {

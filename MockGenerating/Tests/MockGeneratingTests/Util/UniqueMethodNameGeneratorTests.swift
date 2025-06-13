@@ -205,10 +205,7 @@ struct UniqueMethodNameGeneratorTests  {
         )
     }
 
-    @Test(
-        "Should Ignore Special Characters In Tuples And Closures",
-        .disabled("First Two Currently Failing")
-    )
+    @Test("Should Ignore Special Characters In Tuples And Closures")
     mutating func shouldIgnoreSpecialCharactersInTuplesAndClosures() {
         assertEquals(
             models: [

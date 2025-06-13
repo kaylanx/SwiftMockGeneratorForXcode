@@ -4,15 +4,17 @@
 //
 //  Created by Andy Kayley on 03/06/2025.
 //
-
+import Foundation
 
 enum ParameterUtil {
 
     static func getParameterList(parameters: String) -> [String] {
-        return parameters
-            .split(separator: ",")
+        let regex = try! NSRegularExpression(pattern: ",(?=[\\w\\s`]+:)", options: [])
+        let matches = regex
+            .split(string: parameters)
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
+        return matches
     }
 
     static func getParameters(parameters: String) -> [Parameter] {
@@ -96,5 +98,27 @@ enum ParameterUtil {
             with: "",
             options: .regularExpression
         )
+    }
+}
+
+extension NSRegularExpression {
+    func split(string: String) -> [String] {
+        let nsString = string as NSString
+        let matches = self.matches(in: string, range: NSRange(location: 0, length: nsString.length))
+
+        var lastEnd = 0
+        var result: [String] = []
+
+        for match in matches {
+            let range = NSRange(location: lastEnd, length: match.range.location - lastEnd)
+            result.append(nsString.substring(with: range))
+            lastEnd = match.range.location + match.range.length
+        }
+
+        // Append remainder
+        let remainingRange = NSRange(location: lastEnd, length: nsString.length - lastEnd)
+        result.append(nsString.substring(with: remainingRange))
+
+        return result
     }
 }

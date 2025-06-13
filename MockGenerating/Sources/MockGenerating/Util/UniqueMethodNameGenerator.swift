@@ -25,14 +25,14 @@ class UniqueMethodNameGenerator {
 
     private func processDuplicates() {
         let nameBuckets = moveDuplicatesToNameBuckets()
-        for (name, models) in nameBuckets {
-            commitUniqueModels(name: name, models: models)
+        nameBuckets.forEach {
+            commitUniqueModels(name: $0.key, models: $0.value)
         }
     }
 
     private func commitUniqueModels(name: String, models: [MethodModel]) {
         if models.count == 1 {
-            commitModel(name: name, model: models[0])
+            commitModel(name: name, simplestModel: models[0])
             return
         }
 
@@ -42,7 +42,7 @@ class UniqueMethodNameGenerator {
         guard let simplestModel = sortedModels.first else { return }
 
         if isUniquelySimple(sortedModels) {
-            commitModel(name: name, model: simplestModel)
+            commitModel(name: name, simplestModel: simplestModel)
         }
 
         commitModelsThatCannotGetMoreComplex(models: sortedModels, name: name)
@@ -51,7 +51,7 @@ class UniqueMethodNameGenerator {
     private func commitModelsThatCannotGetMoreComplex(models: [MethodModel], name: String) {
         models
             .filter { canModelGetMoreComplex($0) }
-            .forEach { commitModel(name: name, model: $0) }
+            .forEach { commitModel(name: name, simplestModel: $0) }
     }
 
     private func canModelGetMoreComplex(_ model: MethodModel) -> Bool {
@@ -65,9 +65,9 @@ class UniqueMethodNameGenerator {
         return simplestParamCount < nextSimplestParamCount
     }
 
-    private func commitModel(name: String, model: MethodModel) {
-        duplicateMethodModels.remove(model)
-        uniqueMethodName[model.id] = strip(name)
+    private func commitModel(name: String, simplestModel: MethodModel) {
+        duplicateMethodModels.remove(simplestModel)
+        uniqueMethodName[simplestModel.id] = strip(name)
     }
 
     private func strip(_ name: String) -> String {
