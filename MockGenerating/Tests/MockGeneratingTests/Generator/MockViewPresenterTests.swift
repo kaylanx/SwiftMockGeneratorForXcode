@@ -51,6 +51,17 @@ struct MockViewPresenterTests {
     }
 
     @Test(
+        "Should Correctly Render Method Parameter",
+        arguments: arguments
+    )
+    mutating func shoudlCorrectlyRenderMethodParameter(
+        type: MockViewType
+    ) async throws {
+        try await setUp(type: type)
+        try runTest(template: MethodParameterTemplate(), for: type)
+    }
+
+    @Test(
         "Should Correctly Render Intializer With Arguments",
         arguments: arguments
     )
