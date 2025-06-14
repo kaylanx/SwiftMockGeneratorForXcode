@@ -23,8 +23,15 @@ final class CreateInvokedParameters {
                     genericIdentifiers: genericIdentifiers
                 )
             }
-        if validateParameters(parameterList: parameterList, tupleParameters: tupleParameters) {
-            return createProperty(tupleParameters: tupleParameters.filter { !isClosure(parameter: $0) })
+        if validateParameters(
+            parameterList: parameterList,
+            tupleParameters: tupleParameters
+        ) {
+            return createProperty(
+                tupleParameters: tupleParameters.filter {
+                    !isClosure(parameter: $0)
+                }
+            )
         }
         return nil
     }
@@ -42,7 +49,7 @@ final class CreateInvokedParameters {
             return nil
         }
 
-        guard tupleParameters.count > 1 else {
+        guard tupleParameters.count == 1 else {
             return TuplePropertyDeclaration(parameters: tupleParameters)
         }
 

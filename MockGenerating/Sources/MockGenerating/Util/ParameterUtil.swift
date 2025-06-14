@@ -12,7 +12,12 @@ enum ParameterUtil {
         let regex = try! NSRegularExpression(pattern: ",(?=[\\w\\s`]+:)", options: [])
         let matches = regex
             .split(string: parameters)
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .map {
+                $0.components(separatedBy: .newlines)
+                    .map { $0.trimmingCharacters(in: .whitespaces) }
+                    .filter { !$0.isEmpty }
+                    .joined(separator: " ")
+            }
             .filter { !$0.isEmpty }
         return matches
     }
