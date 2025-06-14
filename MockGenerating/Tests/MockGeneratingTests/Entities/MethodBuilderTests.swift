@@ -13,8 +13,8 @@ struct MethodBuilderTests {
     func shouldBuildDefaultMethod() {
         let method = Method.Builder(name: "name").build()
         #expect(method.name == "name")
-        #expect(method.returnType.originalType.text == ResolvedType.implicit.originalType.text)
-        #expect(method.returnType.resolvedType.text == ResolvedType.implicit.resolvedType.text)
+        #expect(method.returnType.originalType.text == ResolvedTypes.implicit.type.originalType.text)
+        #expect(method.returnType.resolvedType.text == ResolvedTypes.implicit.type.resolvedType.text)
         #expect(method.parametersList.isEmpty)
         #expect(!method.throws)
         #expect(!method.async)

@@ -21,7 +21,7 @@ struct Method: Element {
 
     class Builder {
 
-        private var _returnType = ResolvedType.implicit
+        private var _returnType = ResolvedTypes.implicit.type
         private var _throws = false
         private var _rethrows = false
         private var _async = false
@@ -98,7 +98,7 @@ struct Method: Element {
             var throwString = ""
             var asyncString = ""
             let parametersString: String = parameters.map { $0.text }.joined(separator: ", ")
-            if _returnType !== ResolvedType.implicit {
+            if _returnType !== ResolvedTypes.implicit.type {
                 returnString = " -> \(_returnType.originalType.text)"
             }
             if _async {

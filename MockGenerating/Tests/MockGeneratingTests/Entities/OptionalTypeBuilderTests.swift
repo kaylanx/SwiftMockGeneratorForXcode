@@ -51,8 +51,8 @@ struct OptionalTypeBuilderTests {
     @Test
     func testBuildAlreadyBuiltType() {
         let optional = OptionalType.Builder()
-            .type(type: TypeIdentifier.emptyTuple)
+            .type(type: TypeIdentifiers.emptyTuple.type)
             .build()
-        #expect(optional.type.text == TypeIdentifier.emptyTuple.text)
+        #expect(optional.type.text == TypeIdentifiers.emptyTuple.type.text)
     }
 }

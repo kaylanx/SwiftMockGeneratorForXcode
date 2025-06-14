@@ -15,8 +15,8 @@ struct ParameterBuilderTests {
         let param = Parameter.Builder(name: "name").build()
         #expect(param.internalName == "name")
         #expect(param.externalName == nil)
-        #expect(param.type.originalType.text == ResolvedType.implicit.originalType.text)
-        #expect(param.type.resolvedType.text == ResolvedType.implicit.resolvedType.text)
+        #expect(param.type.originalType.text == ResolvedTypes.implicit.type.originalType.text)
+        #expect(param.type.resolvedType.text == ResolvedTypes.implicit.type.resolvedType.text)
         #expect(param.text == "name: ")
     }
 
@@ -25,8 +25,8 @@ struct ParameterBuilderTests {
         let param = Parameter.Builder(externalName: "external", internalName: "internal").build()
         #expect(param.internalName == "internal")
         #expect(param.externalName == "external")
-        #expect(param.type.originalType.text == ResolvedType.implicit.originalType.text)
-        #expect(param.type.resolvedType.text == ResolvedType.implicit.resolvedType.text)
+        #expect(param.type.originalType.text == ResolvedTypes.implicit.type.originalType.text)
+        #expect(param.type.resolvedType.text == ResolvedTypes.implicit.type.resolvedType.text)
         #expect(param.text == "external internal: ")
     }
 

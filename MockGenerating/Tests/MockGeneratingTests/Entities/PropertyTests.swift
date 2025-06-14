@@ -14,7 +14,7 @@ struct PropertyTests {
     func trimGetsSetFromSignature() {
         let property = Property(
             name: "",
-            type: TypeIdentifier.empty,
+            type: TypeIdentifiers.empty.type,
             isWritable: false,
             declarationText: "   var prop: Type{ get set }"
         )
@@ -25,7 +25,7 @@ struct PropertyTests {
     func trimGetSetAndWhitespaceFromSignature() {
         let property = Property(
             name: "",
-            type: TypeIdentifier.empty,
+            type: TypeIdentifiers.empty.type,
             isWritable: false,
             declarationText: "   var prop: Type    { get set }"
         )
@@ -36,7 +36,7 @@ struct PropertyTests {
     func trimWhitespaceWhenNoGetSetClause() {
         let property = Property(
             name: "",
-            type: TypeIdentifier.empty,
+            type: TypeIdentifiers.empty.type,
             isWritable: false,
             declarationText: "   var prop: Type    "
         )
@@ -47,7 +47,7 @@ struct PropertyTests {
     func trimWhitespaceAndNewlinesAndTabs() {
         let property = Property(
             name: "",
-            type: TypeIdentifier.empty,
+            type: TypeIdentifiers.empty.type,
             isWritable: false,
             declarationText: " \n\tvar prop: Type \t\n {\n get set \n}   "
         )

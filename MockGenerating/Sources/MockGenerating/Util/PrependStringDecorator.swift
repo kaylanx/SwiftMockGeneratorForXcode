@@ -6,8 +6,13 @@
 //
 
 struct PrependStringDecorator: StringDecorating {
-    let nextDecorator: StringDecorating? = nil
+    let nextDecorator: StringDecorating?
     let prefix: String
+
+    init(nextDecorator: StringDecorating? = nil, prefix: String) {
+        self.nextDecorator = nextDecorator
+        self.prefix = prefix
+    }
 
     func decorate(_ string: String) -> String {
         guard string.isEmpty == false else {

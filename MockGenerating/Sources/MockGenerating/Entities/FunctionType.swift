@@ -5,7 +5,11 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-struct FunctionType: Type {
+final class FunctionType: Type, Equatable {
+    static func == (lhs: FunctionType, rhs: FunctionType) -> Bool {
+        lhs.text == rhs.text
+    }
+
     let arguments: [`Type`]
     let returnType: `Type`
     let `async`: Bool
@@ -45,7 +49,7 @@ struct FunctionType: Type {
 
     class Builder {
         private var arguments: [`Type`] = []
-        private var _returnType: `Type` = TypeIdentifier.emptyTuple
+        private var _returnType: `Type` = TypeIdentifiers.emptyTuple.type
         private var _async: Bool = false
         private var _throws: Bool = false
 

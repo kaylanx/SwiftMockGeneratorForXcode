@@ -5,11 +5,16 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-struct ArrayType: `Type` {
+final class ArrayType: `Type` {
     let type: `Type`
     var useVerboseSyntax: Bool
 
     var text: String { generateText() }
+
+    init(type: Type, useVerboseSyntax: Bool) {
+        self.type = type
+        self.useVerboseSyntax = useVerboseSyntax
+    }
 
     func accept(visitor: any Visitor) {
         visitor.visit(arrayType: self)
@@ -31,7 +36,7 @@ struct ArrayType: `Type` {
     }
 
     class Builder {
-        private var _type: `Type` = TypeIdentifier.empty
+        private var _type: `Type` = TypeIdentifiers.empty.type
         private var _useVerboseSyntax = false
 
         @discardableResult

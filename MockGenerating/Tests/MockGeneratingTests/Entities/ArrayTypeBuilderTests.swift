@@ -14,7 +14,7 @@ struct ArrayTypeBuilderTests {
     func shouldBuildEmptyArray() {
         let array = ArrayType.Builder().build()
         #expect(array.text == "[]")
-        #expect(array.type.text == TypeIdentifier.empty.text)
+        #expect(array.type.text == TypeIdentifiers.empty.type.text)
     }
 
     @Test("Should Build Array With Type")

@@ -5,12 +5,18 @@
 //  Created by Andy Kayley on 03/06/2025.
 //
 
-struct OptionalType: `Type` {
+final class OptionalType: `Type` {
     let type: `Type`
     let isImplicitlyUnwrapped: Bool
     let useVerboseSyntax: Bool
 
     var text: String { generateText() }
+
+    init(type: Type, isImplicitlyUnwrapped: Bool, useVerboseSyntax: Bool) {
+        self.type = type
+        self.isImplicitlyUnwrapped = isImplicitlyUnwrapped
+        self.useVerboseSyntax = useVerboseSyntax
+    }
 
     private func generateText() -> String {
         let text = type.text
@@ -37,7 +43,7 @@ struct OptionalType: `Type` {
 
     class Builder {
 
-        private var _type: `Type` = TypeIdentifier.empty
+        private var _type: `Type` = TypeIdentifiers.empty.type
         private var implicitlyUnwrapped = false
         private var useVerboseSyntax = false
 

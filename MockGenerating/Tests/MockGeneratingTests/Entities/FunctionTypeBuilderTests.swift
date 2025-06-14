@@ -16,7 +16,7 @@ struct FunctionTypeBuilderTests {
         #expect(type.arguments.isEmpty)
         #expect(!type.throws)
         #expect(!type.async)
-        #expect(type.returnType.text == TypeIdentifier.emptyTuple.text)
+        #expect(type.returnType.text == TypeIdentifiers.emptyTuple.type.text)
         #expect(type.text == "() -> ()")
     }
 

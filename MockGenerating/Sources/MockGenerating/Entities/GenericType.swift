@@ -5,10 +5,15 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-struct GenericType: `Type` {
+final class GenericType: `Type` {
 
     let identifier: String
     let arguments: [`Type`]
+
+    init(identifier: String, arguments: [`Type`]) {
+        self.identifier = identifier
+        self.arguments = arguments
+    }
 
     var text: String {
         let argumentsList = arguments.map(\.text).joined(separator: ", ")

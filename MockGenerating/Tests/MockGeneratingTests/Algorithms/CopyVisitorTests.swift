@@ -23,14 +23,7 @@ struct CopyVisitorTests {
 
     private func expectCopied(original: `Type`) {
         let copied = CopyVisitor.copy(original)
-
-        if type(of: original) is AnyObject.Type,
-           type(of: copied) is AnyObject.Type {
-            let originalId = ObjectIdentifier(original as AnyObject)
-            let copiedId = ObjectIdentifier(copied as AnyObject)
-            #expect(originalId == copiedId, "Expected different object instances")
-        }
-
+        #expect(copied !== original, "Expected different object instances")
         #expect(copied.text == original.text)
     }
 }

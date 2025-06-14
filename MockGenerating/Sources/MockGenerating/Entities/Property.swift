@@ -27,7 +27,7 @@ struct Property: Element {
             self.name = name
         }
 
-        private var _type: `Type` = TypeIdentifier.empty
+        private var _type: `Type` = TypeIdentifiers.empty.type
         private var isWritable = true
 
         func readonly() -> Builder {

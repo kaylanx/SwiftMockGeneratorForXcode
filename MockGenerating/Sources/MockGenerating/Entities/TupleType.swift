@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TupleType: `Type` {
+final class TupleType: `Type` {
     let tupleElements: [TupleElement]
 
     init(tupleElements: [TupleElement]) {
@@ -35,7 +35,7 @@ struct TupleType: `Type` {
     }
 
     // MARK: - Nested TupleElement
-    final class TupleElement: Sendable {
+    final class TupleElement {
         let label: String?
         let type: `Type`
 

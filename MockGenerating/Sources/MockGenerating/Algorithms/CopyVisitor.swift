@@ -21,7 +21,7 @@ class CopyVisitor: Visitor {
 
     // MARK: - Visitor Overrides
     func visit(typeIdentifier: TypeIdentifier) {
-        copy = typeIdentifier
+        copy = typeIdentifier.deepCopy()
     }
 
     func visit(functionType: FunctionType) {

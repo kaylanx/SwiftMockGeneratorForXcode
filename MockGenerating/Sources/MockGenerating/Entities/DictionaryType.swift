@@ -5,10 +5,16 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-struct DictionaryType: Type {
+final class DictionaryType: Type {
     var keyType: `Type`
     var valueType: `Type`
     private let useVerboseSyntax: Bool
+
+    init(keyType: Type, valueType: Type, useVerboseSyntax: Bool) {
+        self.keyType = keyType
+        self.valueType = valueType
+        self.useVerboseSyntax = useVerboseSyntax
+    }
 
     var text: String {
         let key = keyType.text
@@ -34,8 +40,8 @@ struct DictionaryType: Type {
 
     class Builder {
 
-        private var _keyType: `Type` = TypeIdentifier.empty
-        private var _valueType: `Type` = TypeIdentifier.empty
+        private var _keyType: `Type` = TypeIdentifiers.empty.type
+        private var _valueType: `Type` = TypeIdentifiers.empty.type
         private var _useVerboseSyntax = false
 
         @discardableResult

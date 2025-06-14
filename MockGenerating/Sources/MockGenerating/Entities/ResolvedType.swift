@@ -7,18 +7,27 @@
 
 import Foundation
 
-final class ResolvedType: Sendable, Equatable {
+enum ResolvedTypes {
+    case implicit
+
+    var type: ResolvedType {
+        switch self {
+        case .implicit:
+            Self.implicitResolvedType
+        }
+    }
+
+    nonisolated(unsafe) private static let implicitResolvedType = ResolvedType(
+        originalType: TypeIdentifier(identifier: ""),
+        resolvedType: TypeIdentifier(identifier: "")
+    )
+}
+
+final class ResolvedType: Equatable {
 
     static func == (lhs: ResolvedType, rhs: ResolvedType) -> Bool {
         lhs.originalType.text == rhs.originalType.text
     }
-
-    static let implicit: ResolvedType = {
-        ResolvedType(
-            originalType: TypeIdentifier(identifier: ""),
-            resolvedType: TypeIdentifier(identifier: "")
-        )
-    }()
     
     let originalType: `Type`
     let resolvedType: `Type`

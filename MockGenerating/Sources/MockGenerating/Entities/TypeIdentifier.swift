@@ -7,7 +7,44 @@
 
 import Foundation
 
-struct TypeIdentifier: `Type` {
+enum TypeIdentifiers {
+
+    // Static constants and helper functions
+    case void
+    case emptyTuple
+    case voidTuple
+    case empty
+    case int
+
+    var type: `Type` {
+        switch self {
+        case .void: Self.voidType
+        case .emptyTuple: Self.emptyTupleType
+        case .voidTuple: Self.voidTupleType
+        case .empty: Self.emptyType
+        case .int: Self.intType
+        }
+    }
+
+    static func isVoid(_ type: `Type`) -> Bool {
+        let void = TypeIdentifiers.void.type
+        let emptyTuple = TypeIdentifiers.emptyTuple.type
+        let voidTuple = TypeIdentifiers.voidTuple.type
+        return [void.text, emptyTuple.text, voidTuple.text].contains(type.text)
+    }
+
+    static func isEmpty(_ type: `Type`) -> Bool {
+        return TypeIdentifiers.empty.type.text == type.text
+    }
+
+    nonisolated(unsafe) private static let voidType = TypeIdentifier(identifier: "Void")
+    nonisolated(unsafe) private static let emptyTupleType = TupleType.Builder().build()
+    nonisolated(unsafe) private static let voidTupleType = TupleType.Builder().element(TypeIdentifiers.void.type).build()
+    nonisolated(unsafe) private static let emptyType = TypeIdentifier(identifier: "")
+    nonisolated(unsafe) private static let intType = TypeIdentifier(identifier: "Int")
+}
+
+final class TypeIdentifier: `Type` {
     var identifiers: [String]
 
     init(identifier: String) {
@@ -16,6 +53,12 @@ struct TypeIdentifier: `Type` {
 
     init(identifiers: [String]) {
         self.identifiers = identifiers
+    }
+
+    func deepCopy() -> TypeIdentifier {
+        TypeIdentifier(
+            identifiers: self.identifiers
+        )
     }
 
     var isEmpty: Bool {
@@ -32,21 +75,6 @@ struct TypeIdentifier: `Type` {
 
     func accept(visitor: Visitor) {
         visitor.visit(typeIdentifier: self)
-    }
-
-    // Static constants and helper functions
-    static let void = TypeIdentifier(identifier: "Void")
-    static let emptyTuple = TupleType.Builder().build()
-    static let voidTuple = TupleType.Builder().element(TypeIdentifier.void).build()
-    static let empty = TypeIdentifier(identifier: "")
-    static let int = TypeIdentifier(identifier: "Int")
-
-    static func isVoid(_ type: `Type`) -> Bool {
-        return [void.text, emptyTuple.text, voidTuple.text].contains(type.text)
-    }
-
-    static func isEmpty(_ type: `Type`) -> Bool {
-        return empty.text == type.text
     }
 
     // Nested Builder class

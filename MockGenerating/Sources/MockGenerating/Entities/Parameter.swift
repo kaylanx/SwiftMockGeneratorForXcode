@@ -46,7 +46,7 @@ class Parameter: Element, Equatable {
     class Builder {
         private let externalName: String?
         private let internalName: String
-        private var _type: ResolvedType = .implicit
+        private var _type: ResolvedType = ResolvedTypes.implicit.type
         private var isEscaping: Bool = false
         private var annotations: [String] = []
         private var isInout: Bool = false

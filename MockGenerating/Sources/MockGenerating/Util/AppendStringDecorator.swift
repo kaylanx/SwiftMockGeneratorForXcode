@@ -9,6 +9,11 @@ struct AppendStringDecorator: StringDecorating {
     let nextDecorator: StringDecorating?
     let suffix: String
 
+    init(nextDecorator: StringDecorating? = nil, suffix: String) {
+        self.nextDecorator = nextDecorator
+        self.suffix = suffix
+    }
+
     func decorate(_ string: String) -> String {
         guard string.isEmpty == false else {
             return ""

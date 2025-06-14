@@ -12,15 +12,15 @@ struct SubscriptBuilderTests {
 
     @Test("Should Build Subscript With Return Type")
     func shouldBuildSubscriptWithReturnType() {
-        let `subscript` = Subscript.Builder(type: TypeIdentifier.int).build()
-        #expect(`subscript`.returnType.originalType.text == TypeIdentifier.int.text)
-        #expect(`subscript`.returnType.resolvedType.text == TypeIdentifier.int.text)
+        let `subscript` = Subscript.Builder(type: TypeIdentifiers.int.type).build()
+        #expect(`subscript`.returnType.originalType.text == TypeIdentifiers.int.type.text)
+        #expect(`subscript`.returnType.resolvedType.text == TypeIdentifiers.int.type.text)
         #expect(`subscript`.declarationText == "subscript() -> Int")
     }
 
     @Test("Should Build Subscript With Parameter")
     func shouldBuildSubscriptWithParameter() {
-        let `subscript` = Subscript.Builder(type: TypeIdentifier.int)
+        let `subscript` = Subscript.Builder(type: TypeIdentifiers.int.type)
             .parameter(name: "a") { $0.type().type("String") }
             .build()
         #expect(`subscript`.parameters[0].text == "a: String")
@@ -29,7 +29,7 @@ struct SubscriptBuilderTests {
 
     @Test("Should Build Subscript With Parameters")
     func shouldBuildSubscriptWithParameters() {
-        let `subscript` = Subscript.Builder(type: TypeIdentifier.int)
+        let `subscript` = Subscript.Builder(type: TypeIdentifiers.int.type)
             .parameter(name: "a") { $0.type().type("String") }
             .parameter(externalName: "b", internalName: "b") { $0.type().type("UInt") }
             .build()
@@ -41,13 +41,13 @@ struct SubscriptBuilderTests {
 
     @Test("Should Build Subscript Writable By Default")
     func shouldBuildSubscriptWritableByDefault() {
-        let `subscript` = Subscript.Builder(type: TypeIdentifier.int).build()
+        let `subscript` = Subscript.Builder(type: TypeIdentifiers.int.type).build()
         #expect(`subscript`.isWritable)
     }
 
     @Test("Should Build Subscript Read Only")
     func shouldBuildSubscriptReadOnly() {
-        let `subscript` = Subscript.Builder(type: TypeIdentifier.int).readonly().build()
+        let `subscript` = Subscript.Builder(type: TypeIdentifiers.int.type).readonly().build()
         #expect(!`subscript`.isWritable)
     }
 }
