@@ -160,6 +160,12 @@ struct MockViewPresenterTests {
         try runTest(template: AsyncThrowingInitializerTemplate(), for: type)
     }
 
+    @Test
+    mutating func shouldForwardToSuper() async throws {
+        try await setUp(type: .partial)
+        try runTest(template: ForwardToSuperTemplate(), for: .partial)
+    }
+
     private func runTest(
         template: MockGeneratorTestTemplate,
         for type: MockViewType

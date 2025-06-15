@@ -109,7 +109,7 @@ class MockViewPresenter: MockTransformer {
         generateOverloadedNames()
         let mockModel = MockViewModel(
             initializer: transformInitializers(),
-            property: [], // transformProperties(),
+            property: transformProperties(),
             method: transformMethods(),
             subscript: [], // transformSubscripts(),
             scope: scope
@@ -174,44 +174,51 @@ class MockViewPresenter: MockTransformer {
     }
 
 
-//    private func transformProperties() -> [PropertyViewModel] {
-//        return transformProperties(classProperties, isClass: true) +
-//        transformProperties(protocolProperties, isClass: false)
-//    }
-//
-//    private func transformProperties(_ properties: [Property], isClass: Bool) -> [PropertyViewModel] {
-//        return properties.map {
-//            let name = getUniqueName($0).capitalized
-//            let optionalized = OptionalizeIUOVisitor.optionalize($0.type)
-//            let removedOptional = RemoveOptionalVisitor.removeOptional($0.type)
-//            let removedRecursive = RecursiveRemoveOptionalVisitor.removeOptional($0.type)
-//            let assignment = DefaultValueVisitor.getDefaultValue($0.type) != "nil" ? "= \(DefaultValueVisitor.getDefaultValue($0.type)!)" : ""
-//            return PropertyViewModel(
-//                name: $0.name,
-//                capitalizedName: name,
-//                isWritable: $0.isWritable,
-//                originalType: optionalized.text,
-//                unwrappedType: SurroundOptionalVisitor.surround(removedOptional, unwrapped: false).text,
-//                deeplyUnwrappedType: SurroundOptionalVisitor.surround(removedRecursive, unwrapped: true).text,
-//                defaultValueAssignment: assignment,
-//                defaultValue: DefaultValueVisitor.getDefaultValue($0.type),
-//                isClass: isClass,
-//                declarationText: transformDeclarationText($0.getTrimmedDeclarationText(), isOverriding: isClass)
-//            )
-//        }
-//    }
-//
-    private func getUniqueName(_ method: Method) -> String {
-        return nameGenerator.getMethodName(for: method.toMethodModel().id) ?? ""
+    private func transformProperties() -> [PropertyViewModel] {
+        transformProperties(classProperties, isClass: true) + transformProperties(protocolProperties, isClass: false)
     }
-//
-//    private func getUniqueName(_ property: Property) -> String {
-//        return nameGenerator.getMethodName(for: property.toMethodModel().id) ?? ""
-//    }
-//
-//    private func getUniqueName(_ subscript: Subscript) -> String {
-//        return nameGenerator.getMethodName(for: subscript.toMethodModel().id) ?? ""
-//    }
+
+    private func transformProperties(
+        _ properties: [Property],
+        isClass: Bool
+    ) -> [PropertyViewModel] {
+        return properties.map {
+            let name = getUniqueName($0).capitalizingFirstLetter()
+            let optionalized = OptionalizeIUOVisitor.optionalize(type: $0.type)
+            let removedOptional = RemoveOptionalVisitor.remove(optionalType: $0.type)
+            let removedRecursive = RecursiveRemoveOptionalVisitor.remove(optionalType: $0.type)
+            let assignment = DefaultValueVisitor.getDefaultValue(
+                for: $0.type
+            ) != "nil" ? "= \(DefaultValueVisitor.getDefaultValue(for: $0.type)!)" : ""
+            return PropertyViewModel(
+                name: $0.name,
+                capitalizedUniqueName: name,
+                hasSetter: $0.isWritable,
+                type: optionalized.text,
+                optionalType: "", //SurroundOptionalVisitor.surround(removedOptional, unwrapped: false).text,
+                iuoType: "",// SurroundOptionalVisitor.surround(removedRecursive, unwrapped: true).text,
+                defaultValueAssignment: assignment,
+                defaultValue: DefaultValueVisitor.getDefaultValue(for: $0.type),
+                isImplemented: isClass,
+                declarationText: transformDeclarationText(
+                    declaration: $0.getTrimmedDeclarationText(),
+                    isOverriding: isClass
+                )
+            )
+        }
+    }
+
+    private func getUniqueName(_ method: Method) -> String {
+        nameGenerator.getMethodName(for: method.toMethodModel().id) ?? ""
+    }
+
+    private func getUniqueName(_ property: Property) -> String {
+        nameGenerator.getMethodName(for: property.toMethodModel().id) ?? ""
+    }
+
+    private func getUniqueName(_ subscript: Subscript) -> String {
+        return nameGenerator.getMethodName(for: `subscript`.toMethodModel().id) ?? ""
+    }
 
     private func transformDeclarationText(declaration: String, isOverriding: Bool) -> String {
         var modifiers = ""
@@ -265,7 +272,7 @@ class MockViewPresenter: MockTransformer {
 //        return ResultTypeViewModel(
 //            defaultValueAssignment: getDefaultValueAssignment(type.resolvedType),
 //            defaultValue: getDefaultValue(type.resolvedType),
-//            unwrappedType: SurroundOptionalVisitor.surround(RemoveOptionalVisitor.removeOptional(erased), unwrapped: false).text,
+//            unwrappedType: SurroundOptionalVisitor.surround(RemoveOptionalVisitor.remove(optionalType: erased), unwrapped: false).text,
 //            deeplyUnwrappedType: SurroundOptionalVisitor.surround(RecursiveRemoveOptionalVisitor.removeOptional(erased), unwrapped: true).text,
 //            optionalizedType: OptionalizeIUOVisitor.optionalize(erased).text,
 //            castStatement: transformReturnCastStatement(originalType: type.originalType, erasedType: erased)
@@ -287,7 +294,7 @@ class MockViewPresenter: MockTransformer {
 //    private func transformReturnCastStatement(originalType: Type, erasedType: Type) -> String {
 //        guard originalType.text != erasedType.text else { return "" }
 //        let optional = originalType is OptionalType ? "?" : "!"
-//        let typeName = (originalType is OptionalType) ? RemoveOptionalVisitor.removeOptional(originalType).text : originalType.text
+//        let typeName = (originalType is OptionalType) ? RemoveOptionalVisitor.remove(optionalType: originalType).text : originalType.text
 //        return " as\(optional) \(typeName)"
 //    }
 //
