@@ -167,6 +167,6 @@ struct MockViewPresenterTests {
         template.build(generator: generator)
         generator.generate()
         let expected = try #require(template.getExpected(type: type))
-        #expect(view.rendered == expected)
+        StringCompareTestHelper.expectEqualStrings(view.rendered, expected)
     }
 }

@@ -229,10 +229,8 @@ class MockViewPresenter: MockTransformer {
         return methods.map {
             MethodViewModel(
                 capitalizedUniqueName: getUniqueName($0).capitalizingFirstLetter(),
-                escapingParameters: nil,
-                // transformParameters($0),
-                closureParameter: [],
-                // $0.parametersList.compactMap(transformClosureParameters),
+                escapingParameters: transformParameters($0),
+                closureParameter: $0.parametersList.compactMap(transformClosureParameters),
                 resultType: nil,
                 // transformReturnType($0),
                 functionCall: nil,
@@ -251,11 +249,11 @@ class MockViewPresenter: MockTransformer {
         }
     }
 
-//    private func transformClosureParameters(_ parameter: Parameter) -> ClosureParameterViewModel? {
-//        let visitor = FunctionParameterTransformer(parameter.internalName)
-//        parameter.type.resolvedType.accept(visitor)
-//        return visitor.transformed
-//    }
+    private func transformClosureParameters(_ parameter: Parameter) -> ClosureParameterViewModel? {
+        let visitor = FunctionParameterTransformer(name: parameter.internalName)
+        parameter.type.resolvedType.accept(visitor: visitor)
+        return visitor.transformed
+    }
 //
 //    private func transformReturnType(_ method: Method) -> ResultTypeViewModel? {
 //        guard !TypeIdentifier.isEmpty(method.returnType.resolvedType) else { return nil }
@@ -302,20 +300,23 @@ class MockViewPresenter: MockTransformer {
 //        return DefaultValueVisitor.getDefaultValue(type)
 //    }
 //
-//    private func transformParameters(_ method: Method) -> ParametersViewModel? {
-//        return transformParameters(method.parametersList, genericParameters: method.genericParameters)
-//    }
-//
-//    private func transformParameters(_ parametersList: [Parameter], genericParameters: [String]) -> ParametersViewModel? {
-//        guard let declaration = CreateInvokedParameters().transform(parametersList, genericParameters: genericParameters),
-//              let assignment = SwiftStringTupleForwardCall().transform(declaration) else {
-//            return nil
-//        }
-//        return ParametersViewModel(
-//            declaration: declaration.text,
-//            assignment: assignment
-//        )
-//    }
+    private func transformParameters(_ method: Method) -> ParametersViewModel? {
+        transformParameters(method.parametersList, genericParameters: method.genericParameters)
+    }
+
+    private func transformParameters(_ parametersList: [Parameter], genericParameters: [String]) -> ParametersViewModel? {
+        let declaration = CreateInvokedParameters().transform(
+            parameterList: parametersList,
+            genericIdentifiers: genericParameters
+        )
+        guard let declaration else { return nil }
+        let assignment = SwiftStringTupleForwardCall().transform(property: declaration)
+
+        return ParametersViewModel(
+            tupleRepresentation: declaration.text,
+            tupleAssignment: assignment
+        )
+    }
 //
 //    private func transformSubscripts() -> [SubscriptViewModel] {
 //        return transformSubscripts(classSubscripts, isClass: true) +
