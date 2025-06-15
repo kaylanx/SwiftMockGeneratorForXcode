@@ -5,7 +5,12 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-final class ArrayType: `Type` {
+final class ArrayType: `Type`, Equatable {
+    static func == (lhs: ArrayType, rhs: ArrayType) -> Bool {
+        lhs.useVerboseSyntax == rhs.useVerboseSyntax &&
+            lhs.text == rhs.text
+    }
+
     let type: `Type`
     var useVerboseSyntax: Bool
 

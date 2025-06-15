@@ -5,7 +5,10 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-final class GenericType: `Type` {
+final class GenericType: `Type`, Equatable {
+    static func == (lhs: GenericType, rhs: GenericType) -> Bool {
+        lhs.identifier == rhs.identifier && lhs.text == rhs.text
+    }
 
     let identifier: String
     let arguments: [`Type`]

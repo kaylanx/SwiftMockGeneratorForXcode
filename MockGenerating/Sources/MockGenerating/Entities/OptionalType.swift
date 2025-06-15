@@ -5,7 +5,13 @@
 //  Created by Andy Kayley on 03/06/2025.
 //
 
-final class OptionalType: `Type` {
+final class OptionalType: `Type`, Equatable {
+    static func == (lhs: OptionalType, rhs: OptionalType) -> Bool {
+        lhs.isImplicitlyUnwrapped == rhs.isImplicitlyUnwrapped &&
+        lhs.useVerboseSyntax == rhs.useVerboseSyntax &&
+        lhs.text == rhs.text
+    }
+
     let type: `Type`
     let isImplicitlyUnwrapped: Bool
     let useVerboseSyntax: Bool
@@ -69,7 +75,7 @@ final class OptionalType: `Type` {
                 }
             }
         }
-
+        
         @discardableResult
         func unwrapped() -> Builder {
             implicitlyUnwrapped = true

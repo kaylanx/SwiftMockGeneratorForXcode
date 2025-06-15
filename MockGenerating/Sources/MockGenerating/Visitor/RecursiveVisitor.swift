@@ -7,6 +7,10 @@
 
 class RecursiveVisitor: Visitor {
 
+    func visit(typeIdentifier type: TypeIdentifier) {
+        visit(type: type)
+    }
+
     func visit(functionType type: FunctionType) {
         type.arguments.forEach { $0.accept(visitor: self) }
         type.returnType.accept(visitor: self)

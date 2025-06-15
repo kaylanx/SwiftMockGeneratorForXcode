@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class TupleType: `Type` {
+final class TupleType: `Type`, Equatable {
+    static func == (lhs: TupleType, rhs: TupleType) -> Bool {
+        lhs.text == rhs.text
+    }
+
     let tupleElements: [TupleElement]
 
     init(tupleElements: [TupleElement]) {

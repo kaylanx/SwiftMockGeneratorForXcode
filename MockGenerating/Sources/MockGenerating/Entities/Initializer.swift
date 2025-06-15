@@ -7,7 +7,14 @@
 
 import Foundation
 
-class Initializer: Element {
+class Initializer: Element, Equatable {
+    static func == (lhs: Initializer, rhs: Initializer) -> Bool {
+        lhs.parametersList == rhs.parametersList &&
+        lhs.isFailable == rhs.isFailable &&
+        lhs.async == rhs.async &&
+        lhs.throws == rhs.throws
+    }
+    
     let parametersList: [Parameter]
     let isFailable: Bool
     let `async`: Bool

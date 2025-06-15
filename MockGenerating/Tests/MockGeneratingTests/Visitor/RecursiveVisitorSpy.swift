@@ -10,7 +10,7 @@
 class RecursiveVisitorSpy: RecursiveVisitor {
 
     var visitedTypes = [TypeIdentifier]()
-    func visit(typeIdentifier type: TypeIdentifier) {
+    override func visit(typeIdentifier type: TypeIdentifier) {
         visitedTypes.append(type)
         super.visit(typeIdentifier: type)
     }

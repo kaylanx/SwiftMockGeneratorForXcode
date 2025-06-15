@@ -11,7 +11,7 @@ struct RecursiveVisitorTest {
 
     private let visitor = RecursiveVisitorSpy()
 
-    @Test(.disabled())
+    @Test
     func shouldVisitFunctionInnerTypes() {
         let function = FunctionType.Builder()
             .argument(type: "A")
@@ -20,102 +20,105 @@ struct RecursiveVisitorTest {
             .build()
         function.accept(visitor: visitor)
         #expect(visitor.visitedFunctionTypes[0] == function)
+        #expect(visitor.visitedTypes.count == 3)
+        #expect(function.arguments.count == 2)
         #expect(visitor.visitedTypes[0].text == function.arguments[0].text)
         #expect(visitor.visitedTypes[1].text == function.arguments[1].text)
         #expect(visitor.visitedTypes[2].text == function.returnType.text)
     }
-/*
+
     @Test
     func shouldVisitOptionalInnerType() {
-        let optional = OptionalType.Builder().type("Type").build()
-        optional.accept(visitor)
-        assertEquals(visitor.visitedOptionalTypes[0], optional)
-        assertEquals(visitor.visitedTypes[0], optional.type)
+        let optional = OptionalType.Builder().type(type: "Type").build()
+        optional.accept(visitor: visitor)
+        #expect(optional == visitor.visitedOptionalTypes[0])
+        #expect(optional.type.text == visitor.visitedTypes[0].text)
     }
 
     @Test
-    func shouldVisitTupleInnerType() {
+    func shouldVisitTupleInnerType() throws {
         let optional = OptionalType.Builder().type().bracket().type("Type").build()
-        let tuple = optional.type as TupleType
-        optional.accept(visitor)
-        assertEquals(visitor.visitedOptionalTypes[0], optional)
-        assertEquals(visitor.visitedTupleTypes[0], tuple)
-        assertEquals(visitor.visitedTypes[0], tuple.types[0])
+        let tuple = try #require(optional.type as? TupleType)
+        optional.accept(visitor: visitor)
+        #expect(optional == visitor.visitedOptionalTypes[0])
+        #expect(tuple == visitor.visitedTupleTypes[0])
+        #expect(tuple.types[0].text == visitor.visitedTypes[0].text)
     }
 
     @Test
     func shouldVisitArrayInnerType() {
-        let array = ArrayType.Builder().type("Type").build()
-        array.accept(visitor)
-        assertEquals(visitor.visitedArrayTypes[0], array)
-        assertEquals(visitor.visitedTypes[0], array.type)
+        let array = ArrayType.Builder().type(type: "Type").build()
+        array.accept(visitor: visitor)
+        #expect(array == visitor.visitedArrayTypes[0])
+        #expect(array.type.text == visitor.visitedTypes[0].text)
     }
+
 
     @Test
     func shouldVisitDictionaryKeyAndValueTypes() {
         let dictionary = DictionaryType.Builder()
-            .keyType("Key")
-            .valueType("Value")
+            .keyType(type: "Key")
+            .valueType(type: "Value")
             .build()
-        dictionary.accept(visitor)
-        assertEquals(visitor.visitedDictionaryTypes[0], dictionary)
-        assertEquals(visitor.visitedTypes[0], dictionary.keyType)
-        assertEquals(visitor.visitedTypes[1], dictionary.valueType)
+        dictionary.accept(visitor: visitor)
+        #expect(dictionary == visitor.visitedDictionaryTypes[0])
+        #expect(dictionary.keyType.text == visitor.visitedTypes[0].text)
+        #expect(dictionary.valueType.text == visitor.visitedTypes[1].text)
     }
 
     @Test
     func shouldVisitGenericTypes() {
-        let generic = GenericType.Builder("Type")
-            .argument("T")
-            .argument("U")
+        let generic = GenericType.Builder(identifier: "Type")
+            .argument(identifier: "T")
+            .argument(identifier: "U")
             .build()
-        generic.accept(visitor)
-        assertEquals(visitor.visitedGenericTypes[0], generic)
-        assertEquals(visitor.visitedTypes[0], generic.arguments[0])
-        assertEquals(visitor.visitedTypes[1], generic.arguments[1])
+        generic.accept(visitor: visitor)
+        #expect(visitor.visitedGenericTypes[0] == generic)
+        #expect(visitor.visitedTypes[0].text == generic.arguments[0].text)
+        #expect(visitor.visitedTypes[1].text == generic.arguments[1].text)
     }
 
     @Test
     func shouldVisitMethodChildren() {
-        let declaration = Method.Builder("method")
-            .parameter("a") { it.type("Int") }
-            .returnType("String")
+        let declaration = Method.Builder(name: "method")
+            .parameter(name: "a") { $0.type("Int") }
+            .returnType(type: "String")
             .build()
-        declaration.accept(visitor)
-        assertEquals(visitor.visitedMethods[0], declaration)
-        assertEquals(visitor.visitedParameters[0], declaration.parametersList[0])
-        assertEquals(visitor.visitedTypes[0], declaration.parametersList[0].type.resolvedType)
-        assertEquals(visitor.visitedTypes[1], declaration.returnType.resolvedType)
+        declaration.accept(visitor: visitor)
+        #expect(visitor.visitedMethods[0] == declaration)
+        #expect(visitor.visitedParameters[0] == declaration.parametersList[0])
+        #expect(visitor.visitedTypes[0].text == declaration.parametersList[0].type.resolvedType.text)
+        #expect(visitor.visitedTypes[1].text == declaration.returnType.resolvedType.text)
     }
 
     @Test
     func shouldVisitPropertyChildren() {
-        let declaration = Property.Builder("prop")
-            .type("String")
+        let declaration = Property.Builder(name: "prop")
+            .type(identifier: "String")
             .build()
-        declaration.accept(visitor)
-        assertEquals(visitor.visitedProperties[0], declaration)
-        assertEquals(visitor.visitedTypes[0], declaration.type)
+        declaration.accept(visitor: visitor)
+        #expect(visitor.visitedProperties[0] == declaration)
+        #expect(visitor.visitedTypes[0].text == declaration.type.text)
     }
 
     @Test
     func shouldVisitInitializerChildren() {
         let declaration = Initializer.Builder()
-            .parameter("a") { it.type("Int") }
+            .parameter("a") { $0.type("Int") }
             .build()
-        declaration.accept(visitor)
-        assertEquals(visitor.visitedInitializers[0], declaration)
-        assertEquals(visitor.visitedParameters[0], declaration.parametersList[0])
+        declaration.accept(visitor: visitor)
+        #expect(visitor.visitedInitializers[0] == declaration)
+        #expect(visitor.visitedParameters[0] == declaration.parametersList[0])
     }
 
     @Test
     func shouldVisitParameterChildren() {
-        let parameter = Parameter.Builder("a")
+        let parameter = Parameter.Builder(name: "a")
             .type("Int")
             .build()
-        parameter.accept(visitor)
-        assertEquals(visitor.visitedParameters[0], parameter)
-        assertEquals(visitor.visitedTypes[0], parameter.type.resolvedType)
+        parameter.accept(visitor: visitor)
+        #expect(visitor.visitedParameters[0] == parameter)
+        #expect(visitor.visitedTypes[0].text == parameter.type.resolvedType.text)
     }
 
     @Test
@@ -124,9 +127,8 @@ struct RecursiveVisitorTest {
             .element("A")
             .element("B")
             .build()
-        tuple.accept(visitor)
-        assertEquals(tuple.types[0], visitor.visitedTypes[0])
-        assertEquals(tuple.types[1], visitor.visitedTypes[1])
+        tuple.accept(visitor: visitor)
+        #expect(tuple.types[0].text == visitor.visitedTypes[0].text)
+        #expect(tuple.types[1].text == visitor.visitedTypes[1].text)
     }
- */
 }

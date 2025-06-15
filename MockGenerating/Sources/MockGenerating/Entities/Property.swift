@@ -5,7 +5,14 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-struct Property: Element {
+struct Property: Element, Equatable {
+    static func == (lhs: Property, rhs: Property) -> Bool {
+        lhs.name == rhs.name &&
+        lhs.type.text == rhs.type.text &&
+        lhs.isWritable == rhs.isWritable &&
+        lhs.declarationText == rhs.declarationText
+    }
+
     let name: String
     let type: `Type`
     let isWritable: Bool

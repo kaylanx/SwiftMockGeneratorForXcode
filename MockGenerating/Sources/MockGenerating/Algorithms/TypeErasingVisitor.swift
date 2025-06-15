@@ -18,7 +18,7 @@ final class TypeErasingVisitor: RecursiveVisitor {
         self.genericIdentifiers = genericIdentifiers
     }
 
-    func visit(typeIdentifier type: TypeIdentifier) {
+    override func visit(typeIdentifier type: TypeIdentifier) {
         if genericIdentifiers.contains(type.firstIdentifier) {
             type.identifiers = ["Any"]
         }

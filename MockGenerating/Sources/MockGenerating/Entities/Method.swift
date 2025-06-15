@@ -5,7 +5,8 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-struct Method: Element {
+struct Method: Element, Equatable {
+
     let name: String
     let genericParameters: [String]
     let returnType: ResolvedType

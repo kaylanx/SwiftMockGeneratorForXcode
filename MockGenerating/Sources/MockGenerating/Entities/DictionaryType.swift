@@ -5,7 +5,13 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-final class DictionaryType: Type {
+final class DictionaryType: Type, Equatable {
+    static func == (lhs: DictionaryType, rhs: DictionaryType) -> Bool {
+        lhs.useVerboseSyntax == rhs.useVerboseSyntax &&
+        lhs.keyType.text == rhs.keyType.text &&
+        lhs.valueType.text == rhs.valueType.text
+    }
+
     var keyType: `Type`
     var valueType: `Type`
     private let useVerboseSyntax: Bool
