@@ -195,8 +195,10 @@ class MockViewPresenter: MockTransformer {
                 capitalizedUniqueName: name,
                 hasSetter: $0.isWritable,
                 type: optionalized.text,
-                optionalType: "", //SurroundOptionalVisitor.surround(removedOptional, unwrapped: false).text,
-                iuoType: "",// SurroundOptionalVisitor.surround(removedRecursive, unwrapped: true).text,
+                optionalType: SurroundOptionalVisitor
+                    .surround(type: removedOptional, unwrapped: false).text,
+                iuoType: SurroundOptionalVisitor
+                    .surround(type: removedRecursive, unwrapped: true).text,
                 defaultValueAssignment: assignment,
                 defaultValue: DefaultValueVisitor.getDefaultValue(for: $0.type),
                 isImplemented: isClass,
@@ -238,8 +240,7 @@ class MockViewPresenter: MockTransformer {
                 capitalizedUniqueName: getUniqueName($0).capitalizingFirstLetter(),
                 escapingParameters: transformParameters($0),
                 closureParameter: $0.parametersList.compactMap(transformClosureParameters),
-                resultType: nil,
-                // transformReturnType($0),
+                resultType: transformReturnType($0),
                 functionCall: nil,
                 // MakeFunctionCallVisitor.make($0),
                 async: $0.async,
@@ -261,52 +262,55 @@ class MockViewPresenter: MockTransformer {
         parameter.type.resolvedType.accept(visitor: visitor)
         return visitor.transformed
     }
-//
-//    private func transformReturnType(_ method: Method) -> ResultTypeViewModel? {
-//        guard !TypeIdentifier.isEmpty(method.returnType.resolvedType) else { return nil }
-//        return transformReturnType(method.returnType, genericParameters: method.genericParameters)
-//    }
-//
-//    private func transformReturnType(_ type: ResolvedType, genericParameters: [String]) -> ResultTypeViewModel {
-//        let erased = erase(type.originalType, genericParameters)
-//        return ResultTypeViewModel(
-//            defaultValueAssignment: getDefaultValueAssignment(type.resolvedType),
-//            defaultValue: getDefaultValue(type.resolvedType),
-//            unwrappedType: SurroundOptionalVisitor.surround(RemoveOptionalVisitor.remove(optionalType: erased), unwrapped: false).text,
-//            deeplyUnwrappedType: SurroundOptionalVisitor.surround(RecursiveRemoveOptionalVisitor.removeOptional(erased), unwrapped: true).text,
-//            optionalizedType: OptionalizeIUOVisitor.optionalize(erased).text,
-//            castStatement: transformReturnCastStatement(originalType: type.originalType, erasedType: erased)
-//        )
-//    }
-//
-//    private func erase(_ type: Type, _ genericParameters: [String]) -> Type {
-//        let copied = copy(type)
-//        TypeErasingVisitor(genericParameters).visit(copied)
-//        return copied
-//    }
-//
-//    private func copy(_ type: Type) -> Type {
-//        let visitor = CopyVisitor()
-//        type.accept(visitor)
-//        return visitor.copy
-//    }
-//
-//    private func transformReturnCastStatement(originalType: Type, erasedType: Type) -> String {
-//        guard originalType.text != erasedType.text else { return "" }
-//        let optional = originalType is OptionalType ? "?" : "!"
-//        let typeName = (originalType is OptionalType) ? RemoveOptionalVisitor.remove(optionalType: originalType).text : originalType.text
-//        return " as\(optional) \(typeName)"
-//    }
-//
-//    private func getDefaultValueAssignment(_ type: Type) -> String {
-//        guard let defaultValue = DefaultValueVisitor.getDefaultValue(type), defaultValue != "nil" else { return "" }
-//        return "= \(defaultValue)"
-//    }
-//
-//    private func getDefaultValue(_ type: Type) -> String? {
-//        return DefaultValueVisitor.getDefaultValue(type)
-//    }
-//
+
+    private func transformReturnType(_ method: Method) -> ResultTypeViewModel? {
+        guard !TypeIdentifiers.isEmpty(method.returnType.resolvedType) else { return nil }
+        return transformReturnType(method.returnType, genericParameters: method.genericParameters)
+    }
+
+    private func transformReturnType(_ type: ResolvedType, genericParameters: [String]) -> ResultTypeViewModel {
+        let erased = erase(type.originalType, genericParameters)
+        return ResultTypeViewModel(
+            defaultValueAssignment: getDefaultValueAssignment(type.resolvedType),
+            defaultValue: getDefaultValue(type.resolvedType),
+            optionalType: SurroundOptionalVisitor.surround(type: RemoveOptionalVisitor.remove(optionalType: erased), unwrapped: false).text,
+            iuoType: SurroundOptionalVisitor.surround(type: RecursiveRemoveOptionalVisitor.remove(optionalType: erased), unwrapped: true).text,
+            type: OptionalizeIUOVisitor.optionalize(type: erased).text,
+            returnCastStatement: transformReturnCastStatement(originalType: type.originalType, erasedType: erased)
+        )
+    }
+
+    private func erase(_ type: `Type`, _ genericParameters: [String]) -> `Type` {
+        let copied = copy(type)
+        TypeErasingVisitor(genericIdentifiers: genericParameters)
+            .visit(type: copied)
+        return copied
+    }
+
+    private func copy(_ type: `Type`) -> `Type` {
+        let visitor = CopyVisitor()
+        type.accept(visitor: visitor)
+        return visitor.copy
+    }
+
+    private func transformReturnCastStatement(originalType: `Type`, erasedType: `Type`) -> String {
+        guard originalType.text != erasedType.text else { return "" }
+        let optional = originalType is OptionalType ? "?" : "!"
+        let typeName = (originalType is OptionalType) ? RemoveOptionalVisitor.remove(optionalType: originalType).text : originalType.text
+        return " as\(optional) \(typeName)"
+    }
+
+    private func getDefaultValueAssignment(_ type: `Type`) -> String {
+        guard let defaultValue = DefaultValueVisitor.getDefaultValue(for: type), defaultValue != "nil" else {
+            return ""
+        }
+        return "= \(defaultValue)"
+    }
+
+    private func getDefaultValue(_ type: Type) -> String? {
+        return DefaultValueVisitor.getDefaultValue(for: type)
+    }
+
     private func transformParameters(_ method: Method) -> ParametersViewModel? {
         transformParameters(method.parametersList, genericParameters: method.genericParameters)
     }
