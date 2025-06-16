@@ -150,6 +150,34 @@ return try super.rethrowing()
 }
 return stubbedRethrowingResult
 }
+var invokedAsynchronous = false
+var invokedAsynchronousCount = 0
+var stubbedAsynchronousResult: Void! = ()
+var forwardToOriginalAsynchronous = false
+override func asynchronous() async -> Void {
+invokedAsynchronous = true
+invokedAsynchronousCount += 1
+if forwardToOriginalAsynchronous {
+return await super.asynchronous()
+}
+return stubbedAsynchronousResult
+}
+var invokedAsynchronousThrowing = false
+var invokedAsynchronousThrowingCount = 0
+var stubbedAsynchronousThrowingError: Error?
+var stubbedAsynchronousThrowingResult: Void! = ()
+var forwardToOriginalAsynchronousThrowing = false
+override func asynchronousThrowing() async throws -> Void {
+invokedAsynchronousThrowing = true
+invokedAsynchronousThrowingCount += 1
+if forwardToOriginalAsynchronousThrowing {
+return try await super.asynchronousThrowing()
+}
+if let error = stubbedAsynchronousThrowingError {
+throw error
+}
+return stubbedAsynchronousThrowingResult
+}
 var invokedProtocolMethod = false
 var invokedProtocolMethodCount = 0
 func protocolMethod() {

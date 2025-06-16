@@ -46,6 +46,15 @@ final class ForwardToSuperTemplate: MockGeneratorTestTemplate {
                 Method.Builder(name: "rethrowing")
                     .rethrows()
                     .returnType(type: "Int")
+                    .build(),
+                Method.Builder(name: "asynchronous")
+                    .async()
+                    .returnType(type: "Void")
+                    .build(),
+                Method.Builder(name: "asynchronousThrowing")
+                    .async()
+                    .throws()
+                    .returnType(type: "Void")
                     .build()
         )
         generator.add(

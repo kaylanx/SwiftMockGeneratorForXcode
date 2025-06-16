@@ -44,6 +44,7 @@ class Subscript: Element {
             return parameter(externalName: nil, internalName: name, build: build)
         }
 
+        @discardableResult
         func parameter(externalName: String?, internalName: String, build: (Parameter.Builder) -> Void) -> Builder {
             let builder = Parameter.Builder(externalName: externalName, internalName: internalName)
             build(builder)

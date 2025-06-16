@@ -111,7 +111,7 @@ class MockViewPresenter: MockTransformer {
             initializer: transformInitializers(),
             property: transformProperties(),
             method: transformMethods(),
-            subscript: [], // transformSubscripts(),
+            subscript: transformSubscripts(),
             scope: scope
         )
         view.render(model: mockModel)
@@ -119,11 +119,11 @@ class MockViewPresenter: MockTransformer {
     }
 
     private func transformInitializers() -> [InitializerViewModel] {
-        return transformClassInitializer() + transformProtocolInitializer()
+        transformClassInitializer() + transformProtocolInitializer()
     }
 
     private func transformProtocolInitializer() -> [InitializerViewModel] {
-        return initializers.map {
+        initializers.map {
             InitializerViewModel(
                 declarationText: SwiftStringProtocolInitialiserDeclaration().transform(initializer: $0),
                 initializerCall: ""
@@ -182,7 +182,7 @@ class MockViewPresenter: MockTransformer {
         _ properties: [Property],
         isClass: Bool
     ) -> [PropertyViewModel] {
-        return properties.map {
+        properties.map {
             let name = getUniqueName($0).capitalizingFirstLetter()
             let optionalized = OptionalizeIUOVisitor.optionalize(type: $0.type)
             let removedOptional = RemoveOptionalVisitor.remove(optionalType: $0.type)
@@ -219,7 +219,7 @@ class MockViewPresenter: MockTransformer {
     }
 
     private func getUniqueName(_ subscript: Subscript) -> String {
-        return nameGenerator.getMethodName(for: `subscript`.toMethodModel().id) ?? ""
+        nameGenerator.getMethodName(for: `subscript`.toMethodModel().id) ?? ""
     }
 
     private func transformDeclarationText(declaration: String, isOverriding: Bool) -> String {
@@ -230,19 +230,18 @@ class MockViewPresenter: MockTransformer {
     }
 
     private func transformMethods() -> [MethodViewModel] {
-        return transformMethods(classMethods, isClass: true) +
-        transformMethods(protocolMethods, isClass: false)
+        transformMethods(classMethods, isClass: true) +
+            transformMethods(protocolMethods, isClass: false)
     }
 
     private func transformMethods(_ methods: [Method], isClass: Bool) -> [MethodViewModel] {
-        return methods.map {
+        methods.map {
             MethodViewModel(
                 capitalizedUniqueName: getUniqueName($0).capitalizingFirstLetter(),
                 escapingParameters: transformParameters($0),
                 closureParameter: $0.parametersList.compactMap(transformClosureParameters),
                 resultType: transformReturnType($0),
-                functionCall: nil,
-                // MakeFunctionCallVisitor.make($0),
+                functionCall: MakeFunctionCallVisitor.make(element: $0),
                 async: $0.async,
                 throws: $0.throws,
                 rethrows: $0.rethrows,
@@ -308,7 +307,7 @@ class MockViewPresenter: MockTransformer {
     }
 
     private func getDefaultValue(_ type: Type) -> String? {
-        return DefaultValueVisitor.getDefaultValue(for: type)
+        DefaultValueVisitor.getDefaultValue(for: type)
     }
 
     private func transformParameters(_ method: Method) -> ParametersViewModel? {
@@ -328,25 +327,31 @@ class MockViewPresenter: MockTransformer {
             tupleAssignment: assignment
         )
     }
-//
-//    private func transformSubscripts() -> [SubscriptViewModel] {
-//        return transformSubscripts(classSubscripts, isClass: true) +
-//        transformSubscripts(protocolSubscripts, isClass: false)
-//    }
-//
-//    private func transformSubscripts(_ subscripts: [Subscript], isClass: Bool) -> [SubscriptViewModel] {
-//        return subscripts.map {
-//            SubscriptViewModel(
-//                name: getUniqueName($0).capitalized,
-//                parameters: transformParameters($0.parameters, genericParameters: []),
-//                isWritable: $0.isWritable,
-//                returnType: transformReturnType($0.returnType, genericParameters: []),
-//                functionCall: MakeFunctionCallVisitor.make($0),
-//                isClass: isClass,
-//                declarationText: transformDeclarationText($0.declarationText, isOverriding: isClass)
-//            )
-//        }
-//    }
+
+    private func transformSubscripts() -> [SubscriptViewModel] {
+        transformSubscripts(classSubscripts, isClass: true) +
+            transformSubscripts(protocolSubscripts, isClass: false)
+    }
+
+    private func transformSubscripts(_ subscripts: [Subscript], isClass: Bool) -> [SubscriptViewModel] {
+        subscripts.map {
+            SubscriptViewModel(
+                capitalizedUniqueName: getUniqueName($0).capitalized,
+                escapingParameters: transformParameters($0.parameters, genericParameters: []),
+                hasSetter: $0.isWritable,
+                resultType: transformReturnType(
+                    $0.returnType,
+                    genericParameters: []
+                ),
+                functionCall: MakeFunctionCallVisitor.make(element: $0),
+                isImplemented: isClass,
+                declarationText: transformDeclarationText(
+                    declaration: $0.declarationText,
+                    isOverriding: isClass
+                )
+            )
+        }
+    }
 }
 
 fileprivate extension Method {
@@ -357,12 +362,12 @@ fileprivate extension Method {
 
 fileprivate extension Property {
     func toMethodModel() -> MethodModel {
-        return MethodModel(methodName: name, paramLabels: "")
+        MethodModel(methodName: name, paramLabels: "")
     }
 }
 
 fileprivate extension Subscript {
     func toMethodModel() -> MethodModel {
-        return MethodModel(methodName: "subscript", paramLabels: parameters)
+        MethodModel(methodName: "subscript", paramLabels: parameters)
     }
 }
