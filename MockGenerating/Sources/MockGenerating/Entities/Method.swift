@@ -5,7 +5,7 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-struct Method: Element, Equatable {
+public struct Method: Element, Equatable {
 
     let name: String
     let genericParameters: [String]
@@ -16,7 +16,27 @@ struct Method: Element, Equatable {
     let `throws`: Bool
     let `rethrows`: Bool
 
-    func accept(visitor: Visitor) {
+    public init(
+        name: String,
+        genericParameters: [String],
+        returnType: ResolvedType,
+        parametersList: [Parameter],
+        declarationText: String,
+        `async`: Bool,
+        `throws`: Bool,
+        `rethrows`: Bool
+    ) {
+        self.name = name
+        self.genericParameters = genericParameters
+        self.returnType = returnType
+        self.parametersList = parametersList
+        self.declarationText = declarationText
+        self.async = `async`
+        self.throws = `throws`
+        self.rethrows = `rethrows`
+    }
+
+    public func accept(visitor: Visitor) {
         visitor.visit(method: self)
     }
 

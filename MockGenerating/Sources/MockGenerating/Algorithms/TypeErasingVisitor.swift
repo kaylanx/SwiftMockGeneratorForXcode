@@ -26,7 +26,9 @@ final class TypeErasingVisitor: RecursiveVisitor {
 
     override func visit(dictionaryType type: DictionaryType) {
         if (genericIdentifiers.contains(type.keyType.text)) {
-            type.keyType = TypeIdentifier.Builder("AnyHashable").build()
+            type.keyType = TypeIdentifier
+                .Builder(identifier: "AnyHashable")
+                .build()
         }
         super.visit(dictionaryType: type)
     }

@@ -2,8 +2,8 @@ import XCTest
 import TestHelper
 import AST
 import Resolver
-import UseCases
 @testable import MockGenerator
+@testable import MockGenerating
 
 class VariableTypeResolverTests: XCTestCase {
     func test_shouldNotResolveUnsupportedItems() {
@@ -103,16 +103,16 @@ class VariableTypeResolverTests: XCTestCase {
 
     private func assertResolveArray(_ text: String, _ expected: String, line: UInt = #line) {
         let resolved = try! resolve(text)
-        XCTAssert(resolved is UseCases.ArrayType, line: line)
-        let array = resolved as? UseCases.ArrayType
+        XCTAssert(resolved is MockGenerating.ArrayType, line: line)
+        let array = resolved as? MockGenerating.ArrayType
         XCTAssertEqual(array?.text, "[\(expected)]", line: line)
         XCTAssertEqual(array?.type.text, expected, line: line)
     }
 
     private func assertResolveDict(_ text: String, _ expectedKey: String, _ expectedValue: String, line: UInt = #line) {
         let resolved = try! resolve(text)
-        XCTAssert(resolved is UseCases.DictionaryType, line: line)
-        let dict = resolved as? UseCases.DictionaryType
+        XCTAssert(resolved is MockGenerating.DictionaryType, line: line)
+        let dict = resolved as? MockGenerating.DictionaryType
         XCTAssertEqual(dict?.text, "[\(expectedKey): \(expectedValue)]", line: line)
         XCTAssertEqual(dict?.keyType.text, expectedKey, line: line)
         XCTAssertEqual(dict?.valueType.text, expectedValue, line: line)
@@ -120,8 +120,8 @@ class VariableTypeResolverTests: XCTestCase {
 
     private func assertResolveTuple(_ text: String, _ expected: String..., line: UInt = #line) {
         let resolved = try! resolve(text)
-        XCTAssert(resolved is UseCases.TupleType, line: line)
-        guard let tuple = resolved as? UseCases.TupleType else {
+        XCTAssert(resolved is MockGenerating.TupleType, line: line)
+        guard let tuple = resolved as? MockGenerating.TupleType else {
             XCTFail("Expected tuple type", line: line)
             return
         }
@@ -135,7 +135,7 @@ class VariableTypeResolverTests: XCTestCase {
         XCTAssertNil(try resolve(text), line: line)
     }
 
-    private func resolve(_ text: String) throws -> UseCases.`Type`? {
+    private func resolve(_ text: String) throws -> MockGenerating.`Type`? {
         let fullText = """
         \(text)
         func returnMethod() -> ReturnMethodType {}

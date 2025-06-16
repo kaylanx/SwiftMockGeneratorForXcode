@@ -5,14 +5,14 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-class TypeDeclaration {
-    let initializers: [Initializer]
-    let properties: [Property]
-    let methods: [Method]
-    let subscripts: [Subscript]
-    let protocols: [`Protocol`]
+public class TypeDeclaration {
+    public let initializers: [Initializer]
+    public let properties: [Property]
+    public let methods: [Method]
+    public let subscripts: [Subscript]
+    public let protocols: [`Protocol`]
 
-    init(
+    public init(
         initializers: [Initializer],
         properties: [Property],
         methods: [Method],

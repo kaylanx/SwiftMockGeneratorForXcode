@@ -7,8 +7,8 @@
 
 import Foundation
 
-class Initializer: Element, Equatable {
-    static func == (lhs: Initializer, rhs: Initializer) -> Bool {
+public class Initializer: Element, Equatable {
+    public static func == (lhs: Initializer, rhs: Initializer) -> Bool {
         lhs.parametersList == rhs.parametersList &&
         lhs.isFailable == rhs.isFailable &&
         lhs.async == rhs.async &&
@@ -20,14 +20,14 @@ class Initializer: Element, Equatable {
     let `async`: Bool
     let `throws`: Bool
 
-    init(parametersList: [Parameter], isFailable: Bool, `async`: Bool, `throws`: Bool) {
+    public init(parametersList: [Parameter], isFailable: Bool, `async`: Bool, `throws`: Bool) {
         self.parametersList = parametersList
         self.isFailable = isFailable
         self.`async` = `async`
         self.`throws` = `throws`
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(initializer: self)
     }
 

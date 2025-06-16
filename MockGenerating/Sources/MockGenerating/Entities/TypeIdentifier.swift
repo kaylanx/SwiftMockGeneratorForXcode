@@ -44,14 +44,14 @@ enum TypeIdentifiers {
     nonisolated(unsafe) private static let intType = TypeIdentifier(identifier: "Int")
 }
 
-final class TypeIdentifier: `Type` {
+public final class TypeIdentifier: `Type` {
     var identifiers: [String]
 
-    init(identifier: String) {
+    public init(identifier: String) {
         self.identifiers = [identifier]
     }
 
-    init(identifiers: [String]) {
+    public init(identifiers: [String]) {
         self.identifiers = identifiers
     }
 
@@ -69,28 +69,28 @@ final class TypeIdentifier: `Type` {
         return identifiers.first ?? ""
     }
 
-    var text: String {
+    public var text: String {
         return identifiers.joined(separator: ".")
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(typeIdentifier: self)
     }
 
     // Nested Builder class
-    class Builder {
+    public class Builder {
         private var identifiers: [String]
 
-        init(_ identifier: String) {
+        public init(identifier: String) {
             self.identifiers = [identifier]
         }
 
-        func nest(_ identifier: String) -> Builder {
+        func nest(identifier: String) -> Builder {
             identifiers.append(identifier)
             return self
         }
 
-        func build() -> TypeIdentifier {
+        public func build() -> TypeIdentifier {
             return TypeIdentifier(identifiers: identifiers)
         }
     }

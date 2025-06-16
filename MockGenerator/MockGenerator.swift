@@ -1,7 +1,7 @@
 import AST
-import class UseCases.MockClass
-import class UseCases.CallbackMockView
-import class UseCases.Generator
+import class MockGenerating.MockClass
+import class MockGenerating.CallbackMockView
+import class MockGenerating.Generator
 import SwiftyKit
 
 protocol MockGenerator {
@@ -47,7 +47,7 @@ extension MockGenerator {
             return view.result
         }
         let generator = Generator(view: view)
-        generator.set(c: mockClass)
+        generator.set(class: mockClass)
         generator.generate()
         return view.result
     }

@@ -5,7 +5,7 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-protocol Visitor {
+public protocol Visitor {
     func visit(type: `Type`)
     func visit(initializer: Initializer)
     func visit(parameter: Parameter)

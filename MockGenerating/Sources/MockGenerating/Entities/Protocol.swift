@@ -5,9 +5,9 @@
 //  Created by Andy Kayley on 03/06/2025.
 //
 
-final class `Protocol`: TypeDeclaration {
+public final class `Protocol`: TypeDeclaration {
 
-    override init(
+    override public init(
         initializers: [Initializer],
         properties: [Property],
         methods: [Method],

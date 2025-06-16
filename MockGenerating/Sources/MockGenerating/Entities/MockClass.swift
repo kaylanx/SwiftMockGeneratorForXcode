@@ -5,11 +5,11 @@
 //  Created by Andy Kayley on 03/06/2025.
 //
 
-class MockClass: TypeDeclaration {
-    let inheritedClass: Class?
+public class MockClass: TypeDeclaration {
+    public let inheritedClass: Class?
     let scope: String?
 
-    init(inheritedClass: Class?, protocols: [`Protocol`], scope: String?) {
+    public init(inheritedClass: Class?, protocols: [`Protocol`], scope: String?) {
         self.inheritedClass = inheritedClass
         self.scope = scope
         super.init(

@@ -1,40 +1,39 @@
-////
-////  Generator.swift
-////  MockGenerating
-////
-////  Created by Andy Kayley on 02/06/2025.
-////
 //
-//import Foundation
+//  Generator.swift
+//  MockGenerating
 //
-//class Generator {
-//    private let view: MockView
-//    private var mockClass: MockClass?
-//    private var classes: [Class] = []
-//    private var protocols: [`Protocol`] = []
+//  Created by Andy Kayley on 02/06/2025.
 //
-//    init(view: MockView) {
-//        self.view = view
-//    }
-//
-//    func set(_ c: MockClass) {
-//        mockClass = c
-//        var superclass = c.inheritedClass
-//        while let current = superclass {
-//            classes.append(current)
-//            superclass = current.inheritedClass
-//        }
-//        add(c.protocols)
-//    }
-//
-//    private func add(_ protocols: [`Protocol`]) {
-//        protocols.forEach { self.protocols.append($0) }
-//        protocols.forEach { add($0.protocols) }
-//    }
-//
-//    func generate() -> String {
+
+public class Generator {
+    private let view: MockView
+    private var mockClass: MockClass?
+    private var classes: [Class] = []
+    private var protocols: [`Protocol`] = []
+
+    public init(view: MockView) {
+        self.view = view
+    }
+
+    public func set(class: MockClass) {
+        mockClass = `class`
+        var superclass = `class`.inheritedClass
+        while let current = superclass {
+            classes.append(current)
+            superclass = current.inheritedClass
+        }
+        add(protocols: `class`.protocols)
+    }
+
+    private func add(protocols: [`Protocol`]) {
+        protocols.forEach { self.protocols.append($0) }
+        protocols.forEach { add(protocols: $0.protocols) }
+    }
+
+    @discardableResult
+    public func generate() -> String {
 //        let presenter = MockViewPresenter(view: view)
-//        setScope(presenter)
+//        setScope(for: presenter)
 //        presenter.setClassInitializers(getClassInitializersRemovingDuplicates())
 //        presenter.addClassProperties(getClassPropertiesRemovingDuplicates())
 //        presenter.addClassMethods(getClassMethodsRemovingDuplicates())
@@ -44,18 +43,19 @@
 //        presenter.addMethods(getMethodsRemovingDuplicates())
 //        presenter.addSubscripts(getSubscriptsRemovingDuplicates())
 //        return presenter.generate()
-//    }
-//
-//    private func setScope(_ presenter: MockViewPresenter) {
-//        if let scope = mockClass?.scope {
-//            presenter.setScope(scope)
-//        }
-//    }
-//
-//    private func getClassInitializersRemovingDuplicates() -> [Initializer] {
-//        return classes.flatMap { $0.initializers }
-//    }
-//
+        return ""
+    }
+
+    private func setScope(for presenter: MockViewPresenter) {
+        if let scope = mockClass?.scope {
+            presenter.set(scope: scope)
+        }
+    }
+
+    private func getClassInitializersRemovingDuplicates() -> [Initializer] {
+        return classes.flatMap { $0.initializers }
+    }
+
 //    private func getClassPropertiesRemovingDuplicates() -> [Property] {
 //        return Array(Set(
 //            classes.flatMap { $0.properties }.map { SignatureGenerator.signature($0) }
@@ -120,4 +120,4 @@
 //            protocols.flatMap { $0.subscripts }.first { SignatureGenerator.signature($0) == signature }
 //        }
 //    }
-//}
+}

@@ -5,8 +5,8 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-final class FunctionType: Type, Equatable {
-    static func == (lhs: FunctionType, rhs: FunctionType) -> Bool {
+public final class FunctionType: Type, Equatable {
+    public static func == (lhs: FunctionType, rhs: FunctionType) -> Bool {
         lhs.text == rhs.text
     }
 
@@ -15,14 +15,14 @@ final class FunctionType: Type, Equatable {
     let `async`: Bool
     let `throws`: Bool
 
-    var text: String {
+    public var text: String {
         let argsText = arguments.map { $0.text }.joined(separator: ", ")
         let asyncText = `async` ? "async " : ""
         let throwsText = `throws` ? "throws " : ""
         return "(\(argsText)) \(asyncText)\(throwsText)-> \(returnType.text)"
     }
 
-    init(
+    public init(
         arguments: [`Type`],
         returnType: `Type`,
         async: Bool,
@@ -34,7 +34,7 @@ final class FunctionType: Type, Equatable {
         self.throws = `throws`
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(functionType: self)
     }
 

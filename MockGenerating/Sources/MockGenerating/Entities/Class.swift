@@ -5,10 +5,10 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-class Class: TypeDeclaration {
+public class Class: TypeDeclaration {
     let inheritedClass: Class?
 
-    init(
+    public init(
         initializers: [Initializer],
         properties: [Property],
         methods: [Method],

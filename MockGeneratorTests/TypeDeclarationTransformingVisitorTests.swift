@@ -1,11 +1,11 @@
 import XCTest
 import Resolver
-import UseCases
 import Parser
 import AST
 import TestHelper
 import SwiftyKit
 @testable import MockGenerator
+@testable import MockGenerating
 
 class TypeDeclarationTransformingVisitorTests: XCTestCase {
 
@@ -72,7 +72,7 @@ class TypeDeclarationTransformingVisitorTests: XCTestCase {
         XCTAssertNil(transformed.inheritedClass)
     }
 
-    private func transformProtocols(_ string: String) -> [UseCases.`Protocol`] {
+    private func transformProtocols(_ string: String) -> [MockGenerating.`Protocol`] {
         let p = try! ParserTestHelper.parseFile(from: string).typeDeclarations[0]
         let protocols = TypeDeclarationTransformingVisitor.transformMock(p, resolver: resolver).protocols
         return protocols

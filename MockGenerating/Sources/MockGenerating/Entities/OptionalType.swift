@@ -5,8 +5,8 @@
 //  Created by Andy Kayley on 03/06/2025.
 //
 
-final class OptionalType: `Type`, Equatable {
-    static func == (lhs: OptionalType, rhs: OptionalType) -> Bool {
+public final class OptionalType: `Type`, Equatable {
+    public static func == (lhs: OptionalType, rhs: OptionalType) -> Bool {
         lhs.isImplicitlyUnwrapped == rhs.isImplicitlyUnwrapped &&
         lhs.useVerboseSyntax == rhs.useVerboseSyntax &&
         lhs.text == rhs.text
@@ -16,9 +16,9 @@ final class OptionalType: `Type`, Equatable {
     let isImplicitlyUnwrapped: Bool
     let useVerboseSyntax: Bool
 
-    var text: String { generateText() }
+    public var text: String { generateText() }
 
-    init(type: Type, isImplicitlyUnwrapped: Bool, useVerboseSyntax: Bool) {
+    public init(type: `Type`, isImplicitlyUnwrapped: Bool, useVerboseSyntax: Bool) {
         self.type = type
         self.isImplicitlyUnwrapped = isImplicitlyUnwrapped
         self.useVerboseSyntax = useVerboseSyntax
@@ -35,7 +35,7 @@ final class OptionalType: `Type`, Equatable {
         }
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(optionalType: self)
     }
 

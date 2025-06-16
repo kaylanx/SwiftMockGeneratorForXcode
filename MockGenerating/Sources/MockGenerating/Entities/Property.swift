@@ -5,8 +5,8 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-struct Property: Element, Equatable {
-    static func == (lhs: Property, rhs: Property) -> Bool {
+public struct Property: Element, Equatable {
+    public static func == (lhs: Property, rhs: Property) -> Bool {
         lhs.name == rhs.name &&
         lhs.type.text == rhs.type.text &&
         lhs.isWritable == rhs.isWritable &&
@@ -18,7 +18,19 @@ struct Property: Element, Equatable {
     let isWritable: Bool
     let declarationText: String
 
-    func accept(visitor: Visitor) {
+    public init(
+        name: String,
+        type: `Type`,
+        isWritable: Bool,
+        declarationText: String
+    ) {
+        self.name = name
+        self.type = type
+        self.isWritable = isWritable
+        self.declarationText = declarationText
+    }
+
+    public func accept(visitor: Visitor) {
         visitor.visit(property: self)
     }
 

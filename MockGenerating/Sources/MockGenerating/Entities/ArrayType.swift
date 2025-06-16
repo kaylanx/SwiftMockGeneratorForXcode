@@ -5,8 +5,8 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-final class ArrayType: `Type`, Equatable {
-    static func == (lhs: ArrayType, rhs: ArrayType) -> Bool {
+public final class ArrayType: `Type`, Equatable {
+    public static func == (lhs: ArrayType, rhs: ArrayType) -> Bool {
         lhs.useVerboseSyntax == rhs.useVerboseSyntax &&
             lhs.text == rhs.text
     }
@@ -14,14 +14,14 @@ final class ArrayType: `Type`, Equatable {
     let type: `Type`
     var useVerboseSyntax: Bool
 
-    var text: String { generateText() }
+    public var text: String { generateText() }
 
-    init(type: Type, useVerboseSyntax: Bool) {
+    public init(type: `Type`, useVerboseSyntax: Bool) {
         self.type = type
         self.useVerboseSyntax = useVerboseSyntax
     }
 
-    func accept(visitor: any Visitor) {
+    public func accept(visitor: any Visitor) {
         visitor.visit(arrayType: self)
     }
 

@@ -7,9 +7,9 @@
 
 import Foundation
 
-class Parameter: Element, Equatable {
+public class Parameter: Element, Equatable {
 
-    static func == (lhs: Parameter, rhs: Parameter) -> Bool {
+    public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
         lhs.externalName == rhs.externalName &&
         lhs.internalName == rhs.internalName &&
         lhs.type == rhs.type &&
@@ -31,7 +31,13 @@ class Parameter: Element, Equatable {
         return type.resolvedType.text
     }
 
-    init(externalName: String?, internalName: String, type: ResolvedType, text: String, isEscaping: Bool) {
+    public init(
+        externalName: String?,
+        internalName: String,
+        type: ResolvedType,
+        text: String,
+        isEscaping: Bool
+    ) {
         self.externalName = externalName
         self.internalName = internalName
         self.type = type
@@ -39,7 +45,7 @@ class Parameter: Element, Equatable {
         self.isEscaping = isEscaping
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(parameter: self)
     }
 

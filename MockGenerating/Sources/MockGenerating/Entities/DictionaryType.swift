@@ -5,8 +5,8 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-final class DictionaryType: Type, Equatable {
-    static func == (lhs: DictionaryType, rhs: DictionaryType) -> Bool {
+public final class DictionaryType: `Type`, Equatable {
+    public static func == (lhs: DictionaryType, rhs: DictionaryType) -> Bool {
         lhs.useVerboseSyntax == rhs.useVerboseSyntax &&
         lhs.keyType.text == rhs.keyType.text &&
         lhs.valueType.text == rhs.valueType.text
@@ -16,13 +16,13 @@ final class DictionaryType: Type, Equatable {
     var valueType: `Type`
     private let useVerboseSyntax: Bool
 
-    init(keyType: Type, valueType: Type, useVerboseSyntax: Bool) {
+    public init(keyType: `Type`, valueType: `Type`, useVerboseSyntax: Bool) {
         self.keyType = keyType
         self.valueType = valueType
         self.useVerboseSyntax = useVerboseSyntax
     }
 
-    var text: String {
+    public var text: String {
         let key = keyType.text
         let value = valueType.text
         return if useVerboseSyntax {
@@ -32,7 +32,7 @@ final class DictionaryType: Type, Equatable {
         }
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(dictionaryType: self)
     }
 

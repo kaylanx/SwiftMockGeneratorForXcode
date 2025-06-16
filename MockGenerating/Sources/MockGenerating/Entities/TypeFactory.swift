@@ -69,7 +69,7 @@ class TypeFactory<Builder> {
         identifier: String,
         _ build: (TypeIdentifier.Builder) -> Void
     ) -> Builder {
-        let builder = TypeIdentifier.Builder(identifier)
+        let builder = TypeIdentifier.Builder(identifier: identifier)
         build(builder)
         getType(builder.build())
         return previousBuilder

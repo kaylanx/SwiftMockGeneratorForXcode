@@ -5,25 +5,25 @@
 //  Created by Andy Kayley on 04/06/2025.
 //
 
-final class GenericType: `Type`, Equatable {
-    static func == (lhs: GenericType, rhs: GenericType) -> Bool {
+public final class GenericType: `Type`, Equatable {
+    public static func == (lhs: GenericType, rhs: GenericType) -> Bool {
         lhs.identifier == rhs.identifier && lhs.text == rhs.text
     }
 
     let identifier: String
     let arguments: [`Type`]
 
-    init(identifier: String, arguments: [`Type`]) {
+    public init(identifier: String, arguments: [`Type`]) {
         self.identifier = identifier
         self.arguments = arguments
     }
 
-    var text: String {
+    public var text: String {
         let argumentsList = arguments.map(\.text).joined(separator: ", ")
         return "\(identifier)<\(argumentsList)>"
     }
 
-    func accept(visitor: any Visitor) {
+    public func accept(visitor: any Visitor) {
         visitor.visit(genericType: self)
     }
 

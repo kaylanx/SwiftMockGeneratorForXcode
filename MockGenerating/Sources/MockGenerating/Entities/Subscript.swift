@@ -5,13 +5,13 @@
 //  Created by Andy Kayley on 02/06/2025.
 //
 
-class Subscript: Element {
+public class Subscript: Element {
     let returnType: ResolvedType
     let parameters: [Parameter]
     let isWritable: Bool
     let declarationText: String
 
-    init(
+    public init(
         returnType: ResolvedType,
         parameters: [Parameter],
         isWritable: Bool,
@@ -23,7 +23,7 @@ class Subscript: Element {
         self.declarationText = declarationText
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(subscript: self)
     }
 

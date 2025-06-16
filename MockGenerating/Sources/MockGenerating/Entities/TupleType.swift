@@ -7,14 +7,14 @@
 
 import Foundation
 
-final class TupleType: `Type`, Equatable {
-    static func == (lhs: TupleType, rhs: TupleType) -> Bool {
+public final class TupleType: `Type`, Equatable {
+    public static func == (lhs: TupleType, rhs: TupleType) -> Bool {
         lhs.text == rhs.text
     }
 
     let tupleElements: [TupleElement]
 
-    init(tupleElements: [TupleElement]) {
+    public init(tupleElements: [TupleElement]) {
         self.tupleElements = tupleElements
     }
 
@@ -26,11 +26,11 @@ final class TupleType: `Type`, Equatable {
         tupleElements.map { $0.type }
     }
 
-    var text: String {
+    public var text: String {
         "(" + tupleElements.map { $0.text }.joined(separator: ", ") + ")"
     }
 
-    func accept(visitor: Visitor) {
+    public func accept(visitor: Visitor) {
         visitor.visit(tupleType: self)
     }
 
@@ -39,11 +39,11 @@ final class TupleType: `Type`, Equatable {
     }
 
     // MARK: - Nested TupleElement
-    final class TupleElement {
+    public final class TupleElement {
         let label: String?
         let type: `Type`
 
-        init(label: String?, type: `Type`) {
+        public init(label: String?, type: `Type`) {
             self.label = label
             self.type = type
         }

@@ -23,16 +23,16 @@ enum ResolvedTypes {
     )
 }
 
-final class ResolvedType: Equatable {
+public final class ResolvedType: Equatable {
 
-    static func == (lhs: ResolvedType, rhs: ResolvedType) -> Bool {
+    public static func == (lhs: ResolvedType, rhs: ResolvedType) -> Bool {
         lhs.originalType.text == rhs.originalType.text
     }
     
     let originalType: `Type`
     let resolvedType: `Type`
 
-    init(originalType: `Type`, resolvedType: `Type`) {
+    public init(originalType: `Type`, resolvedType: `Type`) {
         self.originalType = originalType
         self.resolvedType = resolvedType
     }
