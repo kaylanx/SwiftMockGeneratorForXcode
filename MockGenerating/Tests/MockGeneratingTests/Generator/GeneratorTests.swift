@@ -20,11 +20,11 @@ struct GeneratorTests  {
     func multipleProtocols(type: MockType) async throws {
         try await runTest(template: MultipleProtocolTemplate(), for: type)
     }
-//
-//    @Test
-//    fun testDiamondInheritanceProtocols() {
-//        runTest(DiamondInheritanceTest())
-//    }
+
+    @Test(arguments: arguments)
+    func diamondInheritanceProtocols(type: MockType) async throws {
+        try await runTest(template: DiamondInheritanceTemplate(), for: type)
+    }
 //
 //    @Test
 //    fun testMultipleOverloadingProtocols() {
