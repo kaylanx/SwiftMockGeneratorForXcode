@@ -11,7 +11,7 @@ import Testing
 
 struct MockViewPresenterTests {
 
-    private static let arguments: [MockViewType] = [
+    private static let arguments: [MockType] = [
         .dummy,
         .partial,
         .spy,
@@ -22,7 +22,7 @@ struct MockViewPresenterTests {
     private var view: MustacheMockView!
 
     private mutating func setUp(
-        type: MockViewType
+        type: MockType
     ) async throws {
         view = try await MustacheMockView(type: type)
         generator = MockViewPresenter(view: view)
@@ -33,7 +33,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func testShouldCorrectlyRenderEmptyString_whenNothingToMock(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         #expect(generator.generate().isEmpty)
@@ -44,7 +44,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderSimpleProtocol(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: SimpleProtocolTemplate(), for: type)
@@ -55,7 +55,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shoudlCorrectlyRenderMethodParameter(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: MethodParameterTemplate(), for: type)
@@ -66,7 +66,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderArgumentsInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: ArgumentsInitializerTemplate(), for: type)
@@ -77,7 +77,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderOptionalInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: FailableInitialzerTemplate(), for: type)
@@ -88,7 +88,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderNoArgumentsOptionalInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: NoArgumentFailableInitializerTemplate(), for: type)
@@ -99,7 +99,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderProtocolInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: ProtocolInitializerTemplate(), for: type)
@@ -110,7 +110,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderSimplestInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: SimplestClassInitializerTemplate(), for: type)
@@ -121,7 +121,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderOpenIntializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: OpenInitializerTemplate(), for: type)
@@ -132,7 +132,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderThrowingInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: ThrowingInitializerTemplate(), for: type)
@@ -143,7 +143,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderAsyncInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: AsyncInitializerTemplate(), for: type)
@@ -154,7 +154,7 @@ struct MockViewPresenterTests {
         arguments: arguments
     )
     mutating func shouldCorrectlyRenderAsyncThrowingInitializer(
-        type: MockViewType
+        type: MockType
     ) async throws {
         try await setUp(type: type)
         try runTest(template: AsyncThrowingInitializerTemplate(), for: type)
@@ -168,7 +168,7 @@ struct MockViewPresenterTests {
 
     private func runTest(
         template: MockGeneratorTestTemplate,
-        for type: MockViewType
+        for type: MockType
     ) throws {
         template.build(generator: generator)
         generator.generate()

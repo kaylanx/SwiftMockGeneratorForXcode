@@ -8,7 +8,7 @@
 import Testing
 @testable import MockGenerating
 
-struct DefaultValueVisitorTest {
+struct DefaultValueVisitorTests {
 
     @Test
     func shouldReturnEmptyStringWhenUnknownType() {

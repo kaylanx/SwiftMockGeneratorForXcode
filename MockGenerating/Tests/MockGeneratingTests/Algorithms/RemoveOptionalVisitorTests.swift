@@ -8,7 +8,7 @@
 import Testing
 @testable import MockGenerating
 
-struct RemoveOptionalVisitorTest {
+struct RemoveOptionalVisitorTests {
 
     @Test
     func shouldRemoveOptional() {
@@ -21,7 +21,7 @@ struct RemoveOptionalVisitorTest {
 
     @Test
     func shouldReturnOriginalWhenNotOptional() {
-        let type = TypeIdentifier.Builder("A").build()
+        let type = TypeIdentifier.Builder(identifier: "A").build()
         let transformed = RemoveOptionalVisitor.remove(optionalType: type)
         #expect(transformed.text == type.text)
     }

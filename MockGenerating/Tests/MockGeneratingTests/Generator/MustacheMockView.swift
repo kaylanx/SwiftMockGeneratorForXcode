@@ -10,11 +10,11 @@ import Mustache
 
 final class MustacheMockView: MockView {
 
-    private let type: MockViewType
+    private let type: MockType
     private var library: MustacheLibrary!
     var rendered: String? = ""
 
-    init(type: MockViewType) async throws {
+    init(type: MockType) async throws {
         self.type = type
 
         guard let templatesDirectory = Bundle.module.url(forResource: "Templates", withExtension: nil) else {
@@ -33,13 +33,4 @@ final class MustacheMockView: MockView {
             .filter { !$0.isEmpty }
             .joined(separator: "\n")
     }
-}
-
-enum MockViewType: String {
-    case dummy
-    case partial
-    case spy
-    case stub
-
-    var directoryName: String { rawValue.capitalized }
 }

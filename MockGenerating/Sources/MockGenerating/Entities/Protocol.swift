@@ -31,6 +31,7 @@ public final class `Protocol`: TypeDeclaration {
         private var subscripts = [Subscript]()
         private var protocols = [`Protocol`]()
 
+        @discardableResult
         func initializer(build: (Initializer.Builder) -> Void) -> Builder {
             let builder = Initializer.Builder()
             build(builder)
@@ -38,6 +39,7 @@ public final class `Protocol`: TypeDeclaration {
             return self
         }
 
+        @discardableResult
         func property(name: String, build: (Property.Builder) -> Void) -> Builder {
             let builder = Property.Builder(name: name)
             build(builder)
@@ -45,6 +47,7 @@ public final class `Protocol`: TypeDeclaration {
             return self
         }
 
+        @discardableResult
         func method(name: String, build: (Method.Builder) -> Void) -> Builder {
             let builder = Method.Builder(name: name)
             build(builder)
@@ -52,6 +55,7 @@ public final class `Protocol`: TypeDeclaration {
             return self
         }
 
+        @discardableResult
         func `subscript`(type: Type, build: (Subscript.Builder) -> Void) -> Builder {
             let builder = Subscript.Builder(type: type)
             build(builder)
@@ -59,6 +63,7 @@ public final class `Protocol`: TypeDeclaration {
             return self
         }
 
+        @discardableResult
         func `protocol`(build: (`Protocol`.Builder) -> Void) -> Builder {
             let builder = `Protocol`.Builder()
             build(builder)

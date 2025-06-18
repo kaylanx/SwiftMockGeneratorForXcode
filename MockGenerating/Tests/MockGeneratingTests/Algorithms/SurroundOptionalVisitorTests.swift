@@ -7,11 +7,11 @@
 import Testing
 @testable import MockGenerating
 
-struct SurroundOptionalVisitorTest  {
+struct SurroundOptionalVisitorTests  {
 
     @Test
     func shouldSurroundType() throws {
-        let type = TypeIdentifier.Builder("A").build()
+        let type = TypeIdentifier.Builder(identifier: "A").build()
         let optional = try #require(SurroundOptionalVisitor.surround(
             type: type,
             unwrapped: false
@@ -37,7 +37,7 @@ struct SurroundOptionalVisitorTest  {
 
     @Test
     func shouldSurroundTypeWithIUO() throws {
-        let type = TypeIdentifier.Builder("A").build()
+        let type = TypeIdentifier.Builder(identifier: "A").build()
         let optional = try #require(SurroundOptionalVisitor.surround(
             type: type,
             unwrapped: true

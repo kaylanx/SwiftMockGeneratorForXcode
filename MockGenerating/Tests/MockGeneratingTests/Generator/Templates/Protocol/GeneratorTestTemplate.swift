@@ -1,27 +1,26 @@
 //
-//  MockGeneratorTestTemplate.swift
+//  GeneratorTestTemplate.swift
 //  MockGenerating
 //
-//  Created by Andy Kayley on 11/06/2025.
+//  Created by Andy Kayley on 17/06/2025.
 //
 
 import Foundation
 @testable import MockGenerating
 
-protocol MockGeneratorTestTemplate {
+protocol GeneratorTestTemplate {
     var expectedSwiftFileName: String { get }
-    func build(generator: MockTransformer)
+    func build(generator: Generator)
 }
 
-extension MockGeneratorTestTemplate {
-
+extension GeneratorTestTemplate {
     func getExpected(type: MockType) -> String? {
         readFile(from: type.directoryName)?
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func readFile(from directory: String) -> String? {
-        guard let expectedFile = Bundle.module.url(forResource: "Expectations/\(directory)/\(expectedSwiftFileName)", withExtension: "swift") else {
+        guard let expectedFile = Bundle.module.url(forResource: "Expectations/\(directory)/protocol/\(expectedSwiftFileName)", withExtension: "swift") else {
             return nil
         }
         return try? String(contentsOf: expectedFile, encoding: .utf8)

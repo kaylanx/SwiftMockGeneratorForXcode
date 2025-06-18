@@ -49,11 +49,13 @@ public struct Property: Element, Equatable {
         private var _type: `Type` = TypeIdentifiers.empty.type
         private var isWritable = true
 
+        @discardableResult
         func readonly() -> Builder {
             isWritable = false
             return self
         }
 
+        @discardableResult
         func type(identifier: String) -> Builder {
             _type = TypeIdentifier(identifier: identifier)
             return self

@@ -26,7 +26,7 @@ struct OptionalizeIUOVisitorTests {
 
     @Test("Should Remove Not Change Other Type")
     func shouldRemoveNotChangeOtherType() {
-        let type = TypeIdentifier.Builder("B").build()
+        let type = TypeIdentifier.Builder(identifier: "B").build()
         let result = OptionalizeIUOVisitor.optionalize(type: type).text
         #expect(result == "B")
     }

@@ -8,7 +8,7 @@
 import Testing
 @testable import MockGenerating
 
-struct MakeFunctionCallVisitorTest {
+struct MakeFunctionCallVisitorTests {
 
     @Test
     func shouldCallSimpleMethod() {

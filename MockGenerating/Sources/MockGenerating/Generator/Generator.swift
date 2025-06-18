@@ -50,80 +50,62 @@ public class Generator {
             presenter.set(scope: scope)
         }
     }
-
+    
     private func getClassInitializersRemovingDuplicates() -> [Initializer] {
         return classes.flatMap { $0.initializers }
     }
 
     private func getClassPropertiesRemovingDuplicates() -> [Property] {
-        []
-//        return Array(Set(
-//            classes.flatMap { $0.properties }.map { SignatureGenerator.signature($0) }
-//        )).compactMap { signature in
-//            classes.flatMap { $0.properties }.first { SignatureGenerator.signature($0) == signature }
-//        }
+        return classes.flatMap { $0.properties }
+            .distinctBy { SignatureGenerator.signature(for: $0) }
     }
 
     private func getClassMethodsRemovingDuplicates() -> [Method] {
-        []
-//        return Array(Set(
-//            classes.flatMap { $0.methods }.map { SignatureGenerator.signature($0) }
-//        )).compactMap { signature in
-//            classes.flatMap { $0.methods }.first { SignatureGenerator.signature($0) == signature }
-//        }
+        return classes.flatMap { $0.methods }
+            .distinctBy { SignatureGenerator.signature(for: $0) }
     }
 
     private func getClassSubscriptsRemovingDuplicates() -> [Subscript] {
-        []
-//        return Array(Set(
-//            classes.flatMap { $0.subscripts }.map { SignatureGenerator.signature($0) }
-//        )).compactMap { signature in
-//            classes.flatMap { $0.subscripts }.first { SignatureGenerator.signature($0) == signature }
-//        }
+        return classes.flatMap { $0.subscripts }
+            .distinctBy { SignatureGenerator.signature(for: $0) }
     }
 
     private func getInitializersRemovingDuplicates() -> [Initializer] {
-        []
-//        return Array(Set(
-//            protocols.flatMap { $0.initializers }.map { SignatureGenerator.signature($0) }
-//        )).compactMap { signature in
-//            protocols.flatMap { $0.initializers }.first { SignatureGenerator.signature($0) == signature }
-//        }
+        return protocols.flatMap { $0.initializers }
+            .distinctBy { SignatureGenerator.signature(for: $0) }
     }
 
     private func getPropertiesRemovingDuplicates() -> [Property] {
-        []
-//        let classSignatures = Set(classes.flatMap { $0.properties }.map { SignatureGenerator.signature($0) })
-//        return Array(Set(
-//            protocols.flatMap { $0.properties }
-//                .filter { !classSignatures.contains(SignatureGenerator.signature($0)) }
-//                .map { SignatureGenerator.signature($0) }
-//        )).compactMap { signature in
-//            protocols.flatMap { $0.properties }.first { SignatureGenerator.signature($0) == signature }
-//        }
+        let classSignatures = Set(classes.flatMap { $0.properties }
+            .map { SignatureGenerator.signature(for: $0) })
+
+        return protocols.flatMap { $0.properties }
+            .filter { !classSignatures.contains(SignatureGenerator.signature(for: $0)) }
+            .distinctBy { SignatureGenerator.signature(for: $0) }
     }
 
     private func getMethodsRemovingDuplicates() -> [Method] {
-        []
-//        let classSignatures = Set(classes.flatMap { $0.methods }.map { SignatureGenerator.signature($0) })
-//        return Array(Set(
-//            protocols.flatMap { $0.methods }
-//                .filter { !classSignatures.contains(SignatureGenerator.signature($0)) }
-//                .map { SignatureGenerator.signature($0) }
-//        )).compactMap { signature in
-//            protocols.flatMap { $0.methods }.first { SignatureGenerator.signature($0) == signature }
-//        }
+        let classSignatures = Set(classes.flatMap { $0.methods }
+            .map { SignatureGenerator.signature(for: $0) })
+
+        return protocols.flatMap { $0.methods }
+            .filter { !classSignatures.contains(SignatureGenerator.signature(for: $0)) }
+            .distinctBy { SignatureGenerator.signature(for: $0) }
     }
 
     private func getSubscriptsRemovingDuplicates() -> [Subscript] {
-        []
-//        let classSignatures = Set(classes.flatMap { $0.subscripts }.map { SignatureGenerator.signature($0) })
-//        return Array(Set(
-//            protocols.flatMap { $0.subscripts }
-//                .filter { !classSignatures.contains(SignatureGenerator.signature($0)) }
-//                .map { SignatureGenerator.signature($0) }
-//        )).compactMap { signature in
-//            protocols.flatMap { $0.subscripts }.first { SignatureGenerator.signature($0) == signature }
-//        }
+        let classSignatures = Set(classes.flatMap { $0.subscripts }
+            .map { SignatureGenerator.signature(for: $0) })
+
+        return protocols.flatMap { $0.subscripts }
+            .filter { !classSignatures.contains(SignatureGenerator.signature(for: $0)) }
+            .distinctBy { SignatureGenerator.signature(for: $0) }
+    }
+}
+
+extension Sequence {
+    func distinctBy<T: Hashable>(_ keySelector: (Element) -> T) -> [Element] {
+        var seen = Set<T>()
+        return self.filter { seen.insert(keySelector($0)).inserted }
     }
 }

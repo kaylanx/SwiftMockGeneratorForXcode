@@ -85,6 +85,7 @@ public final class TypeIdentifier: `Type` {
             self.identifiers = [identifier]
         }
 
+        @discardableResult
         func nest(identifier: String) -> Builder {
             identifiers.append(identifier)
             return self

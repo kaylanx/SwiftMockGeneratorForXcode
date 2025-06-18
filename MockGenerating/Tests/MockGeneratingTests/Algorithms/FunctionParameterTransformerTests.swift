@@ -8,7 +8,7 @@
 import Testing
 @testable import MockGenerating
 
-struct FunctionParameterTransformerTest {
+struct FunctionParameterTransformerTests {
 
     @Test
     func shouldCapitalizeName() throws {

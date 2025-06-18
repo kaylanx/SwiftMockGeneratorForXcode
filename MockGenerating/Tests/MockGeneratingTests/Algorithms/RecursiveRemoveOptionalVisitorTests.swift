@@ -8,7 +8,7 @@
 import Testing
 @testable import MockGenerating
 
-struct RecursiveRemoveOptionalVisitorTest {
+struct RecursiveRemoveOptionalVisitorTests {
 
     @Test
     func shouldRemoveOptional() {
@@ -33,7 +33,7 @@ struct RecursiveRemoveOptionalVisitorTest {
 
     @Test
     func shouldReturnTypeWhenNotOptional() {
-        let type = TypeIdentifier.Builder("A").build()
+        let type = TypeIdentifier.Builder(identifier: "A").build()
         let transformed = RecursiveRemoveOptionalVisitor.remove(optionalType: type)
         #expect(transformed.text == type.text)
     }
