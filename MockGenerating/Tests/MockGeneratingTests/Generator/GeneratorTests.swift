@@ -25,16 +25,16 @@ struct GeneratorTests  {
     func diamondInheritanceProtocols(type: MockType) async throws {
         try await runTest(template: DiamondInheritanceTemplate(), for: type)
     }
-//
-//    @Test
-//    fun testMultipleOverloadingProtocols() {
-//        runTest(MultipleOverloadingProtocolsTest())
-//    }
-//
-//    @Test
-//    fun testRemovesDuplicatesFromOverriddenClasses() {
-//        runTest(ClassOverridingTest())
-//    }
+
+    @Test(arguments: arguments)
+    func multipleOverloadingProtocols(type: MockType) async throws {
+        try await runTest(template: MultipleOverloadingProtocolsTemplate(), for: type)
+    }
+
+    @Test(arguments: arguments)
+    func testRemovesDuplicatesFromOverriddenClasses(type: MockType) async throws {
+        try await runTest(template: ClassOverridingTemplate(), for: type)
+    }
 //
 //    @Test
 //    fun testMocksSuperclasses() {
