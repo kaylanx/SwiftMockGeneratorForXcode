@@ -40,6 +40,7 @@ public class Subscript: Element {
             self.returnType = ResolvedType(originalType: type, resolvedType: type)
         }
 
+        @discardableResult
         func parameter(name: String, build: (Parameter.Builder) -> Void) -> Builder {
             return parameter(externalName: nil, internalName: name, build: build)
         }
@@ -51,11 +52,13 @@ public class Subscript: Element {
             return parameter(parameter: builder.build())
         }
 
+        @discardableResult
         private func parameter(parameter: Parameter) -> Builder {
             parameters.append(parameter)
             return self
         }
 
+        @discardableResult
         func readonly() -> Builder {
             isWritable = false
             return self

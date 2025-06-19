@@ -35,21 +35,22 @@ struct GeneratorTests  {
     func testRemovesDuplicatesFromOverriddenClasses(type: MockType) async throws {
         try await runTest(template: ClassOverridingTemplate(), for: type)
     }
-//
-//    @Test
-//    fun testMocksSuperclasses() {
-//        runTest(SuperclassTest())
-//    }
-//
-//    @Test
-//    fun testDeepProtocolInheritance() {
-//        runTest(DeepProtocolInheritanceTest())
-//    }
-//
-//    fun testAugmentedClassSubscript() {
-//        runTest(AugmentedClassSubscriptTest())
-//    }
-//
+
+    @Test(arguments: arguments)
+    func mocksSuperclasses(type: MockType) async throws {
+        try await runTest(template: SuperclassTemplate(), for: type)
+    }
+
+    @Test(arguments: arguments)
+    func deepProtocolInheritance(type: MockType) async throws {
+        try await runTest(template: DeepProtocolInheritanceTemplate(), for: type)
+    }
+
+    @Test(arguments: arguments)
+    func augmentedClassSubscript(type: MockType) async throws {
+        try await runTest(template: AugmentedClassSubscriptTemplate(), for: type)
+    }
+
     private func runTest(template: GeneratorTestTemplate, for type: MockType) async throws {
         let view = try await MustacheMockView(type: type)
         let generator = Generator(view: view)
