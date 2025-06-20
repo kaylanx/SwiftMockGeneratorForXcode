@@ -336,7 +336,7 @@ class MockViewPresenter: MockTransformer {
     private func transformSubscripts(_ subscripts: [Subscript], isClass: Bool) -> [SubscriptViewModel] {
         subscripts.map {
             SubscriptViewModel(
-                capitalizedUniqueName: getUniqueName($0).capitalized,
+                capitalizedUniqueName: getUniqueName($0).capitalizingFirstLetter(),
                 escapingParameters: transformParameters($0.parameters, genericParameters: []),
                 hasSetter: $0.isWritable,
                 resultType: transformReturnType(
