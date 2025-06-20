@@ -53,16 +53,19 @@ public final class FunctionType: Type, Equatable {
         private var _async: Bool = false
         private var _throws: Bool = false
 
+        @discardableResult
         func `async`() -> Builder {
             self._async = true
             return self
         }
 
+        @discardableResult
         func `throws`() -> Builder {
             self._throws = true
             return self
         }
 
+        @discardableResult
         func argument(type: String) -> Builder {
             self.arguments.append(TypeIdentifier(identifier: type))
             return self
@@ -74,6 +77,7 @@ public final class FunctionType: Type, Equatable {
             }
         }
 
+        @discardableResult
         func returnType(type: String) -> Builder {
             self._returnType = TypeIdentifier(identifier: type)
             return self

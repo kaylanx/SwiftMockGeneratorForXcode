@@ -15,7 +15,7 @@ class TypeFactory<Builder> {
     }
 
     @discardableResult
-    func function(_ build: (FunctionType.Builder) -> Void) -> Builder {
+    func function(build: (FunctionType.Builder) -> Void) -> Builder {
         let builder = FunctionType.Builder()
         build(builder)
         getType(builder.build())
@@ -23,7 +23,7 @@ class TypeFactory<Builder> {
     }
 
     @discardableResult
-    func optional(_ build: (OptionalType.Builder) -> Void) -> Builder {
+    func optional(build: (OptionalType.Builder) -> Void) -> Builder {
         let builder = OptionalType.Builder()
         build(builder)
         getType(builder.build())
@@ -31,26 +31,27 @@ class TypeFactory<Builder> {
     }
 
     @discardableResult
-    func array(_ build: (ArrayType.Builder) -> Void) -> Builder {
+    func array(build: (ArrayType.Builder) -> Void) -> Builder {
         let builder = ArrayType.Builder()
         build(builder)
         getType(builder.build())
         return previousBuilder
     }
-//
-//    func dictionary(_ build: (DictionaryType.Builder) -> Void) -> B {
-//        let builder = DictionaryType.Builder()
-//        build(builder)
-//        getType(builder.build())
-//        return previousBuilder
-//    }
-//
-//    func generic(identifier: String, _ build: (GenericType.Builder) -> Void) -> B {
-//        let builder = GenericType.Builder(identifier: identifier)
-//        build(builder)
-//        getType(builder.build())
-//        return previousBuilder
-//    }
+
+    @discardableResult
+    func dictionary(build: (DictionaryType.Builder) -> Void) -> Builder {
+        let builder = DictionaryType.Builder()
+        build(builder)
+        getType(builder.build())
+        return previousBuilder
+    }
+
+    func generic(identifier: String, build: (GenericType.Builder) -> Void) -> Builder {
+        let builder = GenericType.Builder(identifier: identifier)
+        build(builder)
+        getType(builder.build())
+        return previousBuilder
+    }
 
     func bracket() -> TypeFactory<Builder> {
         return TypeFactory<Builder>(previousBuilder: previousBuilder) {
