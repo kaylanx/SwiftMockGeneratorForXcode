@@ -187,9 +187,8 @@ class MockViewPresenter: MockTransformer {
             let optionalized = OptionalizeIUOVisitor.optionalize(type: $0.type)
             let removedOptional = RemoveOptionalVisitor.remove(optionalType: $0.type)
             let removedRecursive = RecursiveRemoveOptionalVisitor.remove(optionalType: $0.type)
-            let assignment = DefaultValueVisitor.getDefaultValue(
-                for: $0.type
-            ) != "nil" ? "= \(DefaultValueVisitor.getDefaultValue(for: $0.type)!)" : ""
+            let assignment = getDefaultValueAssignment(type: $0.type)
+
             return PropertyViewModel(
                 name: $0.name,
                 capitalizedUniqueName: name,
@@ -208,6 +207,14 @@ class MockViewPresenter: MockTransformer {
                 )
             )
         }
+    }
+
+    private func getDefaultValueAssignment(type: `Type`) -> String {
+        let defaultValue = DefaultValueVisitor.getDefaultValue(for: type)
+        if let defaultValue, defaultValue != "nil" {
+            return "= \(defaultValue)"
+        }
+        return ""
     }
 
     private func getUniqueName(_ method: Method) -> String {
@@ -268,7 +275,10 @@ class MockViewPresenter: MockTransformer {
     }
 
     private func transformReturnType(_ type: ResolvedType, genericParameters: [String]) -> ResultTypeViewModel {
-        let erased = erase(type.originalType, genericParameters)
+        let erased = erase(
+            type.originalType,
+            genericParameters: genericParameters
+        )
         return ResultTypeViewModel(
             defaultValueAssignment: getDefaultValueAssignment(type.resolvedType),
             defaultValue: getDefaultValue(type.resolvedType),
@@ -279,10 +289,10 @@ class MockViewPresenter: MockTransformer {
         )
     }
 
-    private func erase(_ type: `Type`, _ genericParameters: [String]) -> `Type` {
+    private func erase(_ type: `Type`, genericParameters: [String]) -> `Type` {
         let copied = copy(type)
-        TypeErasingVisitor(genericIdentifiers: genericParameters)
-            .visit(type: copied)
+        let visitor = TypeErasingVisitor(genericIdentifiers: genericParameters)
+        copied.accept(visitor: visitor)
         return copied
     }
 

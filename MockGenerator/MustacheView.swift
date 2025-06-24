@@ -12,10 +12,9 @@ class MustacheView: NSObject, MockView {
     }
 
     func render(model: MockViewModel) {
-        do {
-            let template = try GRMustacheTemplate(fromResource: templateName, bundle: Bundle(for: MustacheView.self))
-            result = try template.renderObject(model.toDictionary())
-        } catch { } // ignored
+        let template = try? GRMustacheTemplate(fromResource: templateName, bundle: Bundle(for: MustacheView.self))
+        let renderedObject = try? template?.renderObject(model.toDictionary())
+        result = renderedObject ?? ""
     }
 }
 

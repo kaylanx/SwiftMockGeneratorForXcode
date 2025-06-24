@@ -17,7 +17,7 @@ public final class CallbackMockView: MockView {
     public func render(model: MockViewModel) {
         result = callback(model)
             .split(separator: "\n")
-            .filter { $0.isEmpty == false }
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { $0.isEmpty == false }
     }
 }

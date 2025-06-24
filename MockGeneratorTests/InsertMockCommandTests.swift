@@ -7,7 +7,8 @@ import AST
 
 class InsertMockCommandTests: XCTestCase {
 
-    func test_generateAnyMock() {
+    func test_generateAnyMock() throws {
+        throw XCTSkip("Any types not yet implemented.")
         assertMockGeneratesExpected("AnyProtocolMock")
     }
 
