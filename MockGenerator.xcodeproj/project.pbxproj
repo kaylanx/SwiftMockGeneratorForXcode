@@ -94,6 +94,8 @@
 		5830EA192DE8EFF00029D24E /* SwiftToolkit in Frameworks */ = {isa = PBXBuildFile; productRef = 5830EA182DE8EFF00029D24E /* SwiftToolkit */; };
 		5830EA1A2DE8EFF00029D24E /* SwiftToolkit in CopyFiles */ = {isa = PBXBuildFile; productRef = 5830EA182DE8EFF00029D24E /* SwiftToolkit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		584F37462DE8F4DC004F9C9D /* SwiftyPluginTest in Frameworks */ = {isa = PBXBuildFile; productRef = 584F37452DE8F4DC004F9C9D /* SwiftyPluginTest */; };
+		58E2505F2DEE2E190040E19A /* MockGenerating in Frameworks */ = {isa = PBXBuildFile; productRef = 58E2505E2DEE2E190040E19A /* MockGenerating */; };
+		58E250612DEE31220040E19A /* MockGenerating in Frameworks */ = {isa = PBXBuildFile; productRef = 58E250602DEE31220040E19A /* MockGenerating */; };
 		BF14E748254C57D90010956B /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F866EF20D90C3A00E79758 /* XcodeKit.framework */; };
 		BF14E749254C57D90010956B /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14F866EF20D90C3A00E79758 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -347,6 +349,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E2505F2DEE2E190040E19A /* MockGenerating in Frameworks */,
 				5830EA102DE8ED9E0029D24E /* SwiftToolkit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +358,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E250612DEE31220040E19A /* MockGenerating in Frameworks */,
 				14276C6A1F4F312E00EA7753 /* MockGenerator.framework in Frameworks */,
 				584F37462DE8F4DC004F9C9D /* SwiftyPluginTest in Frameworks */,
 				5830EA192DE8EFF00029D24E /* SwiftToolkit in Frameworks */,
@@ -808,6 +812,7 @@
 			mainGroup = 14CA2D4A1F40007000900937;
 			packageReferences = (
 				5830EA0E2DE8ED9E0029D24E /* XCLocalSwiftPackageReference "../swift-toolkit/SwiftToolkit" */,
+				58E2505D2DEE2E190040E19A /* XCLocalSwiftPackageReference "MockGenerating" */,
 			);
 			productRefGroup = 14CA2D541F40007000900937 /* Products */;
 			projectDirPath = "";
@@ -1490,6 +1495,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../swift-toolkit/SwiftToolkit";
 		};
+		58E2505D2DEE2E190040E19A /* XCLocalSwiftPackageReference "MockGenerating" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = MockGenerating;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1511,6 +1520,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5830EA0E2DE8ED9E0029D24E /* XCLocalSwiftPackageReference "../swift-toolkit/SwiftToolkit" */;
 			productName = SwiftyPluginTest;
+		};
+		58E2505E2DEE2E190040E19A /* MockGenerating */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MockGenerating;
+		};
+		58E250602DEE31220040E19A /* MockGenerating */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58E2505D2DEE2E190040E19A /* XCLocalSwiftPackageReference "MockGenerating" */;
+			productName = MockGenerating;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

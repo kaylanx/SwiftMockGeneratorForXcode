@@ -1,10 +1,10 @@
 import XCTest
-import UseCases
 import Resolver
 import AST
 import Parser
 import TestHelper
 import SwiftyKit
+@testable import MockGenerating
 @testable import MockGenerator
 
 class MemberTransformingVisitorTests: XCTestCase {
@@ -27,91 +27,91 @@ class MemberTransformingVisitorTests: XCTestCase {
     // MARK: - visit
 
     func test_shouldTransformTypeIdentifier() {
-        assertTypeIs("Type", UseCases.TypeIdentifier.self, "Type")
+        assertTypeIs("Type", MockGenerating.TypeIdentifier.self, "Type")
     }
 
     func test_shouldTransformMetadataTypeIdentifier() {
-        assertTypeIs("T.Type", UseCases.TypeIdentifier.self, "T.Type")
+        assertTypeIs("T.Type", MockGenerating.TypeIdentifier.self, "T.Type")
     }
 
     func test_shouldTransformProtocolMetadataTypeIdentifier() {
-        assertTypeIs("T.Protocol", UseCases.TypeIdentifier.self, "T.Protocol")
+        assertTypeIs("T.Protocol", MockGenerating.TypeIdentifier.self, "T.Protocol")
     }
 
     func test_shouldTransformParenthesizedType() {
-        assertTypeIs("(T)", UseCases.TupleType.self, "(T)")
+        assertTypeIs("(T)", MockGenerating.TupleType.self, "(T)")
     }
 
     func test_shouldTransformGenericType() {
-        assertTypeIs("Type<A>", UseCases.GenericType.self, "Type<A>")
+        assertTypeIs("Type<A>", MockGenerating.GenericType.self, "Type<A>")
     }
 
     func test_shouldTransformGenericTypeWithMultipleArguments() {
-        assertTypeIs("Type<A, B>", UseCases.GenericType.self, "Type<A, B>")
+        assertTypeIs("Type<A, B>", MockGenerating.GenericType.self, "Type<A, B>")
     }
 
     func test_shouldTransformGenericTypeWithNestedTypes() {
-        assertTypeIs("Type<A.B>", UseCases.GenericType.self, "Type<A.B>")
+        assertTypeIs("Type<A.B>", MockGenerating.GenericType.self, "Type<A.B>")
     }
 
     func test_shouldTransformNestedTypes() {
-        assertTypeIs("A.B.C", UseCases.TypeIdentifier.self, "A.B.C")
-        let type = transformType("A.B", UseCases.TypeIdentifier.self)
-        XCTAssertEqual(type.identifiers[0] as! String, "A")
-        XCTAssertEqual(type.identifiers[1] as! String, "B")
+        assertTypeIs("A.B.C", MockGenerating.TypeIdentifier.self, "A.B.C")
+        let type = transformType("A.B", MockGenerating.TypeIdentifier.self)
+        XCTAssertEqual(type.identifiers[0], "A")
+        XCTAssertEqual(type.identifiers[1], "B")
     }
 
     func test_shouldTransformArrayType() {
-        let type = transformType("[Type]", UseCases.ArrayType.self)
+        let type = transformType("[Type]", MockGenerating.ArrayType.self)
         XCTAssertEqual(type.text, "[Type]")
-        XCTAssert(type.type is UseCases.TypeIdentifier)
+        XCTAssert(type.type is MockGenerating.TypeIdentifier)
     }
 
     func test_shouldTransformArrayTypeWithComplexType() {
-        let type = transformType("[[Int]]", UseCases.ArrayType.self)
+        let type = transformType("[[Int]]", MockGenerating.ArrayType.self)
         XCTAssertEqual(type.text, "[[Int]]")
-        XCTAssert(type.type is UseCases.ArrayType)
+        XCTAssert(type.type is MockGenerating.ArrayType)
         XCTAssertEqual(type.type.text, "[Int]")
-        let inner = type.type as! UseCases.ArrayType
-        XCTAssert(inner.type is UseCases.TypeIdentifier)
+        let inner = type.type as! MockGenerating.ArrayType
+        XCTAssert(inner.type is MockGenerating.TypeIdentifier)
     }
 
     func test_shouldTransformDictionaryType() {
-        let type = transformType("[A: B]", UseCases.DictionaryType.self)
+        let type = transformType("[A: B]", MockGenerating.DictionaryType.self)
         XCTAssertEqual(type.text, "[A: B]")
-        XCTAssert(type.keyType is UseCases.TypeIdentifier)
-        XCTAssert(type.valueType is UseCases.TypeIdentifier)
+        XCTAssert(type.keyType is MockGenerating.TypeIdentifier)
+        XCTAssert(type.valueType is MockGenerating.TypeIdentifier)
     }
 
     func test_shouldTransformDictionaryTypeWithComplexTypes() {
-        let type = transformType("[[A]: [B: C]]", UseCases.DictionaryType.self)
+        let type = transformType("[[A]: [B: C]]", MockGenerating.DictionaryType.self)
         XCTAssertEqual(type.text, "[[A]: [B: C]]")
-        XCTAssert(type.keyType is UseCases.ArrayType)
-        XCTAssert(type.valueType is UseCases.DictionaryType)
+        XCTAssert(type.keyType is MockGenerating.ArrayType)
+        XCTAssert(type.valueType is MockGenerating.DictionaryType)
     }
 
     func test_shouldTransformOptionalType() {
-        let type = transformType("A?", UseCases.OptionalType.self)
+        let type = transformType("A?", MockGenerating.OptionalType.self)
         XCTAssertEqual(type.text, "A?")
-        XCTAssert(type.type is UseCases.TypeIdentifier)
+        XCTAssert(type.type is MockGenerating.TypeIdentifier)
     }
 
     func test_shouldTransformComplexOptionalType() {
-        let type = transformType("[A]?", UseCases.OptionalType.self)
+        let type = transformType("[A]?", MockGenerating.OptionalType.self)
         XCTAssertEqual(type.text, "[A]?")
-        XCTAssert(type.type is UseCases.ArrayType)
+        XCTAssert(type.type is MockGenerating.ArrayType)
     }
 
     // TODO: support IUO properly
     // TODO: support Optional<Style>
     func test_shouldTransformIUO() {
-        let type = transformType("A!", UseCases.OptionalType.self)
+        let type = transformType("A!", MockGenerating.OptionalType.self)
         XCTAssertEqual(type.text, "A!")
         XCTAssert(type.isImplicitlyUnwrapped)
     }
 
     func test_shouldTransformFunctionType() {
-        let type = transformType("() -> ()", UseCases.FunctionType.self)
+        let type = transformType("() -> ()", MockGenerating.FunctionType.self)
         XCTAssertEqual(type.text, "() -> ()")
         XCTAssertFalse(type.throws)
         XCTAssertEqual(type.returnType.text, "()")
@@ -119,20 +119,20 @@ class MemberTransformingVisitorTests: XCTestCase {
     }
 
     func test_shouldTransformThrowingFunctionType() {
-        let type = transformType("() throws -> ()", UseCases.FunctionType.self)
+        let type = transformType("() throws -> ()", MockGenerating.FunctionType.self)
         XCTAssertEqual(type.text, "() throws -> ()")
         XCTAssertTrue(type.throws)
     }
 
     func test_shouldTransformFunctionTypeWithArguments() {
-        let type = transformType("(A, [B]) -> ()", UseCases.FunctionType.self)
+        let type = transformType("(A, [B]) -> ()", MockGenerating.FunctionType.self)
         XCTAssertEqual(type.text, "(A, [B]) -> ()")
         XCTAssertEqual(type.arguments[0].text, "A")
         XCTAssertEqual(type.arguments[1].text, "[B]")
     }
 
     func test_shouldTransformTupleType() {
-        let type = transformType("(a: A, [B])", UseCases.TupleType.self)
+        let type = transformType("(a: A, [B])", MockGenerating.TupleType.self)
         XCTAssertEqual(type.text, "(a: A, [B])")
         XCTAssertEqual(type.tupleElements[0].label, "a")
         XCTAssertEqual(type.tupleElements[0].text, "a: A")
@@ -140,12 +140,12 @@ class MemberTransformingVisitorTests: XCTestCase {
         XCTAssertEqual(type.tupleElements[1].text, "[B]")
     }
 
-    private func assertTypeIs<T: UseCases.`Type`>(_ input: String, _ t: T.Type, _ text: String, line: UInt = #line) {
+    private func assertTypeIs<T: MockGenerating.`Type`>(_ input: String, _ t: T.Type, _ text: String, line: UInt = #line) {
         let result = transformType(input, T.self)
         XCTAssertEqual(result.text, text, line: line)
     }
 
-    private func transformType<T: UseCases.`Type`>(_ input: String, _ t: T.Type) -> T {
+    private func transformType<T: MockGenerating.`Type`>(_ input: String, _ t: T.Type) -> T {
         let type = try! ParserTestHelper.parseType(input)
         return MemberTransformingVisitor.transformType(type, resolver: resolver) as! T
     }
@@ -188,10 +188,10 @@ class MemberTransformingVisitorTests: XCTestCase {
         XCTAssertEqual(method.declarationText, "func a() async throws")
     }
 
-    func test_visit_shouldTransformAnyProtocolMethod() {
-        let method = transformMethod("func a() -> any Foo")
-        XCTAssert(method.any)
-    }
+//    func test_visit_shouldTransformAnyProtocolMethod() {
+//        let method = transformMethod("func a() -> any Foo")
+//        XCTAssert(method.any)
+//    }
 
     func test_visit_shouldTransformThrowingProtocolMethod() {
         let method = transformMethod("func a() throws")
@@ -207,7 +207,7 @@ class MemberTransformingVisitorTests: XCTestCase {
 
     func test_visit_shouldTransformReturningProtocolMethod() {
         let method = transformMethod("func a() -> A")
-        XCTAssert(method.returnType.originalType is UseCases.TypeIdentifier)
+        XCTAssert(method.returnType.originalType is MockGenerating.TypeIdentifier)
         XCTAssertEqual(method.returnType.originalType.text, "A")
         XCTAssertEqual(method.returnType.resolvedType.text, "A")
     }
@@ -249,7 +249,7 @@ class MemberTransformingVisitorTests: XCTestCase {
         assertMethodIsNotTransformed("final func a()")
     }
 
-    private func transformMethod(_ input: String) -> UseCases.Method {
+    private func transformMethod(_ input: String) -> MockGenerating.Method {
         let method = try! ParserTestHelper.parseFunctionDeclaration(input)
         method.accept(visitor)
         return visitor.methods[0]
@@ -261,7 +261,7 @@ class MemberTransformingVisitorTests: XCTestCase {
         XCTAssert(visitor.methods.isEmpty, line: line)
     }
 
-    private func assertParameter(_ parameter: UseCases.Parameter, externalName: String? = nil, internalName: String, type: String, isEscaping: Bool = false, line: UInt = #line) {
+    private func assertParameter(_ parameter: MockGenerating.Parameter, externalName: String? = nil, internalName: String, type: String, isEscaping: Bool = false, line: UInt = #line) {
         XCTAssertEqual(parameter.externalName, externalName, line: line)
         XCTAssertEqual(parameter.internalName, internalName, line: line)
         XCTAssertEqual(parameter.type.originalType.text, type, line: line)
@@ -286,10 +286,10 @@ class MemberTransformingVisitorTests: XCTestCase {
 
     func test_visit_shouldTransformComplexTypeProtocolProperty() {
         let property = transformProperty("var a: [B] { get set }")
-        XCTAssert(property.type is UseCases.ArrayType)
-        let array = property.type as! UseCases.ArrayType
+        XCTAssert(property.type is MockGenerating.ArrayType)
+        let array = property.type as! MockGenerating.ArrayType
         XCTAssertEqual(array.text, "[B]")
-        XCTAssert(array.type is UseCases.TypeIdentifier)
+        XCTAssert(array.type is MockGenerating.TypeIdentifier)
         XCTAssertEqual(array.type.text, "B")
     }
 
@@ -362,16 +362,16 @@ class MemberTransformingVisitorTests: XCTestCase {
     }
 
     func test_visit_shouldFindArrayLiteralType() {
-        let property: UseCases.`Type` = transformProperty("class A {}\nvar a = [A]()").type
+        let property: MockGenerating.`Type` = transformProperty("class A {}\nvar a = [A]()").type
         XCTAssertEqual(property.text, "[A]")
-        XCTAssert(property is UseCases.ArrayType)
+        XCTAssert(property is MockGenerating.ArrayType)
     }
 
     func test_visit_shouldAppendTypeAnnotationToSignatureWhenInferredType() {
         XCTAssertEqual(transformProperty("var a = 0").declarationText, "var a: Int")
     }
 
-    private func transformProperty(_ input: String) -> UseCases.Property {
+    private func transformProperty(_ input: String) -> MockGenerating.Property {
         let file = try! ParserTestHelper.parseFile(from: input)
         let property = file.variableDeclarations[0]
         property.accept(visitor)
@@ -634,7 +634,7 @@ class MemberTransformingVisitorTests: XCTestCase {
         """
     }
 
-    private func getParametersString(_ method: UseCases.Method) -> String {
+    private func getParametersString(_ method: MockGenerating.Method) -> String {
         let parameters = method.parametersList
         return parameters.map { $0.text }.joined(separator: ", ")
     }

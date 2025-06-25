@@ -54,7 +54,7 @@ class AsyncAwaitProtocolMock: AsyncAwaitProtocol {
         invokedClosureArgumentAsyncAwait = true
         invokedClosureArgumentAsyncAwaitCount += 1
         if shouldInvokeClosureArgumentAsyncAwaitClosure {
-            closure()
+            await closure()
         }
     }
 
@@ -66,7 +66,7 @@ class AsyncAwaitProtocolMock: AsyncAwaitProtocol {
         invokedThrowingClosureArgumentAsyncAwait = true
         invokedThrowingClosureArgumentAsyncAwaitCount += 1
         if shouldInvokeThrowingClosureArgumentAsyncAwaitClosure {
-            try? closure()
+            try? await closure()
         }
     }
 }

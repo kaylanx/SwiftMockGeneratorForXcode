@@ -1,4 +1,4 @@
-import UseCases
+import MockGenerating
 import GRMustache
 import Foundation
 
@@ -12,10 +12,9 @@ class MustacheView: NSObject, MockView {
     }
 
     func render(model: MockViewModel) {
-        do {
-            let template = try GRMustacheTemplate(fromResource: templateName, bundle: Bundle(for: MustacheView.self))
-            result = try template.renderObject(model.toDictionary())
-        } catch { } // ignored
+        let template = try? GRMustacheTemplate(fromResource: templateName, bundle: Bundle(for: MustacheView.self))
+        let renderedObject = try? template?.renderObject(model.toDictionary())
+        result = renderedObject ?? ""
     }
 }
 
@@ -64,28 +63,7 @@ extension PropertyViewModel {
     }
 }
 
-// TODO: Should be in the Kotlin code, not sure what they should actually be doing
-extension UseCases.Method {
-    var `async`: Bool {
-        declarationText.contains("async")
-    }
-
-    var `any`: Bool {
-        declarationText.contains("any")
-    }
-}
-
 extension MethodViewModel {
-
-    // TODO: Should be in the Kotlin code, not sure what they should actually be doing
-    var `async`: Bool {
-        declarationText.contains("async")
-    }
-
-    // TODO: Should be in the Kotlin code, not sure what they should actually be doing
-    var `any`: Bool {
-        declarationText.contains("any")
-    }
 
     fileprivate func toDictionary() -> NSDictionary {
         let dictionary = NSMutableDictionary()
@@ -103,7 +81,6 @@ extension MethodViewModel {
         dictionary["throws"] = `throws`
         dictionary["rethrows"] = `rethrows`
         dictionary["async"] = `async`
-        dictionary["any"] = `any`
         dictionary["isImplemented"] = isImplemented
         dictionary["declarationText"] = declarationText
         return dictionary

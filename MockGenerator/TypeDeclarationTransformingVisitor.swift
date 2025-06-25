@@ -1,7 +1,7 @@
 import AST
 import SwiftyKit
-import UseCases
-import class UseCases.Class
+import MockGenerating
+import class MockGenerating.Class
 
 class TypeDeclarationTransformingVisitor: ElementVisitor {
 
@@ -47,8 +47,13 @@ class TypeDeclarationTransformingVisitor: ElementVisitor {
             return nil
         }
         if firstInheritedType.text == "NSObject" {
-            return UseCases.Class(
-                initializers: [UseCases.Initializer(parametersList: [], isFailable: false, throws: false)],
+            return MockGenerating.Class(
+                initializers: [MockGenerating.Initializer(
+                    parametersList: [],
+                    isFailable: false,
+                    async: false,
+                    throws: false
+                )],
                 properties: [],
                 methods: [],
                 subscripts: [],

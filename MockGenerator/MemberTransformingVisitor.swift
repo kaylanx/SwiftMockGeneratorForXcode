@@ -1,33 +1,33 @@
-import UseCases
+import MockGenerating
 import AST
 import SwiftyKit
 import Foundation
 
 class MemberTransformingVisitor: RecursiveElementVisitor {
 
-    private(set) var initializers = [UseCases.Initializer]()
-    private(set) var properties = [UseCases.Property]()
-    private(set) var methods = [UseCases.Method]()
-    private(set) var subscripts = [UseCases.Subscript]()
-    private(set) var type: UseCases.`Type` = TypeIdentifier.Builder(identifier: "").build()
+    private(set) var initializers = [MockGenerating.Initializer]()
+    private(set) var properties = [MockGenerating.Property]()
+    private(set) var methods = [MockGenerating.Method]()
+    private(set) var subscripts = [MockGenerating.Subscript]()
+    private(set) var type: MockGenerating.`Type` = TypeIdentifier.Builder(identifier: "").build()
     private let resolver: Resolver
 
     init(resolver: Resolver) {
         self.resolver = resolver
     }
 
-    static func transformType(_ element: AST.Element, resolver: Resolver) -> UseCases.`Type` {
+    static func transformType(_ element: AST.Element, resolver: Resolver) -> MockGenerating.`Type` {
         let visitor = MemberTransformingVisitor(resolver: resolver)
         element.accept(visitor)
         return visitor.type
     }
 
-    func transformType(_ element: AST.Element) -> UseCases.`Type` {
+    func transformType(_ element: AST.Element) -> MockGenerating.`Type` {
         return MemberTransformingVisitor.transformType(element, resolver: resolver)
     }
 
     override func visitType(_ element: AST.`Type`) {
-        type = UseCases.TypeIdentifier(identifier: element.text)
+        type = MockGenerating.TypeIdentifier(identifier: element.text)
     }
 
     override func visitTypeIdentifier(_ element: AST.TypeIdentifier) {
@@ -35,41 +35,48 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
             type = GenericType(identifier: element.typeName, arguments: genericArgumentClause.arguments.map { transformType($0) })
         } else {
             let identifiers = element.typeNames
-            type = UseCases.TypeIdentifier(identifiers: NSMutableArray(array: identifiers as NSArray))
+            type = MockGenerating.TypeIdentifier(identifiers: identifiers)
         }
     }
 
     override func visitArrayType(_ element: AST.ArrayType) {
-        type = UseCases.ArrayType(type: transformType(element.elementType), useVerboseSyntax: false)
+        type = MockGenerating.ArrayType(type: transformType(element.elementType), useVerboseSyntax: false)
     }
 
     override func visitDictionaryType(_ element: AST.DictionaryType) {
         let key = transformType(element.keyType)
         let value = transformType(element.valueType)
-        type = UseCases.DictionaryType(keyType: key, valueType: value, useVerboseSyntax: false)
+        type = MockGenerating.DictionaryType(keyType: key, valueType: value, useVerboseSyntax: false)
     }
 
     override func visitOptionalType(_ element: AST.OptionalType) {
         let iuo = element.text.hasSuffix("!")
         let type = transformType(element.type)
-        self.type = UseCases.OptionalType(type: type, isImplicitlyUnwrapped: iuo, useVerboseSyntax: false)
+        self.type = MockGenerating.OptionalType(type: type, isImplicitlyUnwrapped: iuo, useVerboseSyntax: false)
     }
 
     override func visitFunctionType(_ element: AST.FunctionType) {
-        type = UseCases.FunctionType(arguments: element.functionTypeArgumentClause.arguments
-            .compactMap { $0.typeAnnotation?.type ?? $0.type }
+        type = MockGenerating.FunctionType(
+            arguments: element.functionTypeArgumentClause.arguments
+                .compactMap { $0.typeAnnotation?.type ?? $0.type
+                }
             .map { transformType($0) },
             returnType: transformType(element.returnType),
-            throws: element.throws)
+            async: element.async,
+            throws: element.throws
+        )
     }
 
     override func visitParenthesizedType(_ element: ParenthesizedType) {
-        let tupleType = UseCases.TupleType.TupleElement(label: nil, type: transformType(element.type))
+        let tupleType = MockGenerating.TupleType.TupleElement(
+            label: nil,
+            type: transformType(element.type)
+        )
         type = TupleType(tupleElements: [tupleType])
     }
 
     override func visitMetatypeType(_ element: MetatypeType) {
-        type = UseCases.TypeIdentifier(identifiers: NSMutableArray(array: [element.type.text, element.metatype.text]))
+        type = MockGenerating.TypeIdentifier(identifiers: [element.type.text, element.metatype.text])
     }
 
     override func visitTupleType(_ element: AST.TupleType) {
@@ -77,7 +84,7 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
         type = TupleType(tupleElements: tupleElements)
     }
 
-    private func transformTupleType(_ e: TupleTypeElement) -> UseCases.TupleType.TupleElement? {
+    private func transformTupleType(_ e: TupleTypeElement) -> MockGenerating.TupleType.TupleElement? {
         if let type = e.type ?? e.typeAnnotation?.type {
             return TupleType.TupleElement(label: e.elementName?.text, type: transformType(type))
         }
@@ -100,15 +107,17 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
                && !element.isFinal
     }
 
-    private func transform(_ element: FunctionDeclaration) -> UseCases.Method {
+    private func transform(_ element: FunctionDeclaration) -> MockGenerating.Method {
         let genericParameter = transformGenericParameters(from: element)
         let parameters = transformParameters(element.parameterClause.parameters)
-        let returnType = element.functionResult.map { transformType($0.type) } ?? UseCases.TypeIdentifier(identifier: "")
-        return UseCases.Method(name: element.name,
+        let returnType = element.functionResult.map { transformType($0.type) } ?? MockGenerating.TypeIdentifier(identifier: "")
+        return MockGenerating.Method(
+            name: element.name,
             genericParameters: genericParameter,
-            returnType: UseCases.ResolvedType(originalType: returnType, resolvedType: returnType),
+            returnType: MockGenerating.ResolvedType(originalType: returnType, resolvedType: returnType),
             parametersList: parameters,
             declarationText: getDeclarationText(element),
+            async: element.async,
             throws: element.throws,
             rethrows: element.rethrows
         )
@@ -126,7 +135,7 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
         } ?? []
     }
 
-    private func transformParameters(_ parameters: [AST.Parameter]) -> [UseCases.Parameter] {
+    private func transformParameters(_ parameters: [AST.Parameter]) -> [MockGenerating.Parameter] {
         return parameters.map { parameter in
             var internalName = parameter.localParameterName
             if internalName == "`let`" {
@@ -134,10 +143,10 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
             } else if internalName == "`var`" {
                 internalName = "var"
             }
-            return UseCases.Parameter(
+            return MockGenerating.Parameter(
                 externalName: parameter.externalParameterName,
                 internalName: internalName,
-                type: UseCases.ResolvedType(originalType: transformType(parameter.typeAnnotation.type), resolvedType: resolveAndTransform(parameter.typeAnnotation.type)),
+                type: MockGenerating.ResolvedType(originalType: transformType(parameter.typeAnnotation.type), resolvedType: resolveAndTransform(parameter.typeAnnotation.type)),
                 text: parameter.text,
                 isEscaping: isEscaping(parameter))
         }
@@ -147,7 +156,7 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
         return parameter.typeAnnotation.attributes.attributes.contains { $0.text == "@escaping" }
     }
 
-    private func resolveAndTransform(_ type: AST.`Type`) -> UseCases.`Type` {
+    private func resolveAndTransform(_ type: AST.`Type`) -> MockGenerating.`Type` {
         let resolved = resolveType(type)
         return transformType(resolved)
     }
@@ -165,13 +174,13 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
             return
         }
         let typeAnnotation = element.typeAnnotation == nil ? ": \(type.text)" : ""
-        properties.append(UseCases.Property(name: name,
+        properties.append(MockGenerating.Property(name: name,
             type: type,
             isWritable: isWritable(element),
             declarationText: "var \(getDeclarationText(element.patternInitializerList.patternInitializers[0]))\(typeAnnotation)"))
     }
 
-    private func findType(_ element: VariableDeclaration) -> UseCases.`Type`? {
+    private func findType(_ element: VariableDeclaration) -> MockGenerating.`Type`? {
         if let type = element.typeAnnotation?.type {
             return transformType(type)
         } else if let type = VariableTypeResolver.resolve(element, resolver: resolver) {
@@ -201,10 +210,14 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
         guard isOverridable(element) else {
             return
         }
-        initializers.append(UseCases.Initializer(
-            parametersList: transformParameters(element.parameterClause.parameters),
-            isFailable: element.isFailable,
-            throws: element.throws))
+        initializers.append(
+            MockGenerating.Initializer(
+                parametersList: transformParameters(element.parameterClause.parameters),
+                isFailable: element.isFailable,
+                async: element.async,
+                throws: element.throws
+            )
+        )
     }
 
     override func visitSubscriptDeclaration(_ element: SubscriptDeclaration) {
@@ -213,9 +226,9 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
             return
         }
         let returnType = transformType(functionResult.type)
-        let resolvedType = UseCases.ResolvedType(originalType: returnType, resolvedType: returnType)
+        let resolvedType = MockGenerating.ResolvedType(originalType: returnType, resolvedType: returnType)
         subscripts.append(
-            UseCases.Subscript(
+            MockGenerating.Subscript(
                 returnType: resolvedType,
                 parameters: transformParameters(element.parameterClause.parameters),
                 isWritable: isWritable(element),

@@ -1,0 +1,62 @@
+{{#initializer}}
+    {{{declarationText}}} {
+      {{{initializerCall}}}
+    }
+{{/initializer}}
+
+{{#property}}
+
+
+    {{#hasSetter}}
+
+        {{{declarationText}}} {
+            set {
+            }
+            get {
+                {{#defaultValue}}return {{{defaultValue}}}{{/defaultValue}}
+                {{^defaultValue}}fatalError("Dummy implementation"){{/defaultValue}}
+            }
+        }
+
+    {{/hasSetter}}
+    {{^hasSetter}}
+
+        {{{declarationText}}} {
+            {{#defaultValue}}return {{{defaultValue}}}{{/defaultValue}}
+            {{^defaultValue}}fatalError("Dummy implementation"){{/defaultValue}}
+        }
+
+    {{/hasSetter}}
+
+{{/property}}
+
+{{#subscript}}
+
+    {{{declarationText}}} {
+
+    {{#hasSetter}}
+        set {
+        }
+        get {
+        return {{{resultType.defaultValue}}}
+        }
+    {{/hasSetter}}
+    {{^hasSetter}}
+        {{#resultType.defaultValue}}return {{{resultType.defaultValue}}}{{/resultType.defaultValue}}
+        {{^resultType.defaultValue}}fatalError("Dummy implementation"){{/resultType.defaultValue}}
+    {{/hasSetter}}
+    }
+
+{{/subscript}}
+
+{{#method}}
+
+    {{{declarationText}}} {
+
+    {{#resultType}}
+        {{#defaultValue}}return {{{defaultValue}}}{{/defaultValue}}
+        {{^defaultValue}}fatalError("Dummy implementation"){{/defaultValue}}
+    {{/resultType}}
+
+    }
+{{/method}}

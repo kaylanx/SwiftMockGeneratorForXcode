@@ -1,23 +1,23 @@
 import AST
 import SwiftyKit
-import UseCases
+import MockGenerating
 
 class VariableTypeResolver: RecursiveElementVisitor {
 
-  public class func resolve(_ element: AST.Element?, resolver: Resolver) -> UseCases.`Type`? {
+  public class func resolve(_ element: AST.Element?, resolver: Resolver) -> MockGenerating.`Type`? {
     let visitor = VariableTypeResolver(resolver: resolver)
     element?.accept(visitor)
     return visitor.type
   }
 
   let resolver: Resolver
-  var type: UseCases.`Type`?
+  var type: MockGenerating.`Type`?
 
   init(resolver: Resolver) {
     self.resolver = resolver
   }
 
-  private func resolve(_ element: AST.Element?) -> UseCases.`Type`? {
+  private func resolve(_ element: AST.Element?) -> MockGenerating.`Type`? {
     return VariableTypeResolver.resolve(element, resolver: resolver)
   }
 
@@ -115,7 +115,7 @@ class VariableTypeResolver: RecursiveElementVisitor {
 
   override func visitTupleExpression(_ element: TupleExpression) {
     let resolved = element.tupleElementList.elements.map {
-      resolve($0) ?? UseCases.TypeIdentifier(identifier: "Any")
+      resolve($0) ?? MockGenerating.TypeIdentifier(identifier: "Any")
     }.map {
       TupleType.TupleElement(label: nil, type: $0)
     }
@@ -163,7 +163,7 @@ class VariableTypeResolver: RecursiveElementVisitor {
 
   private func setTypeIdentifier(_ name: String?) {
     if let name = name {
-      type = UseCases.TypeIdentifier(identifier: name)
+      type = MockGenerating.TypeIdentifier(identifier: name)
     }
   }
 }
