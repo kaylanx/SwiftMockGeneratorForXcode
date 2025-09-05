@@ -1,7 +1,37 @@
-import MockGenerating
-import AST
-import SwiftyKit
 import Foundation
+
+import MockGenerating
+
+import class AST.RecursiveElementVisitor
+import protocol AST.Element
+import protocol AST.ArrayType
+import protocol AST.DictionaryType
+import protocol AST.OptionalType
+import protocol AST.`Type`
+import protocol AST.TypeIdentifier
+import protocol AST.FunctionType
+import protocol AST.ParenthesizedType
+import protocol AST.MetatypeType
+import protocol AST.TupleType
+import protocol AST.TupleTypeElement
+import protocol AST.FunctionDeclaration
+import protocol AST.Declaration
+import protocol AST.Parameter
+import protocol AST.ParameterClause
+import protocol AST.VariableDeclaration
+import protocol AST.GetterSetterDeclaration
+import protocol AST.InitializerDeclaration
+import protocol AST.SubscriptDeclaration
+import protocol AST.FunctionTypeArgumentClause
+import protocol AST.FunctionTypeArgument
+import protocol AST.LeafNode
+import protocol AST.Attributes
+import protocol AST.DeclarationModifier
+import protocol AST.CodeBlock
+import protocol AST.GetterSetterBlock
+import protocol AST.GetterSetterKeywordBlock
+import protocol AST.Initializer
+import protocol SwiftyKit.Resolver
 
 class MemberTransformingVisitor: RecursiveElementVisitor {
 
@@ -9,7 +39,7 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
     private(set) var properties = [MockGenerating.Property]()
     private(set) var methods = [MockGenerating.Method]()
     private(set) var subscripts = [MockGenerating.Subscript]()
-    private(set) var type: MockGenerating.`Type` = TypeIdentifier.Builder(identifier: "").build()
+    private(set) var type: MockGenerating.`Type` = MockGenerating.TypeIdentifier.Builder(identifier: "").build()
     private let resolver: Resolver
 
     init(resolver: Resolver) {
@@ -72,7 +102,7 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
             label: nil,
             type: transformType(element.type)
         )
-        type = TupleType(tupleElements: [tupleType])
+        type = MockGenerating.TupleType(tupleElements: [tupleType])
     }
 
     override func visitMetatypeType(_ element: MetatypeType) {
@@ -81,12 +111,12 @@ class MemberTransformingVisitor: RecursiveElementVisitor {
 
     override func visitTupleType(_ element: AST.TupleType) {
         let tupleElements = element.tupleTypeElementList.tupleTypeElements.compactMap(transformTupleType)
-        type = TupleType(tupleElements: tupleElements)
+        type = MockGenerating.TupleType(tupleElements: tupleElements)
     }
 
     private func transformTupleType(_ e: TupleTypeElement) -> MockGenerating.TupleType.TupleElement? {
         if let type = e.type ?? e.typeAnnotation?.type {
-            return TupleType.TupleElement(label: e.elementName?.text, type: transformType(type))
+            return MockGenerating.TupleType.TupleElement(label: e.elementName?.text, type: transformType(type))
         }
         return nil
     }

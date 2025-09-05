@@ -1,12 +1,12 @@
 import XcodeKit
 
-public protocol SourceEditorCommandInvocation: class {
+public protocol SourceEditorCommandInvocation: AnyObject {
     var commandIdentifier: String { get }
     var sourceTextBuffer: SourceTextBuffer { get }
     var cancellationHandler: () -> () { get set }
 }
 
-public protocol SourceTextBuffer: class {
+public protocol SourceTextBuffer: AnyObject {
     var contentUTI: String { get }
     var tabWidth: Int { get }
     var completeBuffer: String { get set }

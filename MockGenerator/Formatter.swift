@@ -1,6 +1,16 @@
-import Formatter
-import AST
-import SwiftyKit
+import class Formatter.IndentStrategyVisitor
+import class Formatter.RegularIndentStrategy
+import class Formatter.NewLineSpacingVisitor
+import class Formatter.FormatVisitor
+import class Formatter.NewLineBetweenDeclaration
+import class Formatter.NewLineInsideDeclaration
+import class Formatter.NewLineAroundImports
+import class Formatter.EmptyBraces
+import func Formatter.spaceIndent
+import protocol AST.Element
+import class AST.ElementVisitor
+import class AST.CompoundRecursiveVisitor
+import protocol SwiftyKit.Formatter
 
 public class DefaultFormatter: Formatter {
 
@@ -40,8 +50,20 @@ public class DefaultFormatter: Formatter {
           typeDeclaration: (1, 0)
         )
         let visitors: [ElementVisitor] = [
-          NewLineBetweenDeclaration(spacing: { NewLineSpacingVisitor.visit($0, context: newLineBetweenOptions) }),
-          NewLineInsideDeclaration(spacing: { NewLineSpacingVisitor.visit($0, context: newLineInsideOptions) }),
+            NewLineBetweenDeclaration(
+                spacing: {
+                    NewLineSpacingVisitor.visit(
+                        $0,
+                        context: newLineBetweenOptions
+                    )
+                }),
+            NewLineInsideDeclaration(
+                spacing: {
+                    NewLineSpacingVisitor.visit(
+                        $0,
+                        context: newLineInsideOptions
+                    )
+                }),
           NewLineAroundImports(spacing: (1, 1)),
           EmptyBraces(),
 

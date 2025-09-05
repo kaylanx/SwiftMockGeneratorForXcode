@@ -1,6 +1,7 @@
-import SwiftyKit
 import Foundation
-import AST
+
+import var SwiftyKit.parserFactory
+import protocol AST.File
 
 public class GenerateMockCommand: MockGenerator {
 

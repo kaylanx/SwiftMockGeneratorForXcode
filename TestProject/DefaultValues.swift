@@ -30,7 +30,7 @@ protocol DefaultValues {
     func shortOptionalArray() -> [String]?
 
     func dictionary() -> Dictionary<String, String>
-    func dictionaryLiteral() -> DictionaryLiteral<String, String>
+    func dictionaryLiteral() -> KeyValuePairs<String, String>
     func dictionaryShorthand() -> [String: String]
     func optionalDict() -> Optional<Dictionary<String, String>>
     func shortOptionalDict() -> [String: String]?

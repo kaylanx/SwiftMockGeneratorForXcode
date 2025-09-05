@@ -1,6 +1,8 @@
 import Foundation
 import XcodeKit
-import SwiftyKit
+import protocol SwiftyKit.SelectionRange
+import protocol SwiftyKit.TextBuffer
+import class SwiftyKit.SelectionRangeFactory
 
 
 public class TextBufferImpl: NSObject, TextBuffer {

@@ -1,5 +1,28 @@
-import AST
-import SwiftyKit
+import class AST.RecursiveElementVisitor
+import protocol AST.Element
+import protocol AST.VariableDeclaration
+import protocol AST.BinaryExpression
+import protocol AST.`Type`
+import protocol AST.StaticStringLiteralExpression
+import protocol AST.NumericLiteralExpression
+import protocol AST.FloatingPointLiteral
+import protocol AST.IntegerLiteral
+import protocol AST.BooleanLiteralExpression
+import protocol AST.ArrayLiteralExpression
+import protocol AST.DictionaryLiteralExpression
+import protocol AST.FunctionCallExpression
+import protocol AST.ExplicitMemberExpression
+import protocol AST.Expression
+import protocol AST.IdentifierPrimaryExpression
+import protocol AST.TupleExpression
+import protocol AST.ClosureExpression
+import protocol AST.SubscriptExpression
+import protocol AST.OperatorPostfixExpression
+import protocol AST.ConditionalOperator
+import protocol AST.Operator
+import protocol AST.TypeDeclaration
+import protocol AST.TypeCastingOperator
+import protocol SwiftyKit.Resolver
 import MockGenerating
 
 class VariableTypeResolver: RecursiveElementVisitor {

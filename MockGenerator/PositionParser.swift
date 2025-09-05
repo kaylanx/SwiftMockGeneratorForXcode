@@ -1,10 +1,15 @@
-import Parser
-import AST
-import SwiftyKit
-import Algorithms
 import Foundation
 
-public class PositionParser: Parser {
+import class Parser.ParserImpl
+import protocol AST.File
+import protocol AST.`Type`
+import protocol AST.Whitespace
+import protocol AST.HorizontalWhitespaceItem
+import protocol AST.LineBreak
+import protocol SwiftyKit.Parsing
+import class Algorithms.PositionVisitor
+
+public class PositionParser: Parsing {
 
     public init() {}
     public func parseFile(_ string: String, url: URL?) throws -> AST.File {
@@ -19,7 +24,7 @@ public class PositionParser: Parser {
         return file
     }
 
-    public func parseType(_ string: String) throws -> Type {
+    public func parseType(_ string: String) throws -> `Type` {
         return try ParserImpl().parseType(string)
     }
 

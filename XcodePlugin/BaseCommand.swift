@@ -1,9 +1,9 @@
 import Foundation
 import XcodeKit
-import SwiftyKit
-import MockGenerator
 import AppKit
 
+import protocol SwiftyKit.SelectionRange
+import MockGenerator
 
 open class BaseCommand: NSObject, XCSourceEditorCommand {
 

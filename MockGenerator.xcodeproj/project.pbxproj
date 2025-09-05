@@ -25,7 +25,6 @@
 		14276C6A1F4F312E00EA7753 /* MockGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14276C611F4F312E00EA7753 /* MockGenerator.framework */; };
 		14276C6F1F4F312E00EA7753 /* InsertMockCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14276C6E1F4F312E00EA7753 /* InsertMockCommandTests.swift */; };
 		14276C791F4F314600EA7753 /* InsertMockCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14276C781F4F314600EA7753 /* InsertMockCommand.swift */; };
-		142B023021709A97005DE573 /* UseCases.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 142B022F21709A85005DE573 /* UseCases.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14451D351F5F05C500833C61 /* MemberTransformingVisitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CDF7A9B1705ADFFC0CB415 /* MemberTransformingVisitorTests.swift */; };
 		144EF1A12444CEB400C8EE9A /* NSView+Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EF1A02444CEB400C8EE9A /* NSView+Bookmarks.swift */; };
 		145290EA1F981ED600947144 /* VersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145290E91F981ED600947144 /* VersionView.swift */; };
@@ -224,7 +223,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				142B023021709A97005DE573 /* UseCases.framework in Embed Frameworks */,
 				14887ABC20FB859B00D50A73 /* MockGenerator.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -263,7 +261,6 @@
 		14276C6E1F4F312E00EA7753 /* InsertMockCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertMockCommandTests.swift; sourceTree = "<group>"; };
 		14276C701F4F312E00EA7753 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14276C781F4F314600EA7753 /* InsertMockCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertMockCommand.swift; sourceTree = "<group>"; };
-		142B022F21709A85005DE573 /* UseCases.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UseCases.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		142B023921709BC5005DE573 /* libGRMustache7-MacOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGRMustache7-MacOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		144EF1A02444CEB400C8EE9A /* NSView+Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Bookmarks.swift"; sourceTree = "<group>"; };
 		145290E91F981ED600947144 /* VersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionView.swift; sourceTree = "<group>"; };
@@ -479,7 +476,6 @@
 				14CA2D6A1F40008F00900937 /* Frameworks */,
 				14CA2D541F40007000900937 /* Products */,
 				142B023921709BC5005DE573 /* libGRMustache7-MacOS.a */,
-				142B022F21709A85005DE573 /* UseCases.framework */,
 				35CDFCBA18471CBB83E38C32 /* scripts */,
 				35CDF720F8CE28402647AF36 /* readme */,
 				35CDFF76AF338D84655E5142 /* Makefile */,
@@ -1081,6 +1077,7 @@
 					"$(PROJECT_DIR)/lib/Debug",
 					"$(PROJECT_DIR)/lib/Release",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=${PROJECT_DIR}/lib/Debug/include/GRMustache/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1117,6 +1114,7 @@
 					"$(PROJECT_DIR)/lib/Debug",
 					"$(PROJECT_DIR)/lib/Release",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=${PROJECT_DIR}/lib/Release/include/GRMustache/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1146,6 +1144,7 @@
 					"@loader_path/../Frameworks",
 					/usr/lib/swift,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=${PROJECT_DIR}/lib/Debug/include/GRMustache/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1173,6 +1172,7 @@
 					"@loader_path/../Frameworks",
 					/usr/lib/swift,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=${PROJECT_DIR}/lib/Release/include/GRMustache/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1247,6 +1247,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swift Mock Generator for Xcode.app/Contents/MacOS/Swift Mock Generator for Xcode";
@@ -1268,6 +1269,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1314,6 +1316,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_MODULE_NAME = MockGeneratorApp;
 				PRODUCT_NAME = "Swift Mock Generator for Xcode";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1341,6 +1344,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.MockGeneratorApp;
 				PRODUCT_MODULE_NAME = MockGeneratorApp;
 				PRODUCT_NAME = "Swift Mock Generator for Xcode";
@@ -1369,6 +1373,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MENU_DISPLAY_NAME = "Debug Mock Generator";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1401,6 +1406,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MENU_DISPLAY_NAME = "Mock Generator";
 				OTHER_LDFLAGS = (
 					"-framework",

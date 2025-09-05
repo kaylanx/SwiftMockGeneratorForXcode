@@ -1,9 +1,14 @@
 import Foundation
-import Formatter
-import SwiftyKit
+import var SwiftyKit.resolverFactory
+import var SwiftyKit.formatterFactory
+import var SwiftyKit.makeService
+import var SwiftyKit.makeDeserializer
+import var SwiftyKit.parserFactory
+import class SwiftyKit.FormatterFactory
+import class SwiftyKit.ParserFactory
 import class Resolver.ResolverFactory
-import ASTSerialize
-import SwiftyServiceImpl
+import class ASTSerialize.ASTDeserializer
+import class SwiftyServiceImpl.SwiftyServiceImpl
 
 public func setUpSwifty(projectURL: URL, useTabs: Bool, indentationWidth: Int) {
     let sourceFiles = SourceFileFinder(projectRoot: projectURL).findSourceFiles()

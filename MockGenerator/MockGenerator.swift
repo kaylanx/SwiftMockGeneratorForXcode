@@ -1,8 +1,11 @@
-import AST
+import protocol AST.Element
+import protocol AST.TypeDeclaration
 import class MockGenerating.MockClass
 import class MockGenerating.CallbackMockView
 import class MockGenerating.Generator
-import SwiftyKit
+import var SwiftyKit.parserFactory
+import var SwiftyKit.formatterFactory
+import var SwiftyKit.resolverFactory
 
 protocol MockGenerator {
     var templateName: String { get }

@@ -1,17 +1,23 @@
-import AST
-import Resolver
-import SwiftyKit
+import class AST.ElementVisitor
+import protocol AST.`Type`
+import protocol AST.ArrayType
+import protocol AST.DictionaryType
+import protocol AST.OptionalType
+import protocol AST.TypealiasDeclaration
+
+import protocol SwiftyKit.Resolver
+import var SwiftyKit.parserFactory
 
 class TypeResolverVisitor: ElementVisitor {
 
-    var resolvedType: Type?
+    var resolvedType: `Type`?
     private let resolver: Resolver
 
     init(resolver: Resolver) {
         self.resolver = resolver
     }
 
-    override func visitType(_ element: Type) {
+    override func visitType(_ element: `Type`) {
         guard let resolved = self.resolver.resolve(element) else { return }
         let visitor = ResolvedVisitor(resolver: resolver)
         resolved.accept(visitor)

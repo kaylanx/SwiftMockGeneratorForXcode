@@ -1,7 +1,14 @@
 import Foundation
-import AST
-import Algorithms
-import SwiftyKit
+
+import protocol AST.File
+import protocol AST.Element
+import protocol AST.TypeDeclaration
+
+import class Algorithms.CaretUtil
+import class Algorithms.ElementTreeUtil
+
+import class SwiftyKit.ASTCommandImpl
+import protocol SwiftyKit.TextBuffer
 
 public class InsertMockCommand: ASTCommandImpl, MockGenerator {
 

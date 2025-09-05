@@ -1,7 +1,10 @@
-import AST
-import SwiftyKit
+import class AST.ElementVisitor
+import protocol AST.Element
+import protocol AST.ClassDeclaration
+import protocol AST.TypeDeclaration
+import protocol AST.ProtocolDeclaration
+import protocol SwiftyKit.Resolver
 import MockGenerating
-import class MockGenerating.Class
 
 class TypeDeclarationTransformingVisitor: ElementVisitor {
 

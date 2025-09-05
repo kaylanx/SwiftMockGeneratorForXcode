@@ -1,10 +1,8 @@
-USE_CASE_SHA=v19
 MUSTACHE_SHA=v7.3.2
 
 ROOT=$(shell pwd)
 
 SRC_PATH=/tmp/xcode-mock-generator-src
-USECASES_SRC_PATH=$(SRC_PATH)/usecases
 MUSTACHE_SRC_PATH=$(SRC_PATH)/GRMustache
 SWIFT_TOOLKIT_SRC_PATH=$(ROOT)/SwiftToolkit
 
@@ -12,11 +10,9 @@ DEST_PATH=$(ROOT)/lib
 DEST_PATH_DEBUG=$(DEST_PATH)/Debug
 DEST_PATH_RELEASE=$(DEST_PATH)/Release
 
-KOTLINC=~/kotlin-native/bin/kotlinc-native
+.PHONY: bootstrap clean mkdestpath xcpretty mustache swift-toolkit
 
-.PHONY: bootstrap clean usecases mkdestpath mkkotlinnative xcpretty mustache swift-toolkit
-
-bootstrap: clean swift-toolkit usecases mustache
+bootstrap: clean swift-toolkit mustache
 
 clean:
 	rm -rf $(BUILD_PATH) || true
@@ -63,9 +59,6 @@ usecases: mkdestpath mkkotlinnative
 	  $(DEST_PATH_RELEASE)/x86_64/UseCases.framework/Versions/A/UseCases \
 	  $(DEST_PATH_RELEASE)/arm64/UseCases.framework/Versions/A/UseCases; \
 	cp $(USECASES_SRC_PATH)/src/main/resources/*.mustache $(ROOT)/MockGenerator; \
-
-mkkotlinnative:
-	echo "Download and install Kotlin Native from https://github.com/JetBrains/kotlin/releases to ~/kotlin-native"
 
 define MUSTACHE_MODULE_MAP
 module GRMustache {
