@@ -70,7 +70,7 @@ export MUSTACHE_MODULE_MAP
 
 # 1 - configuration
 define build_mustache
-	xcrun xcodebuild -project src/GRMustache.xcodeproj -scheme GRMustache7-MacOS -configuration $(1) -derivedDataPath build clean build MACOSX_DEPLOYMENT_TARGET=11.0 ONLY_ACTIVE_ARCH=NO | xcpretty
+	xcrun xcodebuild -project src/GRMustache.xcodeproj -scheme GRMustache7-MacOS -configuration $(1) -derivedDataPath build clean build MACOSX_DEPLOYMENT_TARGET=14.6 ONLY_ACTIVE_ARCH=NO | xcpretty
 endef
 
 mustache: xcpretty mkdestpath
