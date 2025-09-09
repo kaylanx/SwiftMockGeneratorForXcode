@@ -10,9 +10,9 @@ import func Formatter.spaceIndent
 import protocol AST.Element
 import class AST.ElementVisitor
 import class AST.CompoundRecursiveVisitor
-import protocol SwiftyKit.Formatter
+import protocol SwiftyKit.Formatting
 
-public class DefaultFormatter: Formatter {
+public class DefaultFormatter: Formatting {
 
     let useTabs: Bool
     let indentationWidth: Int
